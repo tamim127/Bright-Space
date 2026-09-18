@@ -156,7 +156,7 @@ export default function MagneticButton({
       // Update and draw existing particles
       const activeParticles: Particle[] = [];
 
-      for (let p of particlesRef.current) {
+      for (const p of particlesRef.current) {
         p.x += p.vx;
         p.y += p.vy;
         p.rotation += p.vRot;

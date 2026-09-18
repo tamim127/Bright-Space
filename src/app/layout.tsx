@@ -26,12 +26,12 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "ARTISAN.DEV | Premium Digital Product & Custom Software Agency",
-  description: "We design and engineer high-performance websites, web applications, SaaS platforms, and custom software solutions for ambitious digital brands.",
-  keywords: ["Digital Agency", "Web Development", "Web Applications", "Custom Software", "Next.js Agency", "UI UX Design"],
+  title: "Bright Motion | Premium Motion & Digital Product Studio",
+  description: "We design and engineer high-performance websites, 3D interactive experiences, motion design, and custom software for ambitious digital brands.",
+  keywords: ["Bright Motion", "Motion Design", "3D WebGL", "Digital Studio", "Web Development", "Next.js", "Creative Engineering"],
   openGraph: {
-    title: "ARTISAN.DEV | Digital Products & Software Studio",
-    description: "Ideas In. Scalable Digital Products Out.",
+    title: "Bright Motion | Creative Motion & Digital Studio",
+    description: "We craft kinetic motion and immersive digital experiences.",
     type: "website",
   },
 };

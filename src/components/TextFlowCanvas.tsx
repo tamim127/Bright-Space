@@ -8,7 +8,7 @@ interface TextFlowCanvasProps {
 }
 
 export default function TextFlowCanvas({
-  text = "BRIGHT SPACE",
+  text = "BRIGHT MOTION",
   className = "",
 }: TextFlowCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -268,8 +268,8 @@ export default function TextFlowCanvas({
   return (
     <div
       ref={containerRef}
-      className={`w-full relative overflow-hidden bg-[#060810] select-none cursor-crosshair flex items-center justify-center ${className}`}
-      style={{ minHeight: "260px", height: "34vw", maxHeight: "400px" }}
+      className={`w-full relative overflow-hidden bg-transparent select-none cursor-crosshair flex items-center justify-center ${className}`}
+      style={{ minHeight: "220px", height: "26vw", maxHeight: "360px" }}
     >
       {/* Kinetic Particle Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 block w-full h-full" />

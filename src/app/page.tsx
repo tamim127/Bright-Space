@@ -5,14 +5,12 @@ import { motion } from "framer-motion";
 import {
   ArrowUpRight,
   ChevronRight,
-  Star,
   CheckCircle2,
-  Quote,
   Layers,
   Sparkles,
   Zap,
   ShieldCheck,
-  TrendingUp
+  TrendingUp,
 } from "lucide-react";
 import MagneticButton from "@/components/MagneticButton";
 import ProjectCard from "@/components/ProjectCard";
@@ -20,43 +18,15 @@ import LogoRail from "@/components/LogoRail";
 import FaqAccordion from "@/components/FaqAccordion";
 import ProblemSolutionSection from "@/components/ProblemSolutionSection";
 import TechArsenalSection from "@/components/TechArsenalSection";
-import ProcessTimeline from "@/components/ProcessTimeline";
 import ScrollServices from "@/components/ScrollServices";
 import MeetTheTeamSection from "@/components/MeetTheTeamSection";
 import TestimonialChain from "@/components/TestimonialChain";
 import ProjectLeadForm from "@/components/ProjectLeadForm";
+import RotatingGlobe from "@/components/RotatingGlobe";
 
 import { projectsData } from "@/data/projects";
 import { servicesData } from "@/data/services";
 import { faqsData } from "@/data/faqs";
-
-const testimonials = [
-  {
-    quote: "ARTISAN transformed our legacy SaaS product into a modern, lightning-fast platform. Our user retention surged by 44% in just two months after release.",
-    author: "Elena Rostova",
-    role: "VP of Product, Nexus Systems",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop",
-  },
-  {
-    quote: "The visual polish, typography taste, and underlying software engineering exceeded our expectations. They deliver commercial-grade software on tight deadlines.",
-    author: "Marcus Thorne",
-    role: "Founder & CTO, Vanguard AI",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
-  },
-  {
-    quote: "Working with ARTISAN felt like having a top 1% Silicon Valley product engineering squad embedded right inside our company.",
-    author: "Sarah Jenkins",
-    role: "Director of Digital, Horizon Capital",
-    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=200&auto=format&fit=crop",
-  },
-];
-
-const metrics = [
-  { value: "99.8%", label: "On-Time Delivery Rate" },
-  { value: "4.9/5", label: "Client Satisfaction Rating" },
-  { value: "10M+", label: "Daily Active End-Users" },
-  { value: "<300ms", label: "Avg API Response Speed" },
-];
 
 const agencyMilestones = [
   { value: "50+", label: "Digital Products Shipped", desc: "High-performing websites, SaaS apps & custom software." },
@@ -103,175 +73,146 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 1. HERO SECTION */}
       {/* ========================================================================= */}
-      {/* Added -mt-24 to pull background behind navbar, pb-24 to compensate */}
-      <section className="relative min-h-[100vh] flex flex-col justify-center overflow-hidden border-b border-white/5 -mt-24 pt-24 pb-16">
+      {/* ========================================================================= */}
+      {/* 1. HERO SECTION — BRIGHT MOTION (MINIMAL EDITORIAL AESTHETIC) */}
+      {/* ========================================================================= */}
+      <section className="relative min-h-[92vh] flex flex-col justify-between overflow-hidden border-b border-white/10 -mt-24 pt-28 pb-8">
         
-        {/* Deep Blue Organic Smoky Wave Background */}
-        <div className="absolute inset-0 z-0 overflow-hidden bg-[#020617]">
-          
-          {/* Base ambient glow */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(30,58,138,0.2)_0%,rgba(2,6,23,1)_100%)]" />
-
-          {/* Wave Layer 1: Deep Blue/Indigo wide sweeping wave */}
-          <motion.div 
-            animate={{ 
-              x: ['-15%', '15%', '-15%'], 
-              y: ['0%', '10%', '0%'],
-              rotate: [0, 3, -2, 0]
-            }}
-            transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[15%] -left-[20%] w-[140%] h-[45%] rounded-[100%] bg-gradient-to-r from-transparent via-[#1e3a8a] to-transparent mix-blend-screen filter blur-[120px] opacity-[0.9]" 
-          />
-          
-          {/* Wave Layer 2: Bright Cyan/Blue inner smoke */}
-          <motion.div 
-            animate={{ 
-              x: ['15%', '-15%', '15%'], 
-              y: ['10%', '-5%', '10%'],
-              rotate: [-2, 1, -2]
-            }}
-            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[25%] -left-[20%] w-[140%] h-[35%] rounded-[100%] bg-gradient-to-r from-transparent via-[#0284c7] to-transparent mix-blend-screen filter blur-[100px] opacity-[0.7]" 
-          />
-          
-          {/* Wave Layer 3: Soft Violet organic flow */}
-          <motion.div 
-            animate={{ 
-              x: ['-10%', '10%', '-10%'], 
-              y: ['-5%', '15%', '-5%'],
-            }}
-            transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[35%] -left-[10%] w-[120%] h-[55%] rounded-[100%] bg-gradient-to-r from-transparent via-[#4338ca] to-transparent mix-blend-screen filter blur-[140px] opacity-[0.8]" 
+        {/* Cinematic Background Video & Ambient Lighting */}
+        <div className="absolute inset-0 z-0 overflow-hidden bg-[#02040a]">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover opacity-25 mix-blend-screen pointer-events-none scale-105"
+            src="/hero-bg.mp4"
           />
 
-          {/* Fine Noise Texture for video realism */}
-          <div className="absolute inset-0 opacity-[0.12] pointer-events-none mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }}></div>
+          {/* Architectural Vertical Grid Lines (Framer Editorial Style) */}
+          <div className="absolute inset-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 pointer-events-none z-0">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="border-r border-white/[0.04] h-full" />
+            ))}
+          </div>
 
-          {/* Gradient Overlays to smoothly fade the edges into black */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/10 via-transparent to-[#020617]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#020617_100%)] opacity-60" />
+          {/* Deep Ambient Glow */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(14,165,233,0.12)_0%,rgba(2,6,23,0.9)_70%,#050505_100%)] pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#02040a]/80 via-transparent to-[#050505] pointer-events-none" />
         </div>
 
-        {/* Hero Content */}
-        <div className="max-w-7xl mx-auto px-6 md:px-12 pt-20 z-10 w-full relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        {/* Hero Grid: Left side Bright Motion Bold + Slogan + CTA, Right side 3D Interactive Globe */}
+        <div className="max-w-7xl mx-auto px-6 md:px-12 z-10 w-full relative flex-grow flex flex-col justify-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
-            {/* Main Hero Content */}
-            <div className="lg:col-span-8 space-y-8">
-              {/* Status Pill Badge */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="inline-flex items-center gap-3 px-4 py-2 rounded-full glass-panel border border-[rgba(108,99,255,0.3)] shadow-[0_0_20px_rgba(108,99,255,0.15)] bg-black/40 backdrop-blur-md"
-              >
-                <span className="w-2.5 h-2.5 rounded-full bg-[#00E5FF] animate-pulse" />
-                <span className="text-xs font-mono tracking-widest text-[#D1D5DB] uppercase font-semibold">
-                  PREMIUM DIGITAL PRODUCT & SOFTWARE STUDIO
-                </span>
-              </motion.div>
-
-              {/* Headline */}
+            {/* Left Column: Giant Bold BRIGHT MOTION & Slogan & CTA */}
+            <div className="lg:col-span-6 flex flex-col justify-center space-y-6 lg:pr-4">
+              
+              {/* Giant Bold Studio Typography */}
               <motion.h1
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.04] text-white"
+                transition={{ duration: 0.7 }}
+                className="text-6xl sm:text-7xl md:text-8xl lg:text-[104px] font-black tracking-tighter leading-[0.88] text-white uppercase select-none"
               >
-                Ideas In. <br />
-                <span className="font-serif italic font-normal text-gradient-accent">
-                  Digital Products
-                </span>{" "}
-                Out.
+                BRIGHT<br />
+                MOTION
               </motion.h1>
 
-              {/* Subtext */}
+              {/* Short crisp slogan */}
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-                className="text-lg md:text-xl text-[#B0B0B0] font-light max-w-2xl leading-relaxed"
+                transition={{ duration: 0.7, delay: 0.15 }}
+                className="text-lg sm:text-xl md:text-2xl text-neutral-300 font-light max-w-lg leading-relaxed pt-1"
               >
-                We design and engineer high-performance websites, scalable web applications, SaaS platforms, and custom software built to elevate ambitious digital brands.
+                Turning concepts into experiences that connect, inspire, and endure.
               </motion.p>
 
-              {/* Hero CTAs */}
+              {/* Directly under text: Avatar rating & Minimal Start Project button */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.3 }}
-                className="flex flex-wrap items-center gap-4 pt-2"
+                transition={{ duration: 0.7, delay: 0.2 }}
+                className="w-full max-w-md space-y-3.5 pt-1"
               >
-                <Link href="/contact">
-                  <MagneticButton variant="primary">
-                    Start Your Project <ArrowUpRight className="w-5 h-5 ml-1" />
-                  </MagneticButton>
-                </Link>
+                {/* Review Rating Pill */}
+                <div className="flex items-center gap-3">
+                  <div className="flex -space-x-2">
+                    {[
+                      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&auto=format&fit=crop",
+                      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop",
+                      "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=100&auto=format&fit=crop",
+                    ].map((src, i) => (
+                      <img
+                        key={i}
+                        src={src}
+                        alt="Client avatar"
+                        className="w-7 h-7 rounded-full border border-black/80 object-cover"
+                      />
+                    ))}
+                  </div>
 
-                <Link href="/work">
-                  <MagneticButton variant="outline">
-                    Explore Our Work
-                  </MagneticButton>
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-0.5 text-[#00E5FF]">
+                      {[...Array(5)].map((_, i) => (
+                        <span key={i} className="text-xs">&bull;</span>
+                      ))}
+                    </div>
+                    <span className="text-xs font-mono font-semibold text-white">4.9/5</span>
+                    <span className="text-[10px] font-mono tracking-wider text-neutral-400 uppercase">
+                      BASED ON 180+ VERIFIED REVIEWS
+                    </span>
+                  </div>
+                </div>
+
+                {/* Minimalist Start A Project Button */}
+                <Link
+                  href="/contact"
+                  className="group flex items-center justify-between w-full py-3.5 px-4 rounded-xl border border-white/15 bg-white/[0.03] hover:bg-white/[0.08] hover:border-[#00E5FF]/50 transition-all duration-300"
+                >
+                  <span className="text-xs font-mono font-bold tracking-widest text-white uppercase group-hover:text-[#00E5FF] transition-colors">
+                    START A PROJECT
+                  </span>
+                  <ChevronRight className="w-4 h-4 text-neutral-400 group-hover:text-[#00E5FF] group-hover:translate-x-1 transition-all" />
                 </Link>
               </motion.div>
 
-              {/* Rating Pill */}
+              {/* Minimal Client / Partner Logos */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.4 }}
-                className="flex items-center gap-4 pt-4 border-t border-[rgba(255,255,255,0.1)] max-w-md"
+                transition={{ duration: 0.7, delay: 0.25 }}
+                className="pt-4 border-t border-white/10 flex flex-wrap items-center gap-6 sm:gap-8 text-neutral-400 text-xs font-mono tracking-widest uppercase"
               >
-                <div className="flex -space-x-2">
-                  {[
-                    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=100&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=100&auto=format&fit=crop",
-                  ].map((src, i) => (
-                    <img
-                      key={i}
-                      src={src}
-                      alt="Client Avatar"
-                      className="w-8 h-8 rounded-full border-2 border-[#050505] object-cover"
-                    />
-                  ))}
-                </div>
-                <div className="text-xs">
-                  <div className="flex items-center gap-1 text-amber-400 font-bold">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                    ))}
-                    <span className="text-white font-mono ml-1">4.9/5.0</span>
-                  </div>
-                  <span className="text-[#9A9A9A] text-[11px]">
-                    Rated by founders, CTOs & product leaders
-                  </span>
-                </div>
+                <span className="hover:text-white transition-colors flex items-center gap-1.5 font-bold">
+                  <span className="w-2 h-2 rounded-sm bg-[#00E5FF]/70"></span> 3PORTALS
+                </span>
+                <span className="hover:text-white transition-colors flex items-center gap-1.5 font-bold">
+                  <span className="w-2 h-2 rounded-full bg-white/70"></span> GOODWELL
+                </span>
+                <span className="hover:text-white transition-colors flex items-center gap-1.5 font-bold">
+                  <span className="w-2 h-2 rotate-45 bg-[#818cf8]"></span> INTELLECT
+                </span>
+                <span className="hover:text-white transition-colors flex items-center gap-1.5 font-bold">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400/80"></span> VANGUARD
+                </span>
               </motion.div>
             </div>
 
-            {/* Right Metrics Grid */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="lg:col-span-4 hidden lg:grid grid-cols-2 gap-4 relative"
-            >
-              {metrics.map((m) => (
-                <div
-                  key={m.label}
-                  className="glass-card p-6 rounded-2xl border border-[rgba(255,255,255,0.08)] bg-black/40 backdrop-blur-md hover:border-[#6C63FF]/40 hover:bg-black/60 transition-all duration-300 group"
-                >
-                  <div className="text-3xl font-extrabold text-white group-hover:text-[#00E5FF] transition-colors font-mono">
-                    {m.value}
-                  </div>
-                  <div className="text-xs text-[#9A9A9A] mt-2 font-medium tracking-wide uppercase">
-                    {m.label}
-                  </div>
-                </div>
-              ))}
-            </motion.div>
+            {/* Right Column: 3D Pure Frameless Interactive Globe */}
+            <div className="lg:col-span-6 flex flex-col justify-center items-center lg:items-center">
+              <div className="relative w-full h-[380px] sm:h-[440px] lg:h-[480px] flex items-center justify-center">
+                <RotatingGlobe
+                  className="w-full h-full"
+                  density={68}
+                  speed={1.05}
+                  accentColor="#00E5FF"
+                  wireColor="#818cf8"
+                  dotColor="#c7d2fe"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>

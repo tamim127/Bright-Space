@@ -172,7 +172,7 @@ export default function Footer() {
 
       const centerX = width / 2;
       const centerY = height / 2;
-      offCtx.fillText("BRIGHT SPACE", centerX, centerY);
+      offCtx.fillText("BRIGHT MOTION", centerX, centerY);
 
       const imageData = offCtx.getImageData(0, 0, width, height);
       const data = imageData.data;
@@ -574,7 +574,7 @@ export default function Footer() {
             </Link>
           </div>
           <p className="text-neutral-500">
-            &copy; {new Date().getFullYear()} Bright Space Agency. All Rights Reserved.
+            &copy; {new Date().getFullYear()} Bright Motion Studio. All Rights Reserved.
           </p>
         </div>
       </div>

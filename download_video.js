@@ -1,8 +1,8 @@
 const fs = require('fs');
 const https = require('https');
 
-const url = 'https://assets.mixkit.co/videos/preview/mixkit-ink-swirling-in-water-2680-large.mp4';
-const dest = 'c:\\Project\\public\\public\\wave.mp4';
+const url = 'https://framerusercontent.com/assets/cPKRRKuW0jpaC4klxDzwXI0sU.mp4';
+const dest = 'c:\\Project\\public\\public\\hero-bg.mp4';
 
 const options = {
   headers: {
