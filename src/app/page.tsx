@@ -21,8 +21,15 @@ import TechArsenalSection from "@/components/TechArsenalSection";
 import ScrollServices from "@/components/ScrollServices";
 import MeetTheTeamSection from "@/components/MeetTheTeamSection";
 import TestimonialChain from "@/components/TestimonialChain";
-import ProjectLeadForm from "@/components/ProjectLeadForm";
 import RotatingGlobe from "@/components/RotatingGlobe";
+import ProjectLeadForm from "@/components/ProjectLeadForm";
+import {
+  DisneyReveal,
+  DisneyStaggerGroup,
+  DisneyStaggerItem,
+  SquashStretchOnScroll,
+  DisneyArcParallax,
+} from "@/components/DisneyScrollReveal";
 
 import { projectsData } from "@/data/projects";
 import { servicesData } from "@/data/services";
@@ -74,10 +81,10 @@ export default function HomePage() {
       {/* 1. HERO SECTION */}
       {/* ========================================================================= */}
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION — BRIGHT MOTION (MINIMAL EDITORIAL AESTHETIC) */}
+      {/* 1. HERO SECTION — Bright Space (MINIMAL EDITORIAL AESTHETIC) */}
       {/* ========================================================================= */}
       <section className="relative min-h-[92vh] flex flex-col justify-between overflow-hidden border-b border-white/10 -mt-24 pt-28 pb-8">
-        
+
         {/* Cinematic Background Video & Ambient Lighting */}
         <div className="absolute inset-0 z-0 overflow-hidden bg-[#02040a]">
           <video
@@ -101,13 +108,13 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-b from-[#02040a]/80 via-transparent to-[#050505] pointer-events-none" />
         </div>
 
-        {/* Hero Grid: Left side Bright Motion Bold + Slogan + CTA, Right side 3D Interactive Globe */}
+        {/* Hero Grid: Left side Bright Space Bold + Slogan + CTA, Right side 3D Interactive Globe */}
         <div className="max-w-7xl mx-auto px-6 md:px-12 z-10 w-full relative flex-grow flex flex-col justify-center">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            
-            {/* Left Column: Giant Bold BRIGHT MOTION & Slogan & CTA */}
+
+            {/* Left Column: Giant Bold Bright Space & Slogan & CTA */}
             <div className="lg:col-span-6 flex flex-col justify-center space-y-6 lg:pr-4">
-              
+
               {/* Giant Bold Studio Typography */}
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
@@ -116,7 +123,7 @@ export default function HomePage() {
                 className="text-6xl sm:text-7xl md:text-8xl lg:text-[104px] font-black tracking-tighter leading-[0.88] text-white uppercase select-none"
               >
                 BRIGHT<br />
-                MOTION
+                SPACE
               </motion.h1>
 
               {/* Short crisp slogan */}
@@ -228,10 +235,10 @@ export default function HomePage() {
       <ProblemSolutionSection />
 
       {/* ========================================================================= */}
-      {/* 4. CORE SERVICES */}
+      {/* 4. CORE SERVICES (Disney Staging & Overlapping Follow-Through) */}
       {/* ========================================================================= */}
       <section className="py-24 max-w-7xl mx-auto px-6 md:px-12 relative">
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <DisneyReveal className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-xs font-mono text-[#00E5FF] tracking-widest uppercase">
             {"/// OUR CAPABILITIES"}
           </span>
@@ -241,16 +248,12 @@ export default function HomePage() {
           <p className="text-[#9A9A9A] text-base leading-relaxed">
             From luxury web design to cloud-native SaaS engineering, we deliver complete digital product solutions under one roof.
           </p>
-        </div>
+        </DisneyReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {servicesData.slice(0, 6).map((service, idx) => (
-            <motion.div
+        <DisneyStaggerGroup stagger={0.08} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {servicesData.slice(0, 6).map((service) => (
+            <DisneyStaggerItem
               key={service.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.08 }}
               className="glass-card p-8 rounded-3xl relative overflow-hidden group hover:border-[#6C63FF]/50 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
@@ -279,9 +282,9 @@ export default function HomePage() {
               >
                 Learn More <ChevronRight className="w-3.5 h-3.5" />
               </Link>
-            </motion.div>
+            </DisneyStaggerItem>
           ))}
-        </div>
+        </DisneyStaggerGroup>
       </section>
 
       {/* ========================================================================= */}
@@ -290,11 +293,11 @@ export default function HomePage() {
       <TechArsenalSection />
 
       {/* ========================================================================= */}
-      {/* 6. FEATURED WORK */}
+      {/* 6. FEATURED WORK (Velocity Squash & Stretch on Scroll) */}
       {/* ========================================================================= */}
-      <section className="py-24 bg-[#08080c] border-b border-[rgba(255,255,255,0.06)] relative">
+      <section className="py-24 bg-[#08080c] border-b border-[rgba(255,255,255,0.06)] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <DisneyReveal className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div>
               <span className="text-xs font-mono text-[#00E5FF] tracking-widest uppercase">
                 {"/// FEATURED WORK"}
@@ -308,21 +311,25 @@ export default function HomePage() {
                 Explore All Projects <ArrowUpRight className="w-4 h-4 ml-1" />
               </MagneticButton>
             </Link>
-          </div>
+          </DisneyReveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            {featuredProjects.map((project, idx) => (
-              <ProjectCard key={project.id} project={project} index={idx} />
-            ))}
-          </div>
+          <SquashStretchOnScroll intensity={0.025}>
+            <DisneyStaggerGroup stagger={0.12} className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+              {featuredProjects.map((project, idx) => (
+                <DisneyStaggerItem key={project.id}>
+                  <ProjectCard project={project} index={idx} />
+                </DisneyStaggerItem>
+              ))}
+            </DisneyStaggerGroup>
+          </SquashStretchOnScroll>
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* 7. CASE STUDIES / RESULTS */}
+      {/* 7. CASE STUDIES / RESULTS (Anticipation & Secondary Action) */}
       {/* ========================================================================= */}
       <section className="py-24 max-w-7xl mx-auto px-6 md:px-12 relative">
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <DisneyReveal className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-xs font-mono text-[#00E5FF] tracking-widest uppercase">
             {"/// MEASURED RESULTS"}
           </span>
@@ -332,10 +339,10 @@ export default function HomePage() {
           <p className="text-[#9A9A9A] text-base leading-relaxed">
             We measure success not just in clean code and aesthetic design, but in real business outcomes and revenue acceleration.
           </p>
-        </div>
+        </DisneyReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="glass-card p-8 rounded-3xl border border-[#6C63FF]/30 space-y-4">
+        <DisneyStaggerGroup stagger={0.1} className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <DisneyStaggerItem className="glass-card p-8 rounded-3xl border border-[#6C63FF]/30 space-y-4">
             <div className="text-5xl font-extrabold font-mono text-gradient-accent">+44%</div>
             <h4 className="text-xl font-bold text-white">SaaS User Retention</h4>
             <p className="text-xs text-[#9A9A9A] leading-relaxed">
@@ -344,9 +351,9 @@ export default function HomePage() {
             <div className="pt-2 text-[11px] font-mono text-[#00E5FF] uppercase">
               Client: Nexus Systems • SaaS Platform
             </div>
-          </div>
+          </DisneyStaggerItem>
 
-          <div className="glass-card p-8 rounded-3xl border border-[#00E5FF]/30 space-y-4">
+          <DisneyStaggerItem className="glass-card p-8 rounded-3xl border border-[#00E5FF]/30 space-y-4">
             <div className="text-5xl font-extrabold font-mono text-[#00E5FF]">2.4x</div>
             <h4 className="text-xl font-bold text-white">Conversion Surge</h4>
             <p className="text-xs text-[#9A9A9A] leading-relaxed">
@@ -355,9 +362,9 @@ export default function HomePage() {
             <div className="pt-2 text-[11px] font-mono text-[#00E5FF] uppercase">
               Client: Horizon Capital • Fintech Portal
             </div>
-          </div>
+          </DisneyStaggerItem>
 
-          <div className="glass-card p-8 rounded-3xl border border-[#6C63FF]/30 space-y-4">
+          <DisneyStaggerItem className="glass-card p-8 rounded-3xl border border-[#6C63FF]/30 space-y-4">
             <div className="text-5xl font-extrabold font-mono text-gradient-accent">-60%</div>
             <h4 className="text-xl font-bold text-white">Manual Processing</h4>
             <p className="text-xs text-[#9A9A9A] leading-relaxed">
@@ -366,8 +373,8 @@ export default function HomePage() {
             <div className="pt-2 text-[11px] font-mono text-[#00E5FF] uppercase">
               Client: Vanguard AI • Enterprise Workflow
             </div>
-          </div>
-        </div>
+          </DisneyStaggerItem>
+        </DisneyStaggerGroup>
       </section>
 
       {/* ========================================================================= */}
@@ -376,10 +383,10 @@ export default function HomePage() {
       <ScrollServices />
 
       {/* ========================================================================= */}
-      {/* 9. WHY CHOOSE US */}
+      {/* 9. WHY CHOOSE US (Disney Staging & Overlapping Follow-Through) */}
       {/* ========================================================================= */}
       <section className="py-28 max-w-7xl mx-auto px-6 md:px-12 relative">
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <DisneyReveal className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-xs font-mono text-[#00E5FF] tracking-widest uppercase">
             {"/// BUILT DIFFERENT"}
           </span>
@@ -389,18 +396,14 @@ export default function HomePage() {
           <p className="text-[#9A9A9A] text-base leading-relaxed">
             We combine high-end aesthetic taste with strict software engineering discipline to deliver exceptional digital products.
           </p>
-        </div>
+        </DisneyReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {whyUsPillars.map((pillar, idx) => {
+        <DisneyStaggerGroup stagger={0.09} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {whyUsPillars.map((pillar) => {
             const Icon = pillar.icon;
             return (
-              <motion.div
+              <DisneyStaggerItem
                 key={pillar.number}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
                 className="glass-card p-8 rounded-3xl relative border border-[rgba(255,255,255,0.08)] hover:border-[#6C63FF]/50 transition-all flex flex-col justify-between"
               >
                 <div>
@@ -419,10 +422,10 @@ export default function HomePage() {
                     {pillar.description}
                   </p>
                 </div>
-              </motion.div>
+              </DisneyStaggerItem>
             );
           })}
-        </div>
+        </DisneyStaggerGroup>
       </section>
 
       {/* ========================================================================= */}
@@ -438,18 +441,14 @@ export default function HomePage() {
       <TestimonialChain />
 
       {/* ========================================================================= */}
-      {/* 12. AGENCY STATS & MILESTONES */}
+      {/* 12. AGENCY STATS & MILESTONES (Disney Cascading Reveal) */}
       {/* ========================================================================= */}
       <section className="py-24 bg-[#08080c] border-y border-[rgba(255,255,255,0.06)] relative">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {agencyMilestones.map((m, idx) => (
-              <motion.div
+          <DisneyStaggerGroup stagger={0.08} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {agencyMilestones.map((m) => (
+              <DisneyStaggerItem
                 key={m.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
                 className="glass-card p-8 rounded-3xl border border-[rgba(255,255,255,0.08)] space-y-3"
               >
                 <div className="text-4xl md:text-5xl font-extrabold font-mono text-gradient-accent">
@@ -461,9 +460,9 @@ export default function HomePage() {
                 <p className="text-xs text-[#9A9A9A] leading-relaxed">
                   {m.desc}
                 </p>
-              </motion.div>
+              </DisneyStaggerItem>
             ))}
-          </div>
+          </DisneyStaggerGroup>
         </div>
       </section>
 
@@ -471,7 +470,7 @@ export default function HomePage() {
       {/* 13. FAQ ACCORDION */}
       {/* ========================================================================= */}
       <section className="py-28 max-w-4xl mx-auto px-6 md:px-12 relative">
-        <div className="text-center mb-16 space-y-4">
+        <DisneyReveal className="text-center mb-16 space-y-4">
           <span className="text-xs font-mono text-[#00E5FF] tracking-widest uppercase">
             {"/// FREQUENT QUESTIONS"}
           </span>
@@ -481,7 +480,7 @@ export default function HomePage() {
           <p className="text-[#9A9A9A] text-base">
             Everything you need to know about starting a digital product or software engagement with us.
           </p>
-        </div>
+        </DisneyReveal>
         <FaqAccordion items={faqsData} />
       </section>
 
@@ -491,11 +490,15 @@ export default function HomePage() {
       <ProjectLeadForm />
 
       {/* ========================================================================= */}
-      {/* 15. FINAL CTA */}
+      {/* 15. FINAL CTA (Disney Arc Parallax + Organic Appeal) */}
       {/* ========================================================================= */}
       <section className="py-32 relative overflow-hidden bg-gradient-to-b from-[#050505] to-[#0a0a12]">
-        <div className="glow-orb-indigo top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-40" />
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10 space-y-8">
+        {/* Disney Arc Parallax Ambient Orb */}
+        <DisneyArcParallax arcStrength={24} yOffset={40} className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="glow-orb-indigo opacity-40" />
+        </DisneyArcParallax>
+
+        <DisneyReveal scaleInitial={0.95} distance={32} className="max-w-4xl mx-auto px-6 text-center relative z-10 space-y-8">
           <span className="text-xs font-mono text-[#00E5FF] tracking-widest uppercase">
             {"/// READY TO BUILD?"}
           </span>
@@ -513,7 +516,7 @@ export default function HomePage() {
               </MagneticButton>
             </Link>
           </div>
-        </div>
+        </DisneyReveal>
       </section>
     </div>
   );

@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
+import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,11 +27,11 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Bright Motion | Premium Motion & Digital Product Studio",
+  title: "Bright Space | Premium Motion & Digital Product Studio",
   description: "We design and engineer high-performance websites, 3D interactive experiences, motion design, and custom software for ambitious digital brands.",
-  keywords: ["Bright Motion", "Motion Design", "3D WebGL", "Digital Studio", "Web Development", "Next.js", "Creative Engineering"],
+  keywords: ["Bright Space", "Motion Design", "3D WebGL", "Digital Studio", "Web Development", "Next.js", "Creative Engineering"],
   openGraph: {
-    title: "Bright Motion | Creative Motion & Digital Studio",
+    title: "Bright Space | Creative Motion & Digital Studio",
     description: "We craft kinetic motion and immersive digital experiences.",
     type: "website",
   },
@@ -44,10 +45,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable} ${cormorant.variable} dark`}>
       <body className="bg-[#050505] text-[#F5F5F5] min-h-screen flex flex-col antialiased selection:bg-[#6C63FF] selection:text-white">
-        <CustomCursor />
-        <Navbar />
-        <main className="flex-grow pt-24">{children}</main>
-        <Footer />
+        <SmoothScrollProvider>
+          <CustomCursor />
+          <Navbar />
+          <main className="flex-grow pt-24">{children}</main>
+          <Footer />
+        </SmoothScrollProvider>
       </body>
     </html>
   );

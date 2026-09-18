@@ -8,7 +8,7 @@ interface TextFlowCanvasProps {
 }
 
 export default function TextFlowCanvas({
-  text = "BRIGHT MOTION",
+  text = "BRIGHT SPACE",
   className = "",
 }: TextFlowCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
