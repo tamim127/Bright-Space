@@ -1,7 +1,8 @@
 "use client";
 
+import { useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import Image from "next/image";
 import {
   ArrowUpRight,
   ChevronRight,
@@ -25,15 +26,28 @@ import RotatingGlobe from "@/components/RotatingGlobe";
 import ProjectLeadForm from "@/components/ProjectLeadForm";
 import {
   DisneyReveal,
-  DisneyStaggerGroup,
-  DisneyStaggerItem,
-  SquashStretchOnScroll,
-  DisneyArcParallax,
 } from "@/components/DisneyScrollReveal";
 
 import { projectsData } from "@/data/projects";
 import { servicesData } from "@/data/services";
 import { faqsData } from "@/data/faqs";
+
+import {
+  initHeroAnimation,
+  initServicesAnimation,
+  initProjectShowcase,
+  initCaseStudiesAnimation,
+  initWhyUsAnimation,
+  initStatsAnimation,
+  initFinalCTAAnimation,
+  type HeroRefs,
+  type ServicesRefs,
+  type ProjectShowcaseRefs,
+  type CaseStudyRefs,
+  type WhyUsRefs,
+  type StatsRefs,
+  type FinalCTARefs,
+} from "@/lib/animations";
 
 const agencyMilestones = [
   { value: "50+", label: "Digital Products Shipped", desc: "High-performing websites, SaaS apps & custom software." },
@@ -72,6 +86,187 @@ const whyUsPillars = [
 export default function HomePage() {
   const featuredProjects = projectsData.filter((p) => p.featured);
 
+  // ─── REFS ──────────────────────────────────────────────
+
+  // Hero refs
+  const heroSectionRef = useRef<HTMLElement>(null);
+  const heroLine1Ref = useRef<HTMLSpanElement>(null);
+  const heroLine2Ref = useRef<HTMLSpanElement>(null);
+  const heroSloganRef = useRef<HTMLParagraphElement>(null);
+  const heroCtaRef = useRef<HTMLDivElement>(null);
+  const heroLogosRef = useRef<HTMLDivElement>(null);
+  const heroVideoBgRef = useRef<HTMLDivElement>(null);
+  const heroAmbientRef = useRef<HTMLDivElement>(null);
+  const heroGlobeRef = useRef<HTMLDivElement>(null);
+
+  // Services refs
+  const servicesSectionRef = useRef<HTMLElement>(null);
+  const servicesHeadingRef = useRef<HTMLDivElement>(null);
+  const serviceCardsRef = useRef<HTMLDivElement[]>([]);
+
+  // Featured Work / Project Showcase refs
+  const projectSectionRef = useRef<HTMLElement>(null);
+  const projectHeaderRef = useRef<HTMLDivElement>(null);
+  const projectPinRef = useRef<HTMLDivElement>(null);
+  const projectTrackRef = useRef<HTMLDivElement>(null);
+  const projectPanelRefs = useRef<HTMLDivElement[]>([]);
+
+  // Case Studies refs
+  const caseSectionRef = useRef<HTMLElement>(null);
+  const caseHeadingRef = useRef<HTMLDivElement>(null);
+  const caseCardRefs = useRef<HTMLDivElement[]>([]);
+
+  // Why Us refs
+  const whySectionRef = useRef<HTMLElement>(null);
+  const whyHeadingRef = useRef<HTMLDivElement>(null);
+  const whyPillarRefs = useRef<HTMLDivElement[]>([]);
+
+  // Stats refs
+  const statsSectionRef = useRef<HTMLElement>(null);
+  const statsCardRefs = useRef<HTMLDivElement[]>([]);
+
+  // Final CTA refs
+  const ctaSectionRef = useRef<HTMLElement>(null);
+  const ctaHeadingRef = useRef<HTMLHeadingElement>(null);
+  const ctaItalicRef = useRef<HTMLSpanElement>(null);
+  const ctaSubtitleRef = useRef<HTMLSpanElement>(null);
+  const ctaDescRef = useRef<HTMLParagraphElement>(null);
+  const ctaButtonRef = useRef<HTMLDivElement>(null);
+  const ctaGlowRef = useRef<HTMLDivElement>(null);
+
+  // Ref setter helpers
+  const setServiceCardRef = useCallback(
+    (el: HTMLDivElement | null, idx: number) => {
+      if (el) serviceCardsRef.current[idx] = el;
+    },
+    []
+  );
+  const setProjectPanelRef = useCallback(
+    (el: HTMLDivElement | null, idx: number) => {
+      if (el) projectPanelRefs.current[idx] = el;
+    },
+    []
+  );
+  const setCaseCardRef = useCallback(
+    (el: HTMLDivElement | null, idx: number) => {
+      if (el) caseCardRefs.current[idx] = el;
+    },
+    []
+  );
+  const setWhyPillarRef = useCallback(
+    (el: HTMLDivElement | null, idx: number) => {
+      if (el) whyPillarRefs.current[idx] = el;
+    },
+    []
+  );
+  const setStatsCardRef = useCallback(
+    (el: HTMLDivElement | null, idx: number) => {
+      if (el) statsCardRefs.current[idx] = el;
+    },
+    []
+  );
+
+  // ─── INIT ANIMATIONS ──────────────────────────────────
+  useEffect(() => {
+    // Each init returns its own gsap.Context (or null for reduced-motion)
+    // Cleanup is fully isolated per section
+    const contexts: (gsap.Context | null)[] = [];
+
+    // Small delay to ensure DOM is fully painted
+    const timer = setTimeout(() => {
+      // Hero
+      if (heroSectionRef.current && heroLine1Ref.current && heroLine2Ref.current) {
+        const heroRefs: HeroRefs = {
+          section: heroSectionRef.current,
+          headingLines: [heroLine1Ref.current, heroLine2Ref.current].filter(Boolean),
+          slogan: heroSloganRef.current!,
+          ctaRow: heroCtaRef.current!,
+          clientLogos: heroLogosRef.current!,
+          videoBg: heroVideoBgRef.current!,
+          ambientGlow: heroAmbientRef.current!,
+          globeContainer: heroGlobeRef.current!,
+        };
+        contexts.push(initHeroAnimation(heroRefs));
+      }
+
+      // Services
+      if (servicesSectionRef.current && servicesHeadingRef.current) {
+        const servRefs: ServicesRefs = {
+          section: servicesSectionRef.current,
+          heading: servicesHeadingRef.current,
+          cards: serviceCardsRef.current.filter(Boolean),
+        };
+        contexts.push(initServicesAnimation(servRefs));
+      }
+
+      // Featured Work Showcase
+      if (
+        projectSectionRef.current &&
+        projectPinRef.current &&
+        projectTrackRef.current
+      ) {
+        const projRefs: ProjectShowcaseRefs = {
+          section: projectSectionRef.current,
+          header: projectHeaderRef.current!,
+          pinContainer: projectPinRef.current,
+          track: projectTrackRef.current,
+          panels: projectPanelRefs.current.filter(Boolean),
+        };
+        contexts.push(initProjectShowcase(projRefs));
+      }
+
+      // Case Studies
+      if (caseSectionRef.current && caseHeadingRef.current) {
+        const caseRefs: CaseStudyRefs = {
+          section: caseSectionRef.current,
+          heading: caseHeadingRef.current,
+          cards: caseCardRefs.current.filter(Boolean),
+          counters: [],
+        };
+        contexts.push(initCaseStudiesAnimation(caseRefs));
+      }
+
+      // Why Us
+      if (whySectionRef.current && whyHeadingRef.current) {
+        const wRefs: WhyUsRefs = {
+          section: whySectionRef.current,
+          heading: whyHeadingRef.current,
+          pillars: whyPillarRefs.current.filter(Boolean),
+        };
+        contexts.push(initWhyUsAnimation(wRefs));
+      }
+
+      // Stats
+      if (statsSectionRef.current) {
+        const sRefs: StatsRefs = {
+          section: statsSectionRef.current,
+          cards: statsCardRefs.current.filter(Boolean),
+        };
+        contexts.push(initStatsAnimation(sRefs));
+      }
+
+      // Final CTA
+      if (ctaSectionRef.current && ctaHeadingRef.current) {
+        const fRefs: FinalCTARefs = {
+          section: ctaSectionRef.current,
+          heading: ctaHeadingRef.current,
+          italicSpan: ctaItalicRef.current!,
+          subtitle: ctaSubtitleRef.current!,
+          description: ctaDescRef.current!,
+          ctaButton: ctaButtonRef.current!,
+          glowOrb: ctaGlowRef.current!,
+        };
+        contexts.push(initFinalCTAAnimation(fRefs));
+      }
+    }, 100);
+
+    // Cleanup — each context reverts only its own triggers/tweens
+    return () => {
+      clearTimeout(timer);
+      contexts.forEach((ctx) => ctx?.revert());
+    };
+  }, []);
+
   return (
     <div className="relative overflow-x-clip bg-[#050505] text-[#F5F5F5]">
       {/* Ambient Background Grid for rest of the page */}
@@ -80,23 +275,24 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 1. HERO SECTION */}
       {/* ========================================================================= */}
-      {/* ========================================================================= */}
-      {/* 1. HERO SECTION — Bright Space (MINIMAL EDITORIAL AESTHETIC) */}
-      {/* ========================================================================= */}
-      <section className="relative min-h-[92vh] flex flex-col justify-between overflow-hidden border-b border-white/10 -mt-24 pt-28 pb-8">
-
+      <section
+        ref={heroSectionRef}
+        className="relative min-h-[92vh] flex flex-col justify-between overflow-hidden border-b border-white/10 -mt-24 pt-28 pb-8"
+      >
         {/* Cinematic Background Video & Ambient Lighting */}
         <div className="absolute inset-0 z-0 overflow-hidden bg-[#02040a]">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover opacity-25 mix-blend-screen pointer-events-none scale-105"
-            src="/hero-bg.mp4"
-          />
+          <div ref={heroVideoBgRef}>
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover opacity-25 mix-blend-screen pointer-events-none scale-105"
+              src="/hero-bg.mp4"
+            />
+          </div>
 
-          {/* Architectural Vertical Grid Lines (Framer Editorial Style) */}
+          {/* Architectural Vertical Grid Lines */}
           <div className="absolute inset-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 pointer-events-none z-0">
             {[...Array(6)].map((_, i) => (
               <div key={i} className="border-r border-white/[0.04] h-full" />
@@ -104,45 +300,43 @@ export default function HomePage() {
           </div>
 
           {/* Deep Ambient Glow */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(14,165,233,0.12)_0%,rgba(2,6,23,0.9)_70%,#050505_100%)] pointer-events-none" />
+          <div
+            ref={heroAmbientRef}
+            className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(14,165,233,0.12)_0%,rgba(2,6,23,0.9)_70%,#050505_100%)] pointer-events-none"
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-[#02040a]/80 via-transparent to-[#050505] pointer-events-none" />
         </div>
 
-        {/* Hero Grid: Left side Bright Space Bold + Slogan + CTA, Right side 3D Interactive Globe */}
+        {/* Hero Grid */}
         <div className="max-w-7xl mx-auto px-6 md:px-12 z-10 w-full relative flex-grow flex flex-col justify-center">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-
-            {/* Left Column: Giant Bold Bright Space & Slogan & CTA */}
+            {/* Left Column */}
             <div className="lg:col-span-6 flex flex-col justify-center space-y-6 lg:pr-4">
+              {/* Giant Bold Studio Typography — Masked Line Reveal */}
+              <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[104px] font-black tracking-tighter leading-[0.88] text-white uppercase select-none">
+                <span className="line-reveal block">
+                  <span ref={heroLine1Ref} className="line-reveal-inner block">
+                    BRIGHT
+                  </span>
+                </span>
+                <span className="line-reveal block">
+                  <span ref={heroLine2Ref} className="line-reveal-inner block">
+                    SPACE
+                  </span>
+                </span>
+              </h1>
 
-              {/* Giant Bold Studio Typography */}
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7 }}
-                className="text-6xl sm:text-7xl md:text-8xl lg:text-[104px] font-black tracking-tighter leading-[0.88] text-white uppercase select-none"
-              >
-                BRIGHT<br />
-                SPACE
-              </motion.h1>
-
-              {/* Short crisp slogan */}
-              <motion.p
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.15 }}
+              {/* Slogan */}
+              <p
+                ref={heroSloganRef}
                 className="text-lg sm:text-xl md:text-2xl text-neutral-300 font-light max-w-lg leading-relaxed pt-1"
+                style={{ opacity: 0 }}
               >
                 Turning concepts into experiences that connect, inspire, and endure.
-              </motion.p>
+              </p>
 
-              {/* Directly under text: Avatar rating & Minimal Start Project button */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-                className="w-full max-w-md space-y-3.5 pt-1"
-              >
+              {/* CTA row */}
+              <div ref={heroCtaRef} className="w-full max-w-md space-y-3.5 pt-1" style={{ opacity: 0 }}>
                 {/* Review Rating Pill */}
                 <div className="flex items-center gap-3">
                   <div className="flex -space-x-2">
@@ -151,15 +345,16 @@ export default function HomePage() {
                       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop",
                       "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=100&auto=format&fit=crop",
                     ].map((src, i) => (
-                      <img
+                      <Image
                         key={i}
                         src={src}
                         alt="Client avatar"
+                        width={28}
+                        height={28}
                         className="w-7 h-7 rounded-full border border-black/80 object-cover"
                       />
                     ))}
                   </div>
-
                   <div className="flex items-center gap-2">
                     <div className="flex gap-0.5 text-[#00E5FF]">
                       {[...Array(5)].map((_, i) => (
@@ -173,7 +368,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Minimalist Start A Project Button */}
+                {/* Start A Project Button */}
                 <Link
                   href="/contact"
                   className="group flex items-center justify-between w-full py-3.5 px-4 rounded-xl border border-white/15 bg-white/[0.03] hover:bg-white/[0.08] hover:border-[#00E5FF]/50 transition-all duration-300"
@@ -183,14 +378,13 @@ export default function HomePage() {
                   </span>
                   <ChevronRight className="w-4 h-4 text-neutral-400 group-hover:text-[#00E5FF] group-hover:translate-x-1 transition-all" />
                 </Link>
-              </motion.div>
+              </div>
 
-              {/* Minimal Client / Partner Logos */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.25 }}
+              {/* Client Logos */}
+              <div
+                ref={heroLogosRef}
                 className="pt-4 border-t border-white/10 flex flex-wrap items-center gap-6 sm:gap-8 text-neutral-400 text-xs font-mono tracking-widest uppercase"
+                style={{ opacity: 0 }}
               >
                 <span className="hover:text-white transition-colors flex items-center gap-1.5 font-bold">
                   <span className="w-2 h-2 rounded-sm bg-[#00E5FF]/70"></span> 3PORTALS
@@ -204,12 +398,16 @@ export default function HomePage() {
                 <span className="hover:text-white transition-colors flex items-center gap-1.5 font-bold">
                   <span className="w-2 h-2 rounded-full bg-emerald-400/80"></span> VANGUARD
                 </span>
-              </motion.div>
+              </div>
             </div>
 
-            {/* Right Column: 3D Pure Frameless Interactive Globe */}
+            {/* Right Column: Globe */}
             <div className="lg:col-span-6 flex flex-col justify-center items-center lg:items-center">
-              <div className="relative w-full h-[380px] sm:h-[440px] lg:h-[480px] flex items-center justify-center">
+              <div
+                ref={heroGlobeRef}
+                className="relative w-full h-[380px] sm:h-[440px] lg:h-[480px] flex items-center justify-center"
+                style={{ opacity: 0 }}
+              >
                 <RotatingGlobe
                   className="w-full h-full"
                   density={68}
@@ -235,10 +433,10 @@ export default function HomePage() {
       <ProblemSolutionSection />
 
       {/* ========================================================================= */}
-      {/* 4. CORE SERVICES (Disney Staging & Overlapping Follow-Through) */}
+      {/* 4. CORE SERVICES */}
       {/* ========================================================================= */}
-      <section className="py-24 max-w-7xl mx-auto px-6 md:px-12 relative">
-        <DisneyReveal className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+      <section ref={servicesSectionRef} className="py-24 max-w-7xl mx-auto px-6 md:px-12 relative">
+        <div ref={servicesHeadingRef} className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-xs font-mono text-[#00E5FF] tracking-widest uppercase">
             {"/// OUR CAPABILITIES"}
           </span>
@@ -248,12 +446,13 @@ export default function HomePage() {
           <p className="text-[#9A9A9A] text-base leading-relaxed">
             From luxury web design to cloud-native SaaS engineering, we deliver complete digital product solutions under one roof.
           </p>
-        </DisneyReveal>
+        </div>
 
-        <DisneyStaggerGroup stagger={0.08} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {servicesData.slice(0, 6).map((service) => (
-            <DisneyStaggerItem
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {servicesData.slice(0, 6).map((service, idx) => (
+            <div
               key={service.id}
+              ref={(el) => setServiceCardRef(el, idx)}
               className="glass-card p-8 rounded-3xl relative overflow-hidden group hover:border-[#6C63FF]/50 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
@@ -282,9 +481,9 @@ export default function HomePage() {
               >
                 Learn More <ChevronRight className="w-3.5 h-3.5" />
               </Link>
-            </DisneyStaggerItem>
+            </div>
           ))}
-        </DisneyStaggerGroup>
+        </div>
       </section>
 
       {/* ========================================================================= */}
@@ -293,11 +492,15 @@ export default function HomePage() {
       <TechArsenalSection />
 
       {/* ========================================================================= */}
-      {/* 6. FEATURED WORK (Velocity Squash & Stretch on Scroll) */}
+      {/* 6. FEATURED WORK — PINNED HORIZONTAL SHOWCASE (Desktop) */}
       {/* ========================================================================= */}
-      <section className="py-24 bg-[#08080c] border-b border-[rgba(255,255,255,0.06)] relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <DisneyReveal className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+      <section
+        ref={projectSectionRef}
+        className="relative bg-[#08080c] border-b border-[rgba(255,255,255,0.06)] overflow-hidden"
+      >
+        {/* Header */}
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 lg:py-24">
+          <div ref={projectHeaderRef} className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
               <span className="text-xs font-mono text-[#00E5FF] tracking-widest uppercase">
                 {"/// FEATURED WORK"}
@@ -311,25 +514,97 @@ export default function HomePage() {
                 Explore All Projects <ArrowUpRight className="w-4 h-4 ml-1" />
               </MagneticButton>
             </Link>
-          </DisneyReveal>
+          </div>
+        </div>
 
-          <SquashStretchOnScroll intensity={0.025}>
-            <DisneyStaggerGroup stagger={0.12} className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-              {featuredProjects.map((project, idx) => (
-                <DisneyStaggerItem key={project.id}>
-                  <ProjectCard project={project} index={idx} />
-                </DisneyStaggerItem>
-              ))}
-            </DisneyStaggerGroup>
-          </SquashStretchOnScroll>
+        {/* Desktop: Pinned Horizontal Showcase */}
+        <div ref={projectPinRef} className="hidden lg:block">
+          <div
+            ref={projectTrackRef}
+            className="flex wc-transform"
+          >
+            {featuredProjects.map((project, idx) => (
+              <div
+                key={project.id}
+                ref={(el) => setProjectPanelRef(el, idx)}
+                className="showcase-panel"
+              >
+                {/* Large Background Number */}
+                <div className="showcase-number bottom-8 right-12">
+                  {String(idx + 1).padStart(2, "0")}
+                </div>
+
+                {/* Panel Layout: Image + Info */}
+                <div className="relative w-full h-full flex items-center px-12 xl:px-20 gap-12">
+                  {/* Project Image */}
+                  <div className="showcase-img w-[55%] h-[70vh] relative">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="showcase-img-inner object-cover object-center"
+                      sizes="55vw"
+                      priority={idx < 2}
+                    />
+                    {/* Subtle gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#08080c]/60 pointer-events-none rounded-[1.25rem]" />
+                  </div>
+
+                  {/* Project Info */}
+                  <div className="flex-1 flex flex-col justify-center space-y-6 max-w-lg">
+                    <span className="showcase-category text-xs font-mono text-[#00E5FF] tracking-widest uppercase">
+                      {project.category} • {project.subcategory}
+                    </span>
+                    <h3 className="showcase-title text-4xl xl:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                      {project.title}
+                    </h3>
+                    <div className="showcase-meta space-y-4">
+                      <p className="text-base text-[#9A9A9A] leading-relaxed">
+                        {project.tagline}
+                      </p>
+                      {project.results && project.results.length > 0 && (
+                        <div className="flex items-center gap-6 pt-2">
+                          {project.results.slice(0, 2).map((r, ri) => (
+                            <div key={ri} className="text-center">
+                              <div className="text-2xl font-extrabold font-mono text-[#00E5FF]">
+                                {r.value}
+                              </div>
+                              <div className="text-[10px] font-mono text-[#9A9A9A] uppercase tracking-wider mt-1">
+                                {r.label}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      <Link
+                        href={`/work/${project.id}`}
+                        className="interactive inline-flex items-center gap-2 text-sm font-mono text-white hover:text-[#00E5FF] transition-colors pt-2"
+                      >
+                        View Case Study <ArrowUpRight className="w-4 h-4" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Mobile/Tablet: Standard Stacked Cards */}
+        <div className="lg:hidden max-w-7xl mx-auto px-6 md:px-12 pb-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {featuredProjects.map((project, idx) => (
+              <ProjectCard key={project.id} project={project} index={idx} />
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* 7. CASE STUDIES / RESULTS (Anticipation & Secondary Action) */}
+      {/* 7. CASE STUDIES / RESULTS */}
       {/* ========================================================================= */}
-      <section className="py-24 max-w-7xl mx-auto px-6 md:px-12 relative">
-        <DisneyReveal className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+      <section ref={caseSectionRef} className="py-24 max-w-7xl mx-auto px-6 md:px-12 relative">
+        <div ref={caseHeadingRef} className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-xs font-mono text-[#00E5FF] tracking-widest uppercase">
             {"/// MEASURED RESULTS"}
           </span>
@@ -339,10 +614,10 @@ export default function HomePage() {
           <p className="text-[#9A9A9A] text-base leading-relaxed">
             We measure success not just in clean code and aesthetic design, but in real business outcomes and revenue acceleration.
           </p>
-        </DisneyReveal>
+        </div>
 
-        <DisneyStaggerGroup stagger={0.1} className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <DisneyStaggerItem className="glass-card p-8 rounded-3xl border border-[#6C63FF]/30 space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div ref={(el) => setCaseCardRef(el, 0)} className="glass-card p-8 rounded-3xl border border-[#6C63FF]/30 space-y-4">
             <div className="text-5xl font-extrabold font-mono text-gradient-accent">+44%</div>
             <h4 className="text-xl font-bold text-white">SaaS User Retention</h4>
             <p className="text-xs text-[#9A9A9A] leading-relaxed">
@@ -351,9 +626,9 @@ export default function HomePage() {
             <div className="pt-2 text-[11px] font-mono text-[#00E5FF] uppercase">
               Client: Nexus Systems • SaaS Platform
             </div>
-          </DisneyStaggerItem>
+          </div>
 
-          <DisneyStaggerItem className="glass-card p-8 rounded-3xl border border-[#00E5FF]/30 space-y-4">
+          <div ref={(el) => setCaseCardRef(el, 1)} className="glass-card p-8 rounded-3xl border border-[#00E5FF]/30 space-y-4">
             <div className="text-5xl font-extrabold font-mono text-[#00E5FF]">2.4x</div>
             <h4 className="text-xl font-bold text-white">Conversion Surge</h4>
             <p className="text-xs text-[#9A9A9A] leading-relaxed">
@@ -362,9 +637,9 @@ export default function HomePage() {
             <div className="pt-2 text-[11px] font-mono text-[#00E5FF] uppercase">
               Client: Horizon Capital • Fintech Portal
             </div>
-          </DisneyStaggerItem>
+          </div>
 
-          <DisneyStaggerItem className="glass-card p-8 rounded-3xl border border-[#6C63FF]/30 space-y-4">
+          <div ref={(el) => setCaseCardRef(el, 2)} className="glass-card p-8 rounded-3xl border border-[#6C63FF]/30 space-y-4">
             <div className="text-5xl font-extrabold font-mono text-gradient-accent">-60%</div>
             <h4 className="text-xl font-bold text-white">Manual Processing</h4>
             <p className="text-xs text-[#9A9A9A] leading-relaxed">
@@ -373,20 +648,20 @@ export default function HomePage() {
             <div className="pt-2 text-[11px] font-mono text-[#00E5FF] uppercase">
               Client: Vanguard AI • Enterprise Workflow
             </div>
-          </DisneyStaggerItem>
-        </DisneyStaggerGroup>
+          </div>
+        </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* 8. SCROLL SERVICES (GSAP PINNED ARC WORKFLOW) */}
+      {/* 8. SCROLL SERVICES (GSAP PINNED ARC WORKFLOW) — UNTOUCHED */}
       {/* ========================================================================= */}
       <ScrollServices />
 
       {/* ========================================================================= */}
-      {/* 9. WHY CHOOSE US (Disney Staging & Overlapping Follow-Through) */}
+      {/* 9. WHY CHOOSE US */}
       {/* ========================================================================= */}
-      <section className="py-28 max-w-7xl mx-auto px-6 md:px-12 relative">
-        <DisneyReveal className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+      <section ref={whySectionRef} className="py-28 max-w-7xl mx-auto px-6 md:px-12 relative">
+        <div ref={whyHeadingRef} className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-xs font-mono text-[#00E5FF] tracking-widest uppercase">
             {"/// BUILT DIFFERENT"}
           </span>
@@ -396,19 +671,20 @@ export default function HomePage() {
           <p className="text-[#9A9A9A] text-base leading-relaxed">
             We combine high-end aesthetic taste with strict software engineering discipline to deliver exceptional digital products.
           </p>
-        </DisneyReveal>
+        </div>
 
-        <DisneyStaggerGroup stagger={0.09} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {whyUsPillars.map((pillar) => {
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {whyUsPillars.map((pillar, idx) => {
             const Icon = pillar.icon;
             return (
-              <DisneyStaggerItem
+              <div
                 key={pillar.number}
+                ref={(el) => setWhyPillarRef(el, idx)}
                 className="glass-card p-8 rounded-3xl relative border border-[rgba(255,255,255,0.08)] hover:border-[#6C63FF]/50 transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <span className="text-2xl font-extrabold font-mono text-[#00E5FF]">
+                    <span className="pillar-number text-2xl font-extrabold font-mono text-[#00E5FF]">
                       {pillar.number}
                     </span>
                     <div className="w-10 h-10 rounded-xl bg-[#121218] border border-[rgba(255,255,255,0.1)] flex items-center justify-center text-[#6C63FF]">
@@ -422,10 +698,10 @@ export default function HomePage() {
                     {pillar.description}
                   </p>
                 </div>
-              </DisneyStaggerItem>
+              </div>
             );
           })}
-        </DisneyStaggerGroup>
+        </div>
       </section>
 
       {/* ========================================================================= */}
@@ -436,19 +712,20 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 11. CLIENT TESTIMONIALS (100vh Chain Style) */}
+      {/* 11. CLIENT TESTIMONIALS */}
       {/* ========================================================================= */}
       <TestimonialChain />
 
       {/* ========================================================================= */}
-      {/* 12. AGENCY STATS & MILESTONES (Disney Cascading Reveal) */}
+      {/* 12. AGENCY STATS & MILESTONES */}
       {/* ========================================================================= */}
-      <section className="py-24 bg-[#08080c] border-y border-[rgba(255,255,255,0.06)] relative">
+      <section ref={statsSectionRef} className="py-24 bg-[#08080c] border-y border-[rgba(255,255,255,0.06)] relative">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <DisneyStaggerGroup stagger={0.08} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {agencyMilestones.map((m) => (
-              <DisneyStaggerItem
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {agencyMilestones.map((m, idx) => (
+              <div
                 key={m.label}
+                ref={(el) => setStatsCardRef(el, idx)}
                 className="glass-card p-8 rounded-3xl border border-[rgba(255,255,255,0.08)] space-y-3"
               >
                 <div className="text-4xl md:text-5xl font-extrabold font-mono text-gradient-accent">
@@ -460,9 +737,9 @@ export default function HomePage() {
                 <p className="text-xs text-[#9A9A9A] leading-relaxed">
                   {m.desc}
                 </p>
-              </DisneyStaggerItem>
+              </div>
             ))}
-          </DisneyStaggerGroup>
+          </div>
         </div>
       </section>
 
@@ -490,33 +767,53 @@ export default function HomePage() {
       <ProjectLeadForm />
 
       {/* ========================================================================= */}
-      {/* 15. FINAL CTA (Disney Arc Parallax + Organic Appeal) */}
+      {/* 15. FINAL CTA */}
       {/* ========================================================================= */}
-      <section className="py-32 relative overflow-hidden bg-gradient-to-b from-[#050505] to-[#0a0a12]">
-        {/* Disney Arc Parallax Ambient Orb */}
-        <DisneyArcParallax arcStrength={24} yOffset={40} className="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <section
+        ref={ctaSectionRef}
+        className="py-32 relative overflow-hidden bg-gradient-to-b from-[#050505] to-[#0a0a12]"
+      >
+        {/* Glow Orb */}
+        <div
+          ref={ctaGlowRef}
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        >
           <div className="glow-orb-indigo opacity-40" />
-        </DisneyArcParallax>
+        </div>
 
-        <DisneyReveal scaleInitial={0.95} distance={32} className="max-w-4xl mx-auto px-6 text-center relative z-10 space-y-8">
-          <span className="text-xs font-mono text-[#00E5FF] tracking-widest uppercase">
+        <div className="max-w-4xl mx-auto px-6 text-center relative z-10 space-y-8">
+          <span
+            ref={ctaSubtitleRef}
+            className="text-xs font-mono text-[#00E5FF] tracking-widest uppercase inline-block"
+          >
             {"/// READY TO BUILD?"}
           </span>
-          <h2 className="text-5xl md:text-7xl font-black text-white tracking-tight leading-tight">
+          <h2
+            ref={ctaHeadingRef}
+            className="text-5xl md:text-7xl font-black text-white tracking-tight leading-tight"
+          >
             Have an Idea? <br />
-            <span className="font-serif italic font-normal text-gradient-accent">Let&apos;s Build It.</span>
+            <span
+              ref={ctaItalicRef}
+              className="font-serif italic font-normal text-gradient-accent inline-block"
+            >
+              Let&apos;s Build It.
+            </span>
           </h2>
-          <p className="text-lg text-[#9A9A9A] max-w-xl mx-auto leading-relaxed">
+          <p
+            ref={ctaDescRef}
+            className="text-lg text-[#9A9A9A] max-w-xl mx-auto leading-relaxed"
+          >
             Partner with a studio that delivers commercial-grade software engineering, luxury visual polish, and high-impact digital experiences.
           </p>
-          <div className="pt-4 flex justify-center gap-4 flex-wrap">
+          <div ref={ctaButtonRef} className="pt-4 flex justify-center gap-4 flex-wrap">
             <Link href="/contact">
               <MagneticButton variant="primary">
                 Schedule a Call <ArrowUpRight className="w-5 h-5 ml-1" />
               </MagneticButton>
             </Link>
           </div>
-        </DisneyReveal>
+        </div>
       </section>
     </div>
   );
