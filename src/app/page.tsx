@@ -24,9 +24,6 @@ import MeetTheTeamSection from "@/components/MeetTheTeamSection";
 import TestimonialChain from "@/components/TestimonialChain";
 import RotatingGlobe from "@/components/RotatingGlobe";
 import ProjectLeadForm from "@/components/ProjectLeadForm";
-import {
-  DisneyReveal,
-} from "@/components/DisneyScrollReveal";
 
 import { projectsData } from "@/data/projects";
 import { servicesData } from "@/data/services";
@@ -747,7 +744,7 @@ export default function HomePage() {
       {/* 13. FAQ ACCORDION */}
       {/* ========================================================================= */}
       <section className="py-28 max-w-4xl mx-auto px-6 md:px-12 relative">
-        <DisneyReveal className="text-center mb-16 space-y-4">
+        <div className="text-center mb-16 space-y-4">
           <span className="text-xs font-mono text-[#00E5FF] tracking-widest uppercase">
             {"/// FREQUENT QUESTIONS"}
           </span>
@@ -757,7 +754,7 @@ export default function HomePage() {
           <p className="text-[#9A9A9A] text-base">
             Everything you need to know about starting a digital product or software engagement with us.
           </p>
-        </DisneyReveal>
+        </div>
         <FaqAccordion items={faqsData} />
       </section>
 
