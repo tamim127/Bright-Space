@@ -39,7 +39,7 @@ const agencyMilestones = [
   { value: "50+", label: "Digital Products Shipped", desc: "High-performing websites, SaaS apps & custom software." },
   { value: "99.8%", label: "On-Time Sprint Record", desc: "Punctual delivery with zero compromise on code quality." },
   { value: "15+", label: "Global Tech Hubs", desc: "Clients across USA, UK, Europe, and Asia Pacific." },
-  { value: "2.4x", label: "Avg Conversion Growth", desc: "Measured conversion surge post ARTISAN redesign." },
+  { value: "2.4x", label: "Avg Conversion Growth", desc: "Measured conversion surge post Bright Space redesign." },
 ];
 
 const whyUsPillars = [
@@ -391,7 +391,7 @@ export default function HomePage() {
             {"/// BUILT DIFFERENT"}
           </span>
           <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-            Why Choose <span className="font-serif italic text-gradient-accent">ARTISAN.DEV</span>
+            Why Choose <span className="font-serif italic text-gradient-accent">Bright Space.DEV</span>
           </h2>
           <p className="text-[#9A9A9A] text-base leading-relaxed">
             We combine high-end aesthetic taste with strict software engineering discipline to deliver exceptional digital products.

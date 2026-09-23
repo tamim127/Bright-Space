@@ -45,7 +45,7 @@ export default function AboutPage() {
           transition={{ delay: 0.2 }}
           className="text-lg text-[#9A9A9A] font-light max-w-3xl leading-relaxed"
         >
-          Artisan.Dev is a dark-tech digital agency positioned at the intersection of high-end UI design and serious software engineering.
+          Bright Space.Dev is a dark-tech digital agency positioned at the intersection of high-end UI design and serious software engineering.
         </motion.p>
       </div>
 

@@ -22,7 +22,7 @@ const testimonialsData: TestimonialItem[] = [
     metric: "3.4×",
     metricLabel: "More Demos Booked",
     quote:
-      "ARTISAN transformed our product interface entirely. The particle interactions and micro-animations brought our SaaS platform to life, doubling our user retention rate within 60 days.",
+      "Bright Space transformed our product interface entirely. The particle interactions and micro-animations brought our SaaS platform to life, doubling our user retention rate within 60 days.",
     author: "Elena Rostova",
     role: "VP of Product",
     company: "Veloce Systems",
@@ -70,7 +70,7 @@ const testimonialsData: TestimonialItem[] = [
     metric: "12ms",
     metricLabel: "Ultra-Fast Load Speeds",
     quote:
-      "Combining complex 3D shader scenes with zero performance lag seemed impossible until ARTISAN took on the project. Truly benchmark-defining work.",
+      "Combining complex 3D shader scenes with zero performance lag seemed impossible until Bright Space took on the project. Truly benchmark-defining work.",
     author: "Amara Patel",
     role: "Design Director",
     company: "Pulse Studio",
@@ -187,7 +187,7 @@ export default function TestimonialChain() {
           Trusted by <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-[#00E5FF] via-[#6C63FF] to-[#FF6B6B]">Product Leaders</span>
         </h2>
         <p className="text-sm md:text-base text-neutral-400 max-w-xl mx-auto">
-          Here is what founders, engineering VPs, and design leaders say about building with ARTISAN.
+          Here is what founders, engineering VPs, and design leaders say about building with Bright Space.
         </p>
       </div>
 
@@ -357,11 +357,10 @@ export default function TestimonialChain() {
               key={idx}
               onClick={() => setActiveIndex(idx)}
               aria-label={`Go to slide ${idx + 1}`}
-              className={`transition-all duration-500 ${
-                idx === activeIndex
+              className={`transition-all duration-500 ${idx === activeIndex
                   ? "w-10 h-2.5 bg-gradient-to-r from-[#00E5FF] to-[#6C63FF] rounded-full shadow-[0_0_15px_rgba(0,229,255,0.7)]"
                   : "w-2.5 h-2.5 bg-white/30 hover:bg-white/70 rounded-full cursor-pointer"
-              }`}
+                }`}
             />
           ))}
         </div>

@@ -174,11 +174,10 @@ export default function ContactPage() {
                       key={b}
                       type="button"
                       onClick={() => setFormData({ ...formData, budget: b })}
-                      className={`py-3 px-3 rounded-xl text-xs font-mono transition-all border ${
-                        formData.budget === b
+                      className={`py-3 px-3 rounded-xl text-xs font-mono transition-all border ${formData.budget === b
                           ? "bg-[#6C63FF] text-white border-[#6C63FF]"
                           : "bg-[#08080c] text-[#9A9A9A] border-[rgba(255,255,255,0.08)] hover:text-white"
-                      }`}
+                        }`}
                     >
                       {b}
                     </button>
@@ -218,10 +217,10 @@ export default function ContactPage() {
             <h3 className="text-lg font-bold text-white uppercase font-mono tracking-wider">
               Direct Contact
             </h3>
-            
+
             <div className="space-y-4 text-sm">
               <a
-                href="mailto:hello@artisan.dev"
+                href="mailto:hello@Bright Space.dev"
                 className="flex items-center gap-4 text-[#9A9A9A] hover:text-[#00E5FF] transition-colors group"
               >
                 <div className="w-10 h-10 rounded-xl bg-[#14141d] border border-[rgba(255,255,255,0.06)] flex items-center justify-center text-white group-hover:border-[#00E5FF]">
@@ -229,7 +228,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <span className="text-[10px] font-mono text-[#5A5A66] block">EMAIL US</span>
-                  <span className="font-semibold text-white">hello@artisan.dev</span>
+                  <span className="font-semibold text-white">hello@Bright Space.dev</span>
                 </div>
               </a>
 
