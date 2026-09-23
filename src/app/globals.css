@@ -22,14 +22,12 @@
   --color-dark-card-hover: #121217;
   --color-subtle-border: rgba(255, 255, 255, 0.08);
   --color-accent-indigo: #6c63ff;
-  --color-accent-[#00e5ff]: #00e5ff;
+  --color-accent-cyan: #00e5ff;
 }
 
 /* Global Layout Override for 1600px Max Width */
-@layer utilities {
-  .max-w-7xl {
-    max-width: 1600px !important;
-  }
+.max-w-7xl {
+  max-width: 1600px !important;
 }
 
 * {
