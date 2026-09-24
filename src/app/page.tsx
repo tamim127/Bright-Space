@@ -24,6 +24,7 @@ import MeetTheTeamSection from "@/components/MeetTheTeamSection";
 import TestimonialChain from "@/components/TestimonialChain";
 import RotatingGlobe from "@/components/RotatingGlobe";
 import ProjectLeadForm from "@/components/ProjectLeadForm";
+import BankingBento from "@/components/BankingBento";
 
 import { projectsData } from "@/data/projects";
 import { servicesData } from "@/data/services";
@@ -423,6 +424,8 @@ export default function HomePage() {
       {/* 2. TRUST / CLIENT LOGOS */}
       {/* ========================================================================= */}
       <LogoRail />
+
+      <BankingBento />
 
       {/* ========================================================================= */}
       {/* 3. PROBLEM → SOLUTION */}

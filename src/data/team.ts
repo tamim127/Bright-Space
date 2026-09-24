@@ -15,7 +15,7 @@ export const teamData: TeamMember[] = [
   {
     id: "alex-vance",
     name: "Alex Vance",
-    role: "Founder & Lead Architect",
+    role: "Founder & Architect",
     bio: "10+ years engineering scalable cloud software and digital products for high-growth tech startups.",
     image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop",
     socials: {
@@ -27,7 +27,7 @@ export const teamData: TeamMember[] = [
   {
     id: "elena-rostova",
     name: "Elena Rostova",
-    role: "Head of Product Design",
+    role: "Head of Design",
     bio: "Passionate about dark minimal luxury aesthetics, design systems, and fluid micro-interactions.",
     image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=600&auto=format&fit=crop",
     socials: {
@@ -38,8 +38,8 @@ export const teamData: TeamMember[] = [
   {
     id: "marcus-chen",
     name: "Marcus Chen",
-    role: "Senior Full-Stack Engineer",
-    bio: "Specializes in Next.js, Node.js microservices, real-time web sockets, and database optimization.",
+    role: "Lead Engineer",
+    bio: "Specializes in Next.js, Node.js microservices, real-time web sockets, and high-performance databases.",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop",
     socials: {
       linkedin: "#",
@@ -49,12 +49,23 @@ export const teamData: TeamMember[] = [
   {
     id: "sarah-jenkins",
     name: "Sarah Jenkins",
-    role: "UX Researcher & Strategist",
+    role: "UX Strategist",
     bio: "Translates complex business workflows into seamless, conversion-focused user journeys.",
     image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop",
     socials: {
       linkedin: "#",
       twitter: "#"
+    }
+  },
+  {
+    id: "david-kim",
+    name: "David Kim",
+    role: "AI Systems Lead",
+    bio: "Pioneering intelligent agent workflows, LLM fine-tuning, and automated data architectures.",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop",
+    socials: {
+      linkedin: "#",
+      github: "#"
     }
   }
 ];
