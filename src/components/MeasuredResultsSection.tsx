@@ -194,7 +194,6 @@ export default function MeasuredResultsSection() {
         {/* ========================================================================= */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch pt-4 pb-4">
           {caseItems.map((item, idx) => {
-            const isCenterCard = idx === 1;
             const isSelected = activeIdx === idx;
 
             return (

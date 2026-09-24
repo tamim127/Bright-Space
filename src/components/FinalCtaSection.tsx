@@ -76,7 +76,7 @@ export default function FinalCtaSection() {
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#DCD4C5] text-xs font-mono text-[#B08D57] shadow-sm backdrop-blur-md">
             <Sparkles className="w-3.5 h-3.5 text-[#B08D57] animate-pulse" />
             <span className="tracking-widest uppercase font-bold">
-              /// READY TO BUILD YOUR PRODUCT?
+              {"/// READY TO BUILD YOUR PRODUCT?"}
             </span>
           </div>
 

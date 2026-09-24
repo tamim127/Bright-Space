@@ -8,10 +8,6 @@ import {
   ChevronRight,
   CheckCircle2,
   Layers,
-  Sparkles,
-  Zap,
-  ShieldCheck,
-  TrendingUp,
 } from "lucide-react";
 import MagneticButton from "@/components/MagneticButton";
 import ProjectCard from "@/components/ProjectCard";
@@ -59,32 +55,6 @@ const agencyMilestones = [
   { value: "2.4x", label: "Avg Conversion Growth", desc: "Measured conversion surge post Bright Space redesign." },
 ];
 
-const whyUsPillars = [
-  {
-    number: "01",
-    title: "Strategy First",
-    description: "We thoroughly analyze your business model, competitive landscape, and user goals before writing a single line of code.",
-    icon: Sparkles
-  },
-  {
-    number: "02",
-    title: "Design + Dev Synergy",
-    description: "Designers and full-stack software engineers work side-by-side to deliver 60fps micro-animations and ultra-responsive layouts.",
-    icon: Zap
-  },
-  {
-    number: "03",
-    title: "Scalable Architecture",
-    description: "Built on modern cloud-native frameworks (Next.js 15, Node, Cloud Edge) designed for zero technical debt and effortless scaling.",
-    icon: ShieldCheck
-  },
-  {
-    number: "04",
-    title: "Long-Term Partnership",
-    description: "We don't disappear after launch. We provide ongoing engineering maintenance, performance optimization, and strategic upgrades.",
-    icon: TrendingUp
-  }
-];
 
 export default function HomePage() {
   const featuredProjects = projectsData.filter((p) => p.featured);
@@ -143,18 +113,7 @@ export default function HomePage() {
     },
     []
   );
-  const setCaseCardRef = useCallback(
-    (el: HTMLDivElement | null, idx: number) => {
-      if (el) caseCardRefs.current[idx] = el;
-    },
-    []
-  );
-  const setWhyPillarRef = useCallback(
-    (el: HTMLDivElement | null, idx: number) => {
-      if (el) whyPillarRefs.current[idx] = el;
-    },
-    []
-  );
+
   const setStatsCardRef = useCallback(
     (el: HTMLDivElement | null, idx: number) => {
       if (el) statsCardRefs.current[idx] = el;
