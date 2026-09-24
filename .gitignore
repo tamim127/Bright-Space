@@ -40,4 +40,23 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-.vercel
+# Large archives, zip files & compressed datasets (Prevent Vercel 100MB limit error)
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+public/*.zip
+
+# Video files
+*.mp4
+*.mov
+*.webm
+*.avi
+*.mkv
+public/*.mp4
+public/hero-bg.mp4
+
+# Heavy frame sequences
+public/frames/
+public/frames/**

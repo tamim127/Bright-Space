@@ -1,0 +1,14 @@
+# Vercel deployment ignore rules
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+public/*.zip
+*.mp4
+*.mov
+*.webm
+public/*.mp4
+public/hero-bg.mp4
+public/frames/
+public/frames/**
