@@ -26,6 +26,7 @@ import RotatingGlobe from "@/components/RotatingGlobe";
 import ProjectLeadForm from "@/components/ProjectLeadForm";
 import BankingBento from "@/components/BankingBento";
 import FinalCtaSection from "@/components/FinalCtaSection";
+import InfiniteProductShowcase from "@/components/InfiniteProductShowcase";
 
 import { projectsData } from "@/data/projects";
 import { servicesData } from "@/data/services";
@@ -547,6 +548,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* 6.5. INFINITE PRODUCT & DESIGN SHOWCASE (Bi-directional Marquee with Center Floating Badge) */}
+      <InfiniteProductShowcase />
 
       {/* 7. CASE STUDIES */}
       <section ref={caseSectionRef} className="py-24 max-w-7xl mx-auto px-6 md:px-12 relative">
