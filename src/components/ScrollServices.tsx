@@ -232,15 +232,15 @@ export default function ScrollServices() {
   return (
     <div ref={containerRef} className="relative w-full">
       {/* 1. INTRO BOOKEND SECTION */}
-      <section className="min-h-screen bg-[#171512] text-[#f2f0ec] flex flex-col justify-center items-center relative px-6 text-center select-none z-10">
+      <section className="min-h-screen bg-[#F3EFE6] text-[#111111] flex flex-col justify-center items-center relative px-6 text-center select-none z-10 border-t border-[#DCD4C5]">
         <div className="max-w-4xl mx-auto space-y-6">
-          <div className="text-xs uppercase tracking-[0.22em] text-[#9A9A9A] font-mono font-medium">
+          <div className="text-xs uppercase tracking-[0.22em] text-[#B08D57] font-mono font-bold">
             Our Process
           </div>
-          <h2 className="font-instrument text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-white leading-[1.04]">
+          <h2 className="font-instrument text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-[#111111] leading-[1.04]">
             How we bring ideas to life
           </h2>
-          <p className="text-[#9A9A9A] max-w-xl mx-auto text-base sm:text-lg font-light leading-relaxed">
+          <p className="text-[#555555] max-w-xl mx-auto text-base sm:text-lg font-light leading-relaxed">
             Scroll down to walk through each phase — from first conversation to
             launch. Every step stays pinned to the screen while the story unfolds
             around it.
@@ -248,12 +248,12 @@ export default function ScrollServices() {
         </div>
 
         {/* Bouncing down indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#9A9A9A] pointer-events-none">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#777]">
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#555555] pointer-events-none">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#B08D57] font-bold">
             Scroll
           </span>
           <svg
-            className="w-5 h-5 animate-bounce text-[#9A9A9A]"
+            className="w-5 h-5 animate-bounce text-[#B08D57]"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -272,48 +272,44 @@ export default function ScrollServices() {
       <div ref={trackRef} className="relative w-full h-[560vh]">
         <div
           ref={viewportRef}
-          className="sticky top-0 w-full h-screen overflow-hidden bg-[#f2f0ec] text-[#171512] select-none"
+          className="sticky top-0 w-full h-screen overflow-hidden bg-[#F3EFE6] text-[#111111] select-none border-t border-[#DCD4C5]"
         >
           {/* Subtle Ambient Grain / Vignette */}
           <div
             className="absolute inset-0 pointer-events-none opacity-40"
             style={{
               backgroundImage:
-                "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.8) 0%, rgba(220,217,210,0.4) 100%)",
+                "radial-gradient(circle at 50% 50%, rgba(243,239,230,0.8) 0%, rgba(220,212,197,0.4) 100%)",
             }}
           />
 
-          {/* ========================================================================= */}
-          {/* A. SVG CIRCULAR ARC WHEEL (Left side) */}
-          {/* ========================================================================= */}
+          {/* SVG CIRCULAR ARC WHEEL */}
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none z-0"
             style={{ overflow: "visible" }}
           >
-            {/* Base Guide Circle Arc */}
             <circle
               cx={Pt}
               cy={P}
               r={F}
               fill="none"
-              stroke="#171512"
+              stroke="#DCD4C5"
               strokeWidth={1.5}
-              opacity={0.12}
+              opacity={0.8}
             />
 
-            {/* Dynamic Active Connecting Arc */}
             {showActiveArc && (
               <path
                 d={activeArcD}
                 fill="none"
-                stroke="#171512"
+                stroke="#B08D57"
                 strokeWidth={3.5}
                 strokeLinecap="round"
               />
             )}
           </svg>
 
-          {/* Circular Step Number Badges along the arc */}
+          {/* Circular Step Number Badges */}
           {defaultPhases.map((phase, idx) => {
             const node = nodeStates[idx];
             const isCurrent = idx === activeIndex;
@@ -337,16 +333,16 @@ export default function ScrollServices() {
                     "background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease",
                   backgroundColor:
                     node.activeFillAlpha > 0.5
-                      ? "#171512"
-                      : `rgba(242, 240, 236, ${1 - node.activeFillAlpha})`,
-                  color: node.activeFillAlpha > 0.5 ? "#f2f0ec" : "#171512",
+                      ? "#B08D57"
+                      : `rgba(255, 255, 255, ${1 - node.activeFillAlpha})`,
+                  color: node.activeFillAlpha > 0.5 ? "#FFFFFF" : "#111111",
                   border:
                     node.activeFillAlpha > 0.5
                       ? "none"
-                      : `1px solid rgba(217, 213, 205, ${Math.max(0.4, node.ringBorderAlpha * 2)})`,
+                      : `1px solid rgba(220, 212, 197, ${Math.max(0.4, node.ringBorderAlpha * 2)})`,
                   boxShadow:
                     node.activeFillAlpha > 0.5
-                      ? "0 12px 28px -6px rgba(0, 0, 0, 0.35)"
+                      ? "0 12px 28px -6px rgba(176, 141, 87, 0.4)"
                       : "0 2px 8px rgba(0,0,0,0.04)",
                   cursor: "pointer",
                 }}
@@ -393,12 +389,12 @@ export default function ScrollServices() {
                   className="space-y-4 sm:space-y-5"
                 >
                   {/* Eyebrow */}
-                  <div className="text-xs uppercase font-semibold tracking-[0.18em] text-[#6a655d]">
+                  <div className="text-xs uppercase font-semibold tracking-[0.18em] text-[#B08D57]">
                     {phase.phase}
                   </div>
 
                   {/* Title */}
-                  <h3 className="font-instrument text-4xl sm:text-5xl md:text-6xl lg:text-[62px] text-[#171512] font-normal leading-[1.02] tracking-tight">
+                  <h3 className="font-instrument text-4xl sm:text-5xl md:text-6xl lg:text-[62px] text-[#111111] font-normal leading-[1.02] tracking-tight">
                     {phase.titleLine1}
                     {phase.titleLine2 && (
                       <>
@@ -409,7 +405,7 @@ export default function ScrollServices() {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-sm sm:text-base text-[#6a655d] leading-relaxed max-w-md font-light">
+                  <p className="text-sm sm:text-base text-[#555555] leading-relaxed max-w-md font-light">
                     {phase.description}
                   </p>
 
@@ -418,7 +414,7 @@ export default function ScrollServices() {
                     {phase.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-3.5 py-1.5 rounded-full border border-[#d9d5cd] text-xs font-medium text-[#171512] bg-[#f2f0ec]/70 backdrop-blur-xs shadow-2xs hover:border-[#171512]/40 transition-colors"
+                        className="px-3.5 py-1.5 rounded-full border border-[#DCD4C5] text-xs font-medium text-[#111111] bg-white/70 backdrop-blur-xs shadow-2xs hover:border-[#B08D57] transition-colors"
                       >
                         {tag}
                       </span>
@@ -479,8 +475,8 @@ export default function ScrollServices() {
           </div>
 
           {/* Phase Counter in bottom right */}
-          <div className="absolute bottom-8 right-10 text-xs font-mono tracking-widest text-[#6a655d] uppercase z-20">
-            <span className="text-[#171512] font-bold">
+          <div className="absolute bottom-8 right-10 text-xs font-mono tracking-widest text-[#777777] uppercase z-20">
+            <span className="text-[#111111] font-bold">
               0{activeIndex + 1}
             </span>{" "}
             / 0{totalPhases}

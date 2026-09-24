@@ -156,12 +156,12 @@ export default function TextFlowCanvas({
 
       // Clean, sharp palette without blur
       const colors = [
-        "#ffffff",
-        "#f8fafc",
-        "#e2e8f0",
-        "#38bdf8",
-        "#00f2fe",
-        "#a78bfa",
+        "#111111",
+        "#B08D57",
+        "#D4BD91",
+        "#8C6D3B",
+        "#555555",
+        "#DCD4C5",
       ];
 
       for (let y = 0; y < height; y += gap) {

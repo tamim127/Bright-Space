@@ -41,14 +41,12 @@ export default function MagneticButton({
   const animFrameIdRef = useRef<number | null>(null);
   const particlesRef = useRef<Particle[]>([]);
 
-  // Canvas size setup
   const updateCanvasSize = useCallback(() => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
     if (!canvas || !container) return;
 
     const rect = container.getBoundingClientRect();
-    // Padding so particles can fly far outside button boundaries
     const paddingX = 140;
     const paddingY = 80;
 
@@ -73,7 +71,6 @@ export default function MagneticButton({
     return () => window.removeEventListener("resize", updateCanvasSize);
   }, [updateCanvasSize]);
 
-  // Main Canvas render loop
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -94,38 +91,34 @@ export default function MagneticButton({
 
       ctx.clearRect(0, 0, width, height);
 
-      // Spawn particles when hovered
-      if (isHovered && time - lastSpawn > 16) { // ~60 particles/sec
+      if (isHovered && time - lastSpawn > 16) {
         lastSpawn = time;
-        const count = Math.floor(Math.random() * 2) + 2; // 2-3 particles per frame
+        const count = Math.floor(Math.random() * 2) + 2;
 
         for (let i = 0; i < count; i++) {
           const relX = mousePosRef.current.x;
           const relY = mousePosRef.current.y;
 
-          // Canvas coordinate space offset
           const spawnX = paddingX + relX + (Math.random() * 20 - 10);
           const spawnY = paddingY + relY + (Math.random() * 20 - 10);
 
-          // Disintegrate towards left / outwards (matching Framer demo)
-          const angle = Math.PI + (Math.random() * 0.8 - 0.4); // drift leftwards (-X direction)
+          const angle = Math.PI + (Math.random() * 0.8 - 0.4);
           const speed = Math.random() * 4.5 + 2.0;
 
-          // Colors
-          let color = "rgba(255, 255, 255, 0.85)";
+          let color = "rgba(176, 141, 87, 0.85)";
           if (variant === "primary") {
             const colors = [
-              "rgba(0, 229, 255, 0.9)",
-              "rgba(108, 99, 255, 0.9)",
-              "rgba(255, 255, 255, 0.95)",
-              "rgba(0, 229, 255, 0.6)",
+              "rgba(176, 141, 87, 0.9)",
+              "rgba(212, 189, 145, 0.95)",
+              "rgba(140, 109, 59, 0.9)",
+              "rgba(176, 141, 87, 0.6)",
             ];
             color = colors[Math.floor(Math.random() * colors.length)];
           } else {
             const colors = [
-              "rgba(255, 255, 255, 0.85)",
-              "rgba(200, 200, 220, 0.7)",
-              "rgba(108, 99, 255, 0.7)",
+              "rgba(176, 141, 87, 0.85)",
+              "rgba(212, 189, 145, 0.7)",
+              "rgba(85, 85, 85, 0.7)",
             ];
             color = colors[Math.floor(Math.random() * colors.length)];
           }
@@ -139,28 +132,27 @@ export default function MagneticButton({
           particlesRef.current.push({
             x: spawnX,
             y: spawnY,
-            vx: Math.cos(angle) * speed - 1.5, // strong leftward velocity
+            vx: Math.cos(angle) * speed - 1.5,
             vy: Math.sin(angle) * speed * 0.6,
-            size: Math.random() * 10 + 5, // 5px to 15px
+            size: Math.random() * 10 + 5,
             rotation: Math.random() * Math.PI * 2,
             vRot: (Math.random() - 0.5) * 0.15,
             life: 1.0,
             maxLife: 1.0,
             color,
-            stroke: Math.random() > 0.35, // 65% hollow wireframes like Framer demo
+            stroke: Math.random() > 0.35,
             shape,
           });
         }
       }
 
-      // Update and draw existing particles
       const activeParticles: Particle[] = [];
 
       for (const p of particlesRef.current) {
         p.x += p.vx;
         p.y += p.vy;
         p.rotation += p.vRot;
-        p.life -= 0.022; // Decay rate
+        p.life -= 0.022;
 
         if (p.life > 0) {
           activeParticles.push(p);
@@ -199,7 +191,6 @@ export default function MagneticButton({
               ctx.fill();
             }
           } else {
-            // Circle
             ctx.beginPath();
             ctx.arc(0, 0, radius, 0, Math.PI * 2);
             if (p.stroke) {
@@ -239,7 +230,6 @@ export default function MagneticButton({
 
     setPosition({ x: middleX * 0.2, y: middleY * 0.2 });
 
-    // Store mouse position relative to container top-left
     mousePosRef.current = {
       x: clientX - left,
       y: clientY - top,
@@ -257,15 +247,15 @@ export default function MagneticButton({
   };
 
   const baseStyles =
-    "relative inline-flex items-center justify-center font-medium px-8 py-4 rounded-full transition-all duration-300 interactive cursor-pointer select-none text-sm tracking-wide group";
+    "relative inline-flex items-center justify-center font-bold px-8 py-4 rounded-full transition-all duration-300 cursor-pointer select-none text-sm tracking-wide group";
 
   const variants = {
     primary:
-      "bg-gradient-to-r from-[#6C63FF] via-[#3B82F6] to-[#00E5FF] text-white shadow-[0_0_30px_rgba(108,99,255,0.4)] hover:shadow-[0_0_40px_rgba(0,229,255,0.6)] border border-transparent",
+      "bg-gradient-to-r from-[#B08D57] via-[#9A7846] to-[#8C6D3B] text-white shadow-[0_4px_25px_rgba(176,141,87,0.35)] hover:shadow-[0_4px_35px_rgba(176,141,87,0.5)] border border-transparent",
     secondary:
-      "bg-[#0D0D12] text-[#F5F5F5] border border-[rgba(255,255,255,0.15)] hover:border-[rgba(0,229,255,0.5)] hover:bg-[#13131A] shadow-lg",
+      "bg-white text-[#111111] border border-[#DCD4C5] hover:border-[#B08D57] hover:bg-[#FAF7F2] shadow-sm",
     outline:
-      "bg-[#0B0B0E]/80 backdrop-blur-md text-[#F5F5F5] border border-[rgba(255,255,255,0.2)] hover:border-[#00E5FF] hover:text-white shadow-md",
+      "bg-white/80 backdrop-blur-md text-[#111111] border border-[#DCD4C5] hover:border-[#B08D57] hover:text-[#B08D57] shadow-sm",
   };
 
   return (
@@ -276,7 +266,6 @@ export default function MagneticButton({
       onMouseLeave={handleMouseLeave}
       className="inline-block relative overflow-visible"
     >
-      {/* Dynamic Canvas Particle Overlay */}
       <canvas
         ref={canvasRef}
         className="absolute pointer-events-none z-20"
@@ -295,8 +284,7 @@ export default function MagneticButton({
           onClick={onClick}
           className={`${baseStyles} ${variants[variant]} ${className}`}
         >
-          {/* Disintegration Edge Glow effect */}
-          <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-gradient-to-r from-transparent via-[rgba(0,229,255,0.25)] to-transparent blur-sm" />
+          <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-gradient-to-r from-transparent via-[rgba(176,141,87,0.25)] to-transparent blur-sm" />
 
           <span className="relative z-10 flex items-center gap-2">
             {children}
@@ -306,4 +294,3 @@ export default function MagneticButton({
     </div>
   );
 }
-

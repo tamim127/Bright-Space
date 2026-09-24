@@ -7,9 +7,6 @@ import {
   AlertTriangle,
   ShieldCheck,
   Zap,
-  Code,
-  TrendingUp,
-  Share,
 } from "lucide-react";
 import {
   initProblemSolutionAnimation,
@@ -21,7 +18,7 @@ const comparisonPoints = [
     problem:
       "Outdated design templates & clunky UI that look like hundreds of other sites",
     solution:
-      "Custom dark minimal luxury aesthetics engineered to command high market authority",
+      "Custom modern luxury aesthetics engineered to command high market authority",
   },
   {
     problem:
@@ -84,95 +81,58 @@ export default function ProblemSolutionSection() {
       ref={sectionRef}
       className="py-24 max-w-7xl mx-auto px-6 md:px-12 relative overflow-hidden"
     >
-      {/* Background ambient glows — with parallax refs */}
       <div
         ref={glow1Ref}
-        className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-red-500/10 blur-[150px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2"
+        className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-red-500/5 blur-[150px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2"
       />
       <div
         ref={glow2Ref}
-        className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#00E5FF]/10 blur-[150px] rounded-full pointer-events-none translate-x-1/3 translate-y-1/3"
+        className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#B08D57]/15 blur-[150px] rounded-full pointer-events-none translate-x-1/3 translate-y-1/3"
       />
 
-      {/* Decorative curved line (SVG) */}
-      <svg
-        className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none"
-        viewBox="0 0 1440 800"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M-100 400C300 100 600 700 1540 300"
-          stroke="url(#paint0_linear_ps)"
-          strokeWidth="1.5"
-        />
-        <defs>
-          <linearGradient
-            id="paint0_linear_ps"
-            x1="-100"
-            y1="400"
-            x2="1540"
-            y2="300"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="#FF3366" stopOpacity="0" />
-            <stop offset="0.5" stopColor="#00E5FF" stopOpacity="0.5" />
-            <stop offset="1" stopColor="#00E5FF" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-      </svg>
-
-      {/* Header */}
       <div className="text-center max-w-3xl mx-auto mb-20 space-y-6 relative z-10">
-        <span className="inline-block text-xs font-mono text-[#00E5FF] tracking-[0.2em] uppercase font-semibold">
+        <span className="inline-block text-xs font-mono text-[#B08D57] tracking-[0.2em] uppercase font-bold">
           {"/// THE Bright Space DIFFERENCE"}
         </span>
         <h2
           ref={headingRef}
-          className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight"
+          className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#111111] tracking-tight leading-tight"
         >
           Why Traditional Agencies <br className="hidden md:block" />
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-600 via-[#B08D57] to-[#D4BD91]">
             Fail You
           </span>{" "}
           & How We Fix It
         </h2>
-        <p className="text-[#9A9A9A] text-lg leading-relaxed max-w-2xl mx-auto">
+        <p className="text-[#555555] text-lg leading-relaxed max-w-2xl mx-auto">
           Most client frustrations come from bloated codebases, uninspired
           designs, and communication breakdowns. Here is how Bright Space
           compares.
         </p>
       </div>
 
-      {/* Comparison Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch relative z-10">
-        {/* Left Card: The Old Way */}
         <div
           ref={leftCardRef}
-          className="group relative rounded-[2rem] p-[1px] bg-gradient-to-br from-red-500/30 via-red-500/5 to-transparent hover:from-red-500/50 transition-colors duration-500"
+          className="group relative rounded-[2rem] p-[1px] bg-gradient-to-br from-red-400/40 via-red-300/10 to-transparent hover:from-red-500/60 transition-colors duration-500 shadow-md"
         >
-          <div className="absolute -inset-[1px] rounded-[2rem] bg-red-500/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
-
-          <div className="relative h-full bg-[#050505]/90 backdrop-blur-xl p-8 md:p-10 rounded-[2rem] flex flex-col justify-between overflow-hidden">
-            {/* Inner top glow */}
-            <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-red-500/10 to-transparent pointer-events-none" />
-
+          <div className="relative h-full bg-white/95 backdrop-blur-xl p-8 md:p-10 rounded-[2rem] flex flex-col justify-between overflow-hidden border border-red-200">
             <div>
-              <div className="flex flex-wrap items-center justify-between gap-4 pb-8 mb-8 border-b border-red-500/10">
+              <div className="flex flex-wrap items-center justify-between gap-4 pb-8 mb-8 border-b border-red-100">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 shadow-[0_0_20px_rgba(248,113,113,0.2)]">
+                  <div className="w-12 h-12 rounded-2xl bg-red-100 border border-red-300 flex items-center justify-center text-red-600">
                     <AlertTriangle className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-white mb-1">
+                    <h3 className="text-2xl font-bold text-[#111111] mb-1">
                       The Old Way
                     </h3>
-                    <p className="text-xs text-red-400 font-mono tracking-wide">
+                    <p className="text-xs text-red-600 font-mono tracking-wide font-semibold">
                       Traditional Agencies & Freelancers
                     </p>
                   </div>
                 </div>
-                <span className="px-4 py-1.5 rounded-full text-xs font-mono bg-red-500/10 border border-red-500/20 text-red-400">
+                <span className="px-4 py-1.5 rounded-full text-xs font-mono bg-red-100 border border-red-300 text-red-700 font-bold">
                   High Risk
                 </span>
               </div>
@@ -184,10 +144,10 @@ export default function ProblemSolutionSection() {
                     ref={(el) => {
                       if (el) listItemsRef.current[i] = el;
                     }}
-                    className="flex items-start gap-4 text-[15px] leading-relaxed text-[#9A9A9A]"
+                    className="flex items-start gap-4 text-[15px] leading-relaxed text-[#555555]"
                   >
-                    <div className="mt-1 bg-red-500/10 rounded-full p-0.5 shrink-0">
-                      <XCircle className="w-4 h-4 text-red-400" />
+                    <div className="mt-1 bg-red-100 rounded-full p-0.5 shrink-0">
+                      <XCircle className="w-4 h-4 text-red-500" />
                     </div>
                     <span>{pt.problem}</span>
                   </li>
@@ -195,8 +155,8 @@ export default function ProblemSolutionSection() {
               </ul>
             </div>
 
-            <div className="mt-10 pt-6 border-t border-red-500/10">
-              <div className="flex items-center justify-center gap-2 text-sm text-red-400/80 font-medium">
+            <div className="mt-10 pt-6 border-t border-red-100">
+              <div className="flex items-center justify-center gap-2 text-sm text-red-600 font-medium">
                 <AlertTriangle className="w-4 h-4" />
                 <span>
                   Result: High technical debt, slow launch, poor user
@@ -204,47 +164,32 @@ export default function ProblemSolutionSection() {
                 </span>
               </div>
             </div>
-
-            {/* Decorative Floating Element (Edit Code) */}
-            <div
-              ref={floatingEditRef}
-              className="absolute -bottom-4 -left-4 w-20 h-24 bg-[#111] border border-red-500/20 rounded-2xl shadow-2xl flex flex-col items-center justify-center gap-2 transform -rotate-6 group-hover:rotate-0 transition-transform duration-300 z-20"
-            >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 to-purple-600 flex items-center justify-center text-white">
-                <Code className="w-5 h-5" />
-              </div>
-              <span className="text-xs font-bold text-white">Edit</span>
-            </div>
           </div>
         </div>
 
-        {/* Right Card: The Bright Space Model */}
         <div
           ref={rightCardRef}
-          className="group relative rounded-[2rem] p-[1px] bg-gradient-to-br from-[#00E5FF]/40 via-[#6C63FF]/20 to-transparent hover:from-[#00E5FF]/60 transition-colors duration-500 shadow-[0_0_50px_rgba(0,229,255,0.1)]"
+          className="group relative rounded-[2rem] p-[1px] bg-gradient-to-br from-[#B08D57] via-[#D4BD91] to-transparent hover:from-[#9A7846] transition-colors duration-500 shadow-xl"
         >
-          <div className="absolute -inset-[1px] rounded-[2rem] bg-[#00E5FF]/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
-
-          <div className="relative h-full bg-[#050505]/90 backdrop-blur-xl p-8 md:p-10 rounded-[2rem] flex flex-col justify-between overflow-hidden">
-            {/* Inner top glow */}
-            <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-[#00E5FF]/10 to-transparent pointer-events-none" />
+          <div className="relative h-full bg-white backdrop-blur-xl p-8 md:p-10 rounded-[2rem] flex flex-col justify-between overflow-hidden border border-[#DCD4C5]">
+            <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-[#B08D57]/5 to-transparent pointer-events-none" />
 
             <div>
-              <div className="flex flex-wrap items-center justify-between gap-4 pb-8 mb-8 border-b border-[rgba(255,255,255,0.05)]">
+              <div className="flex flex-wrap items-center justify-between gap-4 pb-8 mb-8 border-b border-[#DCD4C5]">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#00E5FF] to-[#6C63FF] flex items-center justify-center text-white shadow-[0_0_20px_rgba(0,229,255,0.4)]">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#B08D57] to-[#8C6D3B] flex items-center justify-center text-white shadow-md">
                     <ShieldCheck className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-white mb-1">
+                    <h3 className="text-2xl font-bold text-[#111111] mb-1">
                       The Bright Space Way
                     </h3>
-                    <p className="text-xs text-[#00E5FF] font-mono tracking-wide">
+                    <p className="text-xs text-[#B08D57] font-mono tracking-wide font-bold">
                       Modern Product & Software Studio
                     </p>
                   </div>
                 </div>
-                <span className="px-4 py-1.5 rounded-full text-xs font-mono bg-[#00E5FF]/10 border border-[#00E5FF]/20 text-[#00E5FF]">
+                <span className="px-4 py-1.5 rounded-full text-xs font-mono bg-[#FAF7F2] border border-[#DCD4C5] text-[#B08D57] font-bold">
                   Premium Standard
                 </span>
               </div>
@@ -253,43 +198,24 @@ export default function ProblemSolutionSection() {
                 {comparisonPoints.map((pt, i) => (
                   <li
                     key={i}
-                    ref={(el) => {
-                      if (el) listItemsRef.current[i + comparisonPoints.length] = el;
-                    }}
-                    className="flex items-start gap-4 text-[15px] leading-relaxed text-gray-200 font-medium"
+                    className="flex items-start gap-4 text-[15px] leading-relaxed text-[#111111]"
                   >
-                    <div className="mt-1 bg-[#00E5FF]/20 rounded-full p-0.5 shrink-0">
-                      <CheckCircle2 className="w-4 h-4 text-[#00E5FF]" />
+                    <div className="mt-1 bg-[#B08D57]/15 rounded-full p-0.5 shrink-0 text-[#B08D57]">
+                      <CheckCircle2 className="w-4 h-4" />
                     </div>
-                    <span>{pt.solution}</span>
+                    <span className="font-semibold">{pt.solution}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="mt-10 pt-6 border-t border-[rgba(255,255,255,0.05)]">
-              <div className="flex items-center justify-center gap-2 text-sm text-[#00E5FF] font-medium">
+            <div className="mt-10 pt-6 border-t border-[#DCD4C5]">
+              <div className="flex items-center justify-center gap-2 text-sm text-[#B08D57] font-bold">
                 <Zap className="w-4 h-4" />
                 <span>
-                  Result: Scalable digital products, top-tier engineering &
-                  commercial growth.
+                  Result: Zero tech debt, 60fps performance & high ROI.
                 </span>
               </div>
-            </div>
-
-            {/* Decorative Floating Element (Growth) */}
-            <div
-              ref={floatingGrowthRef}
-              className="absolute -bottom-4 -right-4 w-24 h-24 bg-[#111] border border-[#00E5FF]/20 rounded-2xl shadow-2xl flex flex-col items-center justify-center gap-2 transform rotate-6 group-hover:rotate-0 transition-transform duration-300 z-20"
-            >
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-400 to-[#00E5FF] flex items-center justify-center text-[#111]">
-                <TrendingUp className="w-6 h-6" />
-              </div>
-            </div>
-
-            {/* Small floating share icon */}
-            <div className="absolute -bottom-8 right-16 w-10 h-10 bg-[#111] border border-white/10 rounded-full shadow-xl flex items-center justify-center z-20 text-white/50 hover:text-white transition-colors cursor-pointer">
-              <Share className="w-4 h-4" />
             </div>
           </div>
         </div>

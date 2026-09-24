@@ -117,7 +117,6 @@ export default function MeetTheTeamSection() {
       const rightX = originX + Math.cos(rightAngle) * beamLength;
       const rightY = originY + Math.sin(rightAngle) * beamLength;
 
-      // 1. Conical Volumetric Light
       ctx.save();
       ctx.beginPath();
       ctx.moveTo(originX, originY);
@@ -129,24 +128,22 @@ export default function MeetTheTeamSection() {
         originX, originY, 25,
         targetX, targetY, beamLength * 0.85
       );
-      beamGrad.addColorStop(0, "rgba(255, 255, 255, 0.30)");
-      beamGrad.addColorStop(0.2, "rgba(255, 255, 255, 0.20)");
-      beamGrad.addColorStop(0.5, "rgba(240, 248, 255, 0.09)");
-      beamGrad.addColorStop(0.8, "rgba(220, 235, 255, 0.03)");
+      beamGrad.addColorStop(0, "rgba(176, 141, 87, 0.22)");
+      beamGrad.addColorStop(0.2, "rgba(212, 189, 145, 0.12)");
+      beamGrad.addColorStop(0.5, "rgba(243, 239, 230, 0.06)");
       beamGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
 
       ctx.fillStyle = beamGrad;
       ctx.fill();
       ctx.restore();
 
-      // 2. Focused Radial Spotlight at Cursor Coordinate
       ctx.save();
       const spotGrad = ctx.createRadialGradient(
         targetX, targetY, 0,
         targetX, targetY, 300
       );
-      spotGrad.addColorStop(0, "rgba(255, 255, 255, 0.20)");
-      spotGrad.addColorStop(0.4, "rgba(255, 255, 255, 0.08)");
+      spotGrad.addColorStop(0, "rgba(176, 141, 87, 0.18)");
+      spotGrad.addColorStop(0.4, "rgba(212, 189, 145, 0.08)");
       spotGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
 
       ctx.fillStyle = spotGrad;
@@ -155,7 +152,6 @@ export default function MeetTheTeamSection() {
       ctx.fill();
       ctx.restore();
 
-      // 3. Dynamic Card Illumination
       if (sectionRef.current) {
         const secRect = sectionRef.current.getBoundingClientRect();
         cards.forEach((card) => {
@@ -205,16 +201,15 @@ export default function MeetTheTeamSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-[950px] bg-[#0b0c10] text-white overflow-hidden flex justify-center items-center select-none"
+      className="relative w-full h-[950px] bg-[#F3EFE6] text-[#111111] overflow-hidden flex justify-center items-center select-none border-t border-[#DCD4C5]"
     >
-      {/* Embedded Custom Styles from the Template */}
       <style jsx>{`
         .noise-overlay {
           position: absolute;
           inset: 0;
           pointer-events: none;
           z-index: 1;
-          opacity: 0.05;
+          opacity: 0.03;
           background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
@@ -223,7 +218,7 @@ export default function MeetTheTeamSection() {
           inset: 0;
           pointer-events: none;
           z-index: 1;
-          background: radial-gradient(circle at 50% 50%, transparent 30%, rgba(5, 6, 8, 0.9) 100%);
+          background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(220, 212, 197, 0.45) 100%);
         }
 
         .top-glow-halo {
@@ -233,7 +228,7 @@ export default function MeetTheTeamSection() {
           transform: translateX(-50%);
           width: 850px;
           height: 420px;
-          background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.14) 0%, rgba(200, 220, 255, 0.04) 45%, transparent 75%);
+          background: radial-gradient(ellipse at center, rgba(176, 141, 87, 0.22) 0%, rgba(212, 189, 145, 0.1) 45%, transparent 75%);
           pointer-events: none;
           z-index: 2;
           filter: blur(60px);
@@ -267,8 +262,8 @@ export default function MeetTheTeamSection() {
           font-weight: 900;
           text-transform: uppercase;
           letter-spacing: -0.025em;
-          color: rgba(255, 255, 255, 0.028);
-          -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.11);
+          color: rgba(176, 141, 87, 0.04);
+          -webkit-text-stroke: 1.5px rgba(176, 141, 87, 0.25);
           white-space: nowrap;
         }
 
@@ -296,30 +291,29 @@ export default function MeetTheTeamSection() {
           display: flex;
           gap: 10px;
           font-size: 13px;
-          color: #64748b;
+          color: #B08D57;
           letter-spacing: 0.28em;
           font-family: monospace;
-          opacity: 0.65;
+          opacity: 0.85;
         }
 
         .side-paragraph {
           font-size: 13.5px;
           line-height: 1.55;
-          color: #9aa3af;
+          color: #555555;
           font-weight: 400;
         }
 
         .lime-text {
-          color: #a3e635;
-          font-weight: 500;
-          text-shadow: 0 0 10px rgba(163, 230, 53, 0.3);
+          color: #B08D57;
+          font-weight: 600;
         }
 
         .side-tag {
           align-self: flex-end;
           font-family: monospace;
           font-size: 12px;
-          color: #64748b;
+          color: #777777;
           letter-spacing: 0.04em;
         }
 
@@ -345,16 +339,16 @@ export default function MeetTheTeamSection() {
           position: absolute;
           width: 330px;
           height: 380px;
-          background: rgba(28, 31, 38, 0.76);
+          background: #FFFFFF;
           backdrop-filter: blur(24px);
           -webkit-backdrop-filter: blur(24px);
-          border: 1px solid rgba(255, 255, 255, 0.11);
+          border: 1px solid #DCD4C5;
           border-radius: 16px;
           padding: 30px 24px 22px 24px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          box-shadow: 0 24px 50px rgba(0, 0, 0, 0.72), 0 1px 2px rgba(255, 255, 255, 0.06) inset;
+          box-shadow: 0 20px 45px rgba(17, 17, 17, 0.06), 0 1px 2px rgba(255, 255, 255, 0.9) inset;
           cursor: pointer;
           transform-origin: center 20px;
           transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
@@ -382,10 +376,10 @@ export default function MeetTheTeamSection() {
           width: 22px;
           height: 22px;
           border-radius: 50%;
-          background: radial-gradient(circle at 35% 30%, #f7fee7 0%, #bef264 35%, #84cc16 70%, #3f6212 100%);
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.85), 
-                      0 0 16px rgba(163, 230, 53, 0.55),
-                      0 1px 2px rgba(255, 255, 255, 0.8) inset;
+          background: radial-gradient(circle at 35% 30%, #ffffff 0%, #D4BD91 35%, #B08D57 70%, #8C6D3B 100%);
+          box-shadow: 0 4px 12px rgba(176, 141, 87, 0.4), 
+                      0 0 16px rgba(176, 141, 87, 0.3),
+                      0 1px 2px rgba(255, 255, 255, 0.9) inset;
           position: relative;
         }
 
@@ -406,7 +400,7 @@ export default function MeetTheTeamSection() {
           left: 6px;
           width: 14px;
           height: 12px;
-          background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 75%);
+          background: radial-gradient(ellipse at center, rgba(176, 141, 87, 0.4) 0%, rgba(0, 0, 0, 0) 75%);
           border-radius: 50%;
           filter: blur(1.5px);
           z-index: -1;
@@ -417,9 +411,9 @@ export default function MeetTheTeamSection() {
           top: 19px;
           width: 4px;
           height: 4px;
-          background: #090a0d;
+          background: #B08D57;
           border-radius: 50%;
-          box-shadow: 0 1px 1px rgba(255, 255, 255, 0.15);
+          box-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
         }
 
         .card-specular {
@@ -428,9 +422,8 @@ export default function MeetTheTeamSection() {
           border-radius: 16px;
           pointer-events: none;
           opacity: 0;
-          background: radial-gradient(circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.02) 60%, transparent 80%);
+          background: radial-gradient(circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(176, 141, 87, 0.12) 0%, rgba(212, 189, 145, 0.04) 60%, transparent 80%);
           transition: opacity 0.3s ease;
-          mix-blend-mode: screen;
         }
 
         .service-card.illuminated .card-specular {
@@ -438,8 +431,8 @@ export default function MeetTheTeamSection() {
         }
 
         .service-card.illuminated {
-          border-color: rgba(255, 255, 255, 0.22);
-          box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(255, 255, 255, 0.08);
+          border-color: #B08D57;
+          box-shadow: 0 25px 50px rgba(176, 141, 87, 0.2), 0 0 30px rgba(176, 141, 87, 0.1);
         }
 
         .card-1 {
@@ -480,10 +473,9 @@ export default function MeetTheTeamSection() {
         .service-card:hover {
           transform: translateY(-30px) rotate(0deg) scale(1.05) !important;
           z-index: 50 !important;
-          border-color: rgba(255, 255, 255, 0.45);
-          box-shadow: 0 40px 80px rgba(0, 0, 0, 0.92), 
-                      0 0 50px rgba(255, 255, 255, 0.16),
-                      0 0 2px rgba(255, 255, 255, 0.5) inset;
+          border-color: #B08D57;
+          box-shadow: 0 35px 70px rgba(176, 141, 87, 0.25), 
+                      0 0 40px rgba(212, 189, 145, 0.2);
         }
 
         @media (max-width: 1400px) {
@@ -499,32 +491,27 @@ export default function MeetTheTeamSection() {
         }
       `}</style>
 
-      {/* Ambient Overlays */}
       <div className="noise-overlay" />
       <div className="ambient-vignette" />
       <div className="top-glow-halo" />
 
-      {/* Volumetric Spotlight Canvas */}
       <canvas id="spotlight-canvas" ref={canvasRef} />
 
-      {/* Large Background Outline Typography */}
       <div className="bg-typography">
         <div className="bg-typography-line">MEET OUR TEAM</div>
         <div className="bg-typography-line">EXPERT STRATEGISTS</div>
         <div className="bg-typography-line">& CREATIVE LEADERS</div>
       </div>
 
-      {/* Top Right Decorative Narrative */}
       <div className="side-content top-right">
         <div className="cross-decor">× &nbsp; × &nbsp; ×</div>
         <p className="side-paragraph">
-          We combine creative vision with advanced technology to{" "}
+          We combine creative vision with advanced engineering to{" "}
           <span className="lime-text">build extraordinary digital products</span> that drive high-growth results.
         </p>
         <span className="side-tag">[ The Squad ]</span>
       </div>
 
-      {/* Bottom Right Decorative Narrative */}
       <div className="side-content bottom-right">
         <div className="cross-decor">× &nbsp; × &nbsp; ×</div>
         <p className="side-paragraph">
@@ -534,7 +521,6 @@ export default function MeetTheTeamSection() {
         <span className="side-tag">[ 05 Leaders ]</span>
       </div>
 
-      {/* Main 1920px Scaled Stage Container */}
       <div className="stage-wrapper" ref={stageWrapperRef}>
         <div className="cards-deck">
           {teamData.map((member, idx) => {
@@ -546,7 +532,6 @@ export default function MeetTheTeamSection() {
                 data-index={idx + 1}
                 data-base-rot={pos.rot}
               >
-                {/* 3D Pushpin */}
                 <div className="pushpin-anchor">
                   <div className="pushpin-sphere">
                     <div className="pushpin-specular" />
@@ -555,13 +540,11 @@ export default function MeetTheTeamSection() {
                   <div className="pushpin-needle-shadow" />
                 </div>
 
-                {/* Specular Highlight Overlay */}
                 <div className="card-specular" />
 
-                {/* Card Top: Member Header with Photo Avatar & Socials */}
                 <div>
                   <div className="flex items-center gap-3.5 mb-4">
-                    <div className="relative w-14 h-14 rounded-full overflow-hidden border border-white/20 shadow-md flex-shrink-0 bg-slate-800">
+                    <div className="relative w-14 h-14 rounded-full overflow-hidden border border-[#DCD4C5] shadow-md flex-shrink-0 bg-[#FAF7F2]">
                       <img
                         src={member.image}
                         alt={member.name}
@@ -569,34 +552,32 @@ export default function MeetTheTeamSection() {
                       />
                     </div>
                     <div>
-                      <h4 className="text-lg font-bold text-white leading-tight">
+                      <h4 className="text-lg font-bold text-[#111111] leading-tight">
                         {member.name}
                       </h4>
-                      <p className="text-xs font-mono text-[#a3e635] mt-0.5">
+                      <p className="text-xs font-mono text-[#B08D57] font-semibold mt-0.5">
                         {member.role}
                       </p>
                     </div>
                   </div>
 
-                  <p className="text-sm leading-relaxed text-gray-300 font-normal">
+                  <p className="text-sm leading-relaxed text-[#555555] font-normal">
                     {member.bio}
                   </p>
                 </div>
 
-                {/* Card Footer */}
-                <div className="flex items-center justify-between pt-4 border-t border-white/10 mt-2">
-                  <span className="font-mono text-xs text-slate-400 tracking-wider">
+                <div className="flex items-center justify-between pt-4 border-t border-[#DCD4C5] mt-2">
+                  <span className="font-mono text-xs text-[#777777] tracking-wider font-semibold">
                     {pos.index}
                   </span>
 
-                  {/* Social links */}
                   <div className="flex items-center gap-2">
                     {member.socials.linkedin && (
                       <a
                         href={member.socials.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-7 h-7 rounded-full bg-white/10 hover:bg-[#a3e635] hover:text-black transition-colors flex items-center justify-center text-gray-300 text-xs"
+                        className="w-7 h-7 rounded-full bg-[#FAF7F2] border border-[#DCD4C5] hover:bg-[#B08D57] hover:text-white hover:border-[#B08D57] transition-colors flex items-center justify-center text-[#555555] text-xs"
                       >
                         <Linkedin className="w-3.5 h-3.5" />
                       </a>
@@ -606,7 +587,7 @@ export default function MeetTheTeamSection() {
                         href={member.socials.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-7 h-7 rounded-full bg-white/10 hover:bg-[#a3e635] hover:text-black transition-colors flex items-center justify-center text-gray-300 text-xs"
+                        className="w-7 h-7 rounded-full bg-[#FAF7F2] border border-[#DCD4C5] hover:bg-[#B08D57] hover:text-white hover:border-[#B08D57] transition-colors flex items-center justify-center text-[#555555] text-xs"
                       >
                         <Github className="w-3.5 h-3.5" />
                       </a>
@@ -616,7 +597,7 @@ export default function MeetTheTeamSection() {
                         href={member.socials.twitter}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-7 h-7 rounded-full bg-white/10 hover:bg-[#a3e635] hover:text-black transition-colors flex items-center justify-center text-gray-300 text-xs"
+                        className="w-7 h-7 rounded-full bg-[#FAF7F2] border border-[#DCD4C5] hover:bg-[#B08D57] hover:text-white hover:border-[#B08D57] transition-colors flex items-center justify-center text-[#555555] text-xs"
                       >
                         <Twitter className="w-3.5 h-3.5" />
                       </a>

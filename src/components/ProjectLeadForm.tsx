@@ -37,18 +37,18 @@ export default function ProjectLeadForm() {
   };
 
   return (
-    <section className="py-28 bg-[#08080c] border-t border-[rgba(255,255,255,0.06)] relative overflow-hidden">
+    <section className="py-28 bg-[#FAF7F2] border-t border-[#DCD4C5] relative overflow-hidden">
       <div className="max-w-5xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-panel border border-[#00E5FF]/30 text-[#00E5FF] text-xs font-mono uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#DCD4C5] text-[#B08D57] text-xs font-mono uppercase tracking-widest font-bold shadow-sm">
             <Sparkles className="w-3.5 h-3.5" /> Quick Project Estimator & Inquiry
           </div>
-          <h2 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight">
+          <h2 className="text-4xl md:text-6xl font-extrabold text-[#111111] tracking-tight">
             Tell Us About <span className="font-serif italic text-gradient-accent">Your Vision</span>
           </h2>
-          <p className="text-[#9A9A9A] text-base leading-relaxed">
+          <p className="text-[#555555] text-base leading-relaxed">
             Fill out the brief below and our engineering leads will get back to you within 24 hours with a custom proposal and technical strategy.
           </p>
         </div>
@@ -57,18 +57,18 @@ export default function ProjectLeadForm() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="glass-card p-12 rounded-3xl text-center space-y-6 max-w-2xl mx-auto border border-[#00E5FF]/40 shadow-[0_0_40px_rgba(0,229,255,0.2)]"
+            className="bg-white p-12 rounded-3xl text-center space-y-6 max-w-2xl mx-auto border border-[#B08D57] shadow-xl"
           >
-            <div className="w-16 h-16 rounded-full bg-[#00E5FF]/10 border border-[#00E5FF] flex items-center justify-center mx-auto text-[#00E5FF]">
+            <div className="w-16 h-16 rounded-full bg-[#B08D57]/10 border border-[#B08D57] flex items-center justify-center mx-auto text-[#B08D57]">
               <CheckCircle2 className="w-8 h-8" />
             </div>
-            <h3 className="text-3xl font-extrabold text-white">Project Inquiry Received!</h3>
-            <p className="text-[#9A9A9A] text-sm leading-relaxed">
-              Thank you for reaching out, <span className="text-white font-medium">{formData.name || "partner"}</span>. Our technical leads are reviewing your project requirements and will respond to <span className="text-[#00E5FF] font-mono">{formData.email}</span> shortly.
+            <h3 className="text-3xl font-extrabold text-[#111111]">Project Inquiry Received!</h3>
+            <p className="text-[#555555] text-sm leading-relaxed">
+              Thank you for reaching out, <span className="text-[#111111] font-bold">{formData.name || "partner"}</span>. Our technical leads are reviewing your project requirements and will respond to <span className="text-[#B08D57] font-mono font-bold">{formData.email}</span> shortly.
             </p>
             <button
               onClick={() => setSubmitted(false)}
-              className="text-xs font-mono uppercase tracking-wider text-[#00E5FF] hover:underline pt-4 block mx-auto"
+              className="text-xs font-mono uppercase tracking-wider text-[#B08D57] font-bold hover:underline pt-4 block mx-auto cursor-pointer"
             >
               Submit another inquiry
             </button>
@@ -79,11 +79,11 @@ export default function ProjectLeadForm() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             onSubmit={handleSubmit}
-            className="glass-card p-8 md:p-12 rounded-3xl border border-[rgba(255,255,255,0.1)] space-y-10"
+            className="bg-white p-8 md:p-12 rounded-3xl border border-[#DCD4C5] space-y-10 shadow-xl"
           >
             {/* Step 1: Project Type */}
             <div className="space-y-4">
-              <label className="text-xs font-mono text-[#00E5FF] uppercase tracking-wider block">
+              <label className="text-xs font-mono text-[#B08D57] font-bold uppercase tracking-wider block">
                 01. What type of project are you building?
               </label>
               <div className="flex flex-wrap gap-3">
@@ -92,10 +92,10 @@ export default function ProjectLeadForm() {
                     key={type}
                     type="button"
                     onClick={() => setSelectedType(type)}
-                    className={`px-5 py-2.5 rounded-full text-xs font-mono transition-all duration-300 ${
+                    className={`px-5 py-2.5 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer ${
                       selectedType === type
-                        ? "bg-[#6C63FF] text-white shadow-[0_0_15px_rgba(108,99,255,0.4)] border border-[#00E5FF]/40"
-                        : "bg-[#121218] text-[#9A9A9A] border border-[rgba(255,255,255,0.08)] hover:border-white/30 hover:text-white"
+                        ? "bg-[#B08D57] text-white font-bold shadow-md border border-[#B08D57]"
+                        : "bg-[#F3EFE6] text-[#555555] border border-[#DCD4C5] hover:border-[#B08D57] hover:text-[#111111]"
                     }`}
                   >
                     {type}
@@ -106,7 +106,7 @@ export default function ProjectLeadForm() {
 
             {/* Step 2: Budget */}
             <div className="space-y-4">
-              <label className="text-xs font-mono text-[#00E5FF] uppercase tracking-wider block">
+              <label className="text-xs font-mono text-[#B08D57] font-bold uppercase tracking-wider block">
                 02. What is your estimated budget?
               </label>
               <div className="flex flex-wrap gap-3">
@@ -115,10 +115,10 @@ export default function ProjectLeadForm() {
                     key={b}
                     type="button"
                     onClick={() => setSelectedBudget(b)}
-                    className={`px-5 py-2.5 rounded-full text-xs font-mono transition-all duration-300 ${
+                    className={`px-5 py-2.5 rounded-full text-xs font-mono transition-all duration-300 cursor-pointer ${
                       selectedBudget === b
-                        ? "bg-[#00E5FF] text-[#050505] font-bold shadow-[0_0_15px_rgba(0,229,255,0.4)]"
-                        : "bg-[#121218] text-[#9A9A9A] border border-[rgba(255,255,255,0.08)] hover:border-white/30 hover:text-white"
+                        ? "bg-[#111111] text-white font-bold shadow-md"
+                        : "bg-[#F3EFE6] text-[#555555] border border-[#DCD4C5] hover:border-[#B08D57] hover:text-[#111111]"
                     }`}
                   >
                     {b}
@@ -130,7 +130,7 @@ export default function ProjectLeadForm() {
             {/* Step 3: Text Details */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <label className="text-xs font-mono text-[#D1D5DB] uppercase tracking-wider block mb-2">
+                <label className="text-xs font-mono text-[#111111] font-semibold uppercase tracking-wider block mb-2">
                   Your Name *
                 </label>
                 <input
@@ -139,12 +139,12 @@ export default function ProjectLeadForm() {
                   placeholder="John Doe"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-[#050505] border border-[rgba(255,255,255,0.1)] text-white placeholder-[#555] text-sm focus:outline-none focus:border-[#6C63FF] transition-colors"
+                  className="w-full px-4 py-3 rounded-xl bg-[#F3EFE6] border border-[#DCD4C5] text-[#111111] placeholder-[#777777] text-sm focus:outline-none focus:border-[#B08D57] transition-colors"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-mono text-[#D1D5DB] uppercase tracking-wider block mb-2">
+                <label className="text-xs font-mono text-[#111111] font-semibold uppercase tracking-wider block mb-2">
                   Email Address *
                 </label>
                 <input
@@ -153,12 +153,12 @@ export default function ProjectLeadForm() {
                   placeholder="john@company.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-[#050505] border border-[rgba(255,255,255,0.1)] text-white placeholder-[#555] text-sm focus:outline-none focus:border-[#6C63FF] transition-colors"
+                  className="w-full px-4 py-3 rounded-xl bg-[#F3EFE6] border border-[#DCD4C5] text-[#111111] placeholder-[#777777] text-sm focus:outline-none focus:border-[#B08D57] transition-colors"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-mono text-[#D1D5DB] uppercase tracking-wider block mb-2">
+                <label className="text-xs font-mono text-[#111111] font-semibold uppercase tracking-wider block mb-2">
                   Company / Organization
                 </label>
                 <input
@@ -166,13 +166,13 @@ export default function ProjectLeadForm() {
                   placeholder="Acme Corp"
                   value={formData.company}
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-[#050505] border border-[rgba(255,255,255,0.1)] text-white placeholder-[#555] text-sm focus:outline-none focus:border-[#6C63FF] transition-colors"
+                  className="w-full px-4 py-3 rounded-xl bg-[#F3EFE6] border border-[#DCD4C5] text-[#111111] placeholder-[#777777] text-sm focus:outline-none focus:border-[#B08D57] transition-colors"
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-xs font-mono text-[#D1D5DB] uppercase tracking-wider block mb-2">
+              <label className="text-xs font-mono text-[#111111] font-semibold uppercase tracking-wider block mb-2">
                 Project Overview & Goals
               </label>
               <textarea
@@ -180,7 +180,7 @@ export default function ProjectLeadForm() {
                 placeholder="Describe what you want to build, key timeline requirements, or existing software challenges..."
                 value={formData.brief}
                 onChange={(e) => setFormData({ ...formData, brief: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-[#050505] border border-[rgba(255,255,255,0.1)] text-white placeholder-[#555] text-sm focus:outline-none focus:border-[#6C63FF] transition-colors resize-none"
+                className="w-full px-4 py-3 rounded-xl bg-[#F3EFE6] border border-[#DCD4C5] text-[#111111] placeholder-[#777777] text-sm focus:outline-none focus:border-[#B08D57] transition-colors resize-none"
               />
             </div>
 

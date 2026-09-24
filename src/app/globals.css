@@ -1,28 +1,32 @@
 @import "tailwindcss";
 
 :root {
-  --bg-main: #050505;
-  --bg-card: #0c0c0e;
-  --bg-card-hover: #121217;
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-glow: rgba(108, 99, 255, 0.25);
+  --bg-main: #F3EFE6;
+  --bg-surface: #FFFFFF;
+  --bg-soft: #FAF7F2;
+  --border-subtle: #DCD4C5;
+  --border-glow: rgba(176, 141, 87, 0.25);
 
-  --text-primary: #f5f5f5;
-  --text-secondary: #9a9a9a;
-  --text-muted: #5a5a66;
+  --text-primary: #111111;
+  --text-secondary: #555555;
+  --text-muted: #777777;
 
-  --accent-primary: #6c63ff;
-  --accent-cyan: #00e5ff;
-  --accent-gradient: linear-gradient(135deg, #6c63ff 0%, #00e5ff 100%);
+  --accent-primary: #B08D57;
+  --accent-secondary: #D4BD91;
+  --accent-light: #D4BD91;
+  --cta-dark: #111111;
+  --accent-gradient: linear-gradient(135deg, #B08D57 0%, #D4BD91 100%);
 }
 
 @theme {
-  --color-dark-bg: #050505;
-  --color-dark-card: #0c0c0e;
-  --color-dark-card-hover: #121217;
-  --color-subtle-border: rgba(255, 255, 255, 0.08);
-  --color-accent-indigo: #6c63ff;
-  --color-accent-cyan: #00e5ff;
+  --color-dark-bg: #F3EFE6;
+  --color-dark-card: #FFFFFF;
+  --color-dark-card-hover: #FAF7F2;
+  --color-subtle-border: #DCD4C5;
+  --color-accent-indigo: #B08D57;
+  --color-accent-cyan: #D4BD91;
+  --color-accent-light: #D4BD91;
+  --color-cta-dark: #111111;
 }
 
 /* Global Layout Override for 1600px Max Width */
@@ -74,16 +78,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #050505;
+  background: #F3EFE6;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1f1f2e;
+  background: #DCD4C5;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #6c63ff;
+  background: #B08D57;
 }
 
 /* Font Family Utility */
@@ -97,37 +101,37 @@ body {
 
 /* Glassmorphism Utilities */
 .glass-panel {
-  background: rgba(12, 12, 14, 0.7);
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-subtle);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.03);
+  background: #FFFFFF;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 4px 20px -2px rgba(17, 17, 17, 0.05);
 }
 
 .glass-nav {
-  background: rgba(5, 5, 5, 0.8);
+  background: rgba(243, 239, 230, 0.9);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid #DCD4C5;
 }
 
 /* Text Gradient Utilities */
 .text-gradient {
-  background: linear-gradient(135deg, #ffffff 0%, #9a9a9a 100%);
+  background: linear-gradient(135deg, #111111 0%, #555555 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-accent {
-  background: var(--accent-gradient);
+  background: linear-gradient(135deg, #B08D57 0%, #8C6D3B 50%, #D4BD91 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -162,15 +166,15 @@ body {
 .bg-grid-pattern {
   background-size: 40px 40px;
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, rgba(176, 141, 87, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(176, 141, 87, 0.08) 1px, transparent 1px);
 }
 
 .glow-orb-indigo {
   position: absolute;
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(108, 99, 255, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+  background: radial-gradient(circle, rgba(176, 141, 87, 0.18) 0%, rgba(243, 239, 230, 0) 70%);
   filter: blur(60px);
   pointer-events: none;
 }
@@ -179,14 +183,13 @@ body {
   position: absolute;
   width: 450px;
   height: 450px;
-  background: radial-gradient(circle, rgba(0, 229, 255, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+  background: radial-gradient(circle, rgba(212, 189, 145, 0.2) 0%, rgba(243, 239, 230, 0) 70%);
   filter: blur(70px);
   pointer-events: none;
 }
 
 /* ─── SCROLL ANIMATION UTILITIES ─────────────────────── */
 
-/* Line reveal mask — parent clips, child translates */
 .line-reveal {
   overflow: hidden;
   display: inline-block;
@@ -197,7 +200,6 @@ body {
   will-change: transform;
 }
 
-/* Will-change — use sparingly, only on actively animating elements */
 .wc-transform {
   will-change: transform;
 }
@@ -206,7 +208,6 @@ body {
   will-change: transform, opacity;
 }
 
-/* Pinned horizontal showcase */
 .showcase-panel {
   flex-shrink: 0;
   width: 100vw;
@@ -235,7 +236,7 @@ body {
   font-size: clamp(8rem, 18vw, 16rem);
   font-weight: 900;
   font-family: var(--font-inter), system-ui, sans-serif;
-  color: white;
+  color: #111111;
   opacity: 0;
   pointer-events: none;
   user-select: none;
@@ -243,7 +244,6 @@ body {
   letter-spacing: -0.04em;
 }
 
-/* Reduced motion — disable all custom scroll animations */
 @media (prefers-reduced-motion: reduce) {
   .wc-transform,
   .wc-transform-opacity,

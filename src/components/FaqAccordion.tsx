@@ -25,22 +25,22 @@ export default function FaqAccordion({ items }: FaqAccordionProps) {
             key={item.id}
             className={`rounded-2xl transition-all duration-300 border ${
               isOpen
-                ? "bg-[#0C0C0E] border-[rgba(108,99,255,0.4)] shadow-[0_0_20px_rgba(108,99,255,0.1)]"
-                : "bg-[#070709] border-[rgba(255,255,255,0.06)] hover:border-[rgba(255,255,255,0.12)]"
+                ? "bg-white border-[#B08D57] shadow-[0_4px_20px_rgba(176,141,87,0.15)]"
+                : "bg-white border-[#DCD4C5] hover:border-[#B08D57]"
             }`}
           >
             <button
               onClick={() => toggle(item.id)}
-              className="w-full text-left p-6 md:p-8 flex items-center justify-between gap-4 interactive focus:outline-none"
+              className="w-full text-left p-6 md:p-8 flex items-center justify-between gap-4 focus:outline-none cursor-pointer"
             >
-              <span className="text-base md:text-lg font-semibold text-white tracking-wide">
+              <span className="text-base md:text-lg font-bold text-[#111111] tracking-wide">
                 {item.question}
               </span>
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors shrink-0 ${
                   isOpen
-                    ? "bg-[#6C63FF] text-white"
-                    : "bg-[#14141a] text-[#9A9A9A]"
+                    ? "bg-[#B08D57] text-white"
+                    : "bg-[#FAF7F2] border border-[#DCD4C5] text-[#555555]"
                 }`}
               >
                 {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
@@ -56,7 +56,7 @@ export default function FaqAccordion({ items }: FaqAccordionProps) {
                   transition={{ duration: 0.25 }}
                   className="overflow-hidden"
                 >
-                  <div className="px-6 md:px-8 pb-6 md:pb-8 pt-0 text-sm md:text-base text-[#9A9A9A] leading-relaxed border-t border-[rgba(255,255,255,0.04)] mt-2">
+                  <div className="px-6 md:px-8 pb-6 md:pb-8 pt-2 text-sm md:text-base text-[#555555] leading-relaxed border-t border-[#DCD4C5]">
                     {item.answer}
                   </div>
                 </motion.div>
