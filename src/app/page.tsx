@@ -27,6 +27,8 @@ import ProjectLeadForm from "@/components/ProjectLeadForm";
 import BankingBento from "@/components/BankingBento";
 import FinalCtaSection from "@/components/FinalCtaSection";
 import InfiniteProductShowcase from "@/components/InfiniteProductShowcase";
+import WhyUsSection from "@/components/WhyUsSection";
+import MeasuredResultsSection from "@/components/MeasuredResultsSection";
 
 import { projectsData } from "@/data/projects";
 import { servicesData } from "@/data/services";
@@ -556,100 +558,11 @@ export default function HomePage() {
       {/* 9. INFINITE PRODUCT & DESIGN SHOWCASE (Bi-directional Marquee with Center Floating Badge) */}
       <InfiniteProductShowcase />
 
-      {/* 10. MEASURED COMMERCIAL RESULTS & CASE STUDIES */}
-      <section ref={caseSectionRef} className="py-24 max-w-7xl mx-auto px-6 md:px-12 relative">
-        <div ref={caseHeadingRef} className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <span className="text-xs font-mono text-[#B08D57] tracking-widest uppercase font-bold">
-            {"/// MEASURED RESULTS"}
-          </span>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#111111] tracking-tight">
-            Commercial Impact & <span className="font-serif italic text-gradient-accent">Case Studies</span>
-          </h2>
-          <p className="text-[#555555] text-base leading-relaxed">
-            We measure success not just in clean code and aesthetic design, but in real business outcomes and revenue acceleration.
-          </p>
-        </div>
+      {/* 10. MEASURED COMMERCIAL RESULTS & CASE STUDIES (Same-to-same layout with 3D artwork and golden arc) */}
+      <MeasuredResultsSection />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div ref={(el) => setCaseCardRef(el, 0)} className="glass-card p-8 rounded-3xl border border-[#DCD4C5] bg-white space-y-4 shadow-md">
-            <div className="text-5xl font-extrabold font-mono text-gradient-accent">+44%</div>
-            <h4 className="text-xl font-bold text-[#111111]">SaaS User Retention</h4>
-            <p className="text-xs text-[#555555] leading-relaxed">
-              Refactored Nexus Systems legacy portal into a zero-latency Next.js web application with intuitive workflow UX.
-            </p>
-            <div className="pt-2 text-[11px] font-mono text-[#B08D57] uppercase font-bold">
-              Client: Nexus Systems • SaaS Platform
-            </div>
-          </div>
-
-          <div ref={(el) => setCaseCardRef(el, 1)} className="glass-card p-8 rounded-3xl border border-[#DCD4C5] bg-white space-y-4 shadow-md">
-            <div className="text-5xl font-extrabold font-mono text-[#B08D57]">2.4x</div>
-            <h4 className="text-xl font-bold text-[#111111]">Conversion Surge</h4>
-            <p className="text-xs text-[#555555] leading-relaxed">
-              Designed a high-converting digital branding experience for Horizon Capital, doubling lead generation in 90 days.
-            </p>
-            <div className="pt-2 text-[11px] font-mono text-[#B08D57] uppercase font-bold">
-              Client: Horizon Capital • Fintech Portal
-            </div>
-          </div>
-
-          <div ref={(el) => setCaseCardRef(el, 2)} className="glass-card p-8 rounded-3xl border border-[#DCD4C5] bg-white space-y-4 shadow-md">
-            <div className="text-5xl font-extrabold font-mono text-gradient-accent">-60%</div>
-            <h4 className="text-xl font-bold text-[#111111]">Manual Processing</h4>
-            <p className="text-xs text-[#555555] leading-relaxed">
-              Built automated custom internal software tools & REST APIs that reduced operational manual processing time by over half.
-            </p>
-            <div className="pt-2 text-[11px] font-mono text-[#B08D57] uppercase font-bold">
-              Client: Vanguard AI • Enterprise Workflow
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 11. WHY CHOOSE US */}
-      <section ref={whySectionRef} className="py-28 max-w-7xl mx-auto px-6 md:px-12 relative">
-        <div ref={whyHeadingRef} className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <span className="text-xs font-mono text-[#B08D57] tracking-widest uppercase font-bold">
-            {"/// BUILT DIFFERENT"}
-          </span>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#111111] tracking-tight">
-            Why Choose <span className="font-serif italic text-gradient-accent">Bright Space.DEV</span>
-          </h2>
-          <p className="text-[#555555] text-base leading-relaxed">
-            We combine high-end aesthetic taste with strict software engineering discipline to deliver exceptional digital products.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {whyUsPillars.map((pillar, idx) => {
-            const Icon = pillar.icon;
-            return (
-              <div
-                key={pillar.number}
-                ref={(el) => setWhyPillarRef(el, idx)}
-                className="glass-card p-8 rounded-3xl relative border border-[#DCD4C5] bg-white hover:border-[#B08D57] transition-all flex flex-col justify-between shadow-md"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="pillar-number text-2xl font-extrabold font-mono text-[#B08D57]">
-                      {pillar.number}
-                    </span>
-                    <div className="w-10 h-10 rounded-xl bg-[#F3EFE6] border border-[#DCD4C5] flex items-center justify-center text-[#B08D57]">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold text-[#111111] mb-3">
-                    {pillar.title}
-                  </h3>
-                  <p className="text-xs text-[#555555] leading-relaxed">
-                    {pillar.description}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+      {/* 11. WHY CHOOSE US (New Modern Bento & Showreel Layout) */}
+      <WhyUsSection />
 
       {/* 12. AGENCY STATS & MILESTONES */}
       <section ref={statsSectionRef} className="py-24 bg-[#FAF7F2] border-y border-[#DCD4C5] relative">
