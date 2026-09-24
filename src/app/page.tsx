@@ -275,19 +275,19 @@ export default function HomePage() {
             className="absolute inset-0 w-full h-full pointer-events-none z-0"
           />
 
-          {/* Precision Architectural Grid Lines */}
-          <div className="absolute inset-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 pointer-events-none z-[1] opacity-50">
+          {/* Precision Architectural Grid Lines — subtle */}
+          <div className="absolute inset-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 pointer-events-none z-[1] opacity-25">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="border-r border-[#DCD4C5]/30 h-full" />
+              <div key={i} className="border-r border-[#DCD4C5]/40 h-full" />
             ))}
           </div>
 
-          {/* Ambient Lighting & Atmosphere */}
+          {/* Minimal Subtle Ambient Glow — Keeps frames crisp, clear and vibrant */}
           <div
             ref={heroAmbientRef}
-            className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(176,141,87,0.12)_0%,rgba(243,239,230,0.3)_70%,rgba(243,239,230,0.7)_100%)] pointer-events-none z-[2]"
+            className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(176,141,87,0.08)_0%,transparent_55%)] pointer-events-none z-[2]"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#F3EFE6]/40 via-transparent to-[#F3EFE6] pointer-events-none z-[2]" />
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#F3EFE6]/30 to-transparent pointer-events-none z-[2]" />
         </div>
 
         {/* Existing Hero Content Layer — Revealed dynamically at end of frame scrub */}
