@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { Sparkles } from "lucide-react";
 
 // Brand Logo Definition with Authentic SVG Vectors
 interface BrandLogo {
@@ -152,11 +153,43 @@ const brandLogos: BrandLogo[] = [
     ),
   },
   {
+    id: "figma",
+    name: "Figma",
+    renderLogo: (color) => (
+      <div className="flex items-center gap-2.5">
+        <svg className="w-5 h-6 shrink-0" viewBox="0 0 38 57" fill={color}>
+          <path d="M19 28.5C19 23.2533 23.2533 19 28.5 19C33.7467 19 38 23.2533 38 28.5C38 33.7467 33.7467 38 28.5 38C23.2533 38 19 33.7467 19 28.5Z" />
+          <path d="M0 47.5C0 42.2533 4.25329 38 9.5 38H19V47.5C19 52.7467 14.7467 57 9.5 57C4.25329 57 0 52.7467 0 47.5Z" />
+          <path d="M19 0V19H28.5C33.7467 19 38 14.7467 38 9.5C38 4.25329 33.7467 0 28.5 0H19Z" />
+          <path d="M0 9.5C0 14.7467 4.25329 19 9.5 19H19V0H9.5C4.25329 0 0 4.25329 0 9.5Z" />
+          <path d="M0 28.5C0 33.7467 4.25329 38 9.5 38H19V19H9.5C4.25329 19 0 23.2533 0 28.5Z" />
+        </svg>
+        <span className="font-bold text-xl sm:text-2xl tracking-tight" style={{ color }}>
+          Figma
+        </span>
+      </div>
+    ),
+  },
+  {
+    id: "supabase",
+    name: "Supabase",
+    renderLogo: (color) => (
+      <div className="flex items-center gap-2.5">
+        <svg className="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill={color}>
+          <path d="M21.362 9.354H12V.5a.5.5 0 0 0-.853-.354L.64 12.646A.5.5 0 0 0 1 13.5h9.362v8.854a.5.5 0 0 0 .853.354l10.507-12.5a.5.5 0 0 0-.36-.854z" />
+        </svg>
+        <span className="font-extrabold text-xl sm:text-2xl tracking-tight" style={{ color }}>
+          supabase
+        </span>
+      </div>
+    ),
+  },
+  {
     id: "vercel",
     name: "Vercel",
     renderLogo: (color) => (
       <div className="flex items-center gap-2.5">
-        <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill={color}>
+        <svg className="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill={color}>
           <path d="M12 2L24 22H0L12 2Z" />
         </svg>
         <span className="font-extrabold text-xl sm:text-2xl tracking-tight" style={{ color }}>
@@ -173,83 +206,93 @@ export default function LogoRail() {
   const logosSet2 = [...brandLogos.slice().reverse(), ...brandLogos.slice().reverse()];
 
   return (
-    <section className="relative w-full py-16 sm:py-24 md:py-28 overflow-hidden bg-[#0A0A0A] select-none border-y border-[#222222]">
+    <section className="relative w-full py-20 sm:py-28 overflow-hidden bg-[#F3EFE6] select-none border-y border-[#DCD4C5]">
       {/* Background Subtle Ambience / Glow */}
-      <div className="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(circle_at_50%_50%,rgba(204,255,0,0.15),transparent_70%)]" />
+      <div className="absolute inset-0 pointer-events-none opacity-40 bg-grid-pattern" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[350px] bg-gradient-to-r from-[#B08D57]/15 via-[#D4BD91]/20 to-[#B08D57]/10 blur-[130px] rounded-full pointer-events-none" />
 
       {/* Top Section Header */}
-      <div className="max-w-7xl mx-auto px-6 mb-8 sm:mb-12 relative z-10 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <span className="w-2 h-2 rounded-full bg-[#CCFF00] animate-pulse" />
-          <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#CCFF00] font-bold">
-            Trusted By High-Velocity Product Teams
+      <div className="max-w-7xl mx-auto px-6 mb-12 sm:mb-16 relative z-10 text-center space-y-3">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#DCD4C5] shadow-xs">
+          <Sparkles className="w-3.5 h-3.5 text-[#B08D57]" />
+          <span className="text-xs font-mono uppercase tracking-[0.22em] text-[#B08D57] font-bold">
+            {"/// TRUSTED PARTNER ECOSYSTEM"}
           </span>
         </div>
-        <span className="text-xs font-mono text-white/50 tracking-wider">
-          Over 40+ Enterprise Integrations & Deployments
-        </span>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#111111] tracking-tight">
+          Trusted by Teams Building the <span className="font-serif italic text-gradient-accent">Next Frontier</span>
+        </h2>
+        <p className="text-sm sm:text-base text-[#555555] max-w-xl mx-auto font-light">
+          Engineering mission-critical digital flagships and cloud architectures for high-velocity startups and global enterprises.
+        </p>
       </div>
 
       {/* ========================================================================= */}
-      {/* ANGLED CRISS-CROSS RIBBONS CONTAINER */}
+      {/* 3D ANGLED CRISS-CROSS RIBBONS CONTAINER */}
       {/* ========================================================================= */}
-      <div className="relative w-full h-[220px] sm:h-[260px] md:h-[300px] flex items-center justify-center overflow-hidden">
-        {/* Subtle Side Vignette Fades */}
-        <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-36 md:w-56 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent z-30 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-36 md:w-56 bg-gradient-to-l from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent z-30 pointer-events-none" />
+      <div className="relative w-full h-[260px] sm:h-[300px] md:h-[340px] flex items-center justify-center overflow-hidden">
+        {/* Side Vignette Fades to Background Color (#F3EFE6) */}
+        <div className="absolute left-0 top-0 bottom-0 w-24 sm:w-44 md:w-64 bg-gradient-to-r from-[#F3EFE6] via-[#F3EFE6]/80 to-transparent z-30 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 sm:w-44 md:w-64 bg-gradient-to-l from-[#F3EFE6] via-[#F3EFE6]/80 to-transparent z-30 pointer-events-none" />
 
         {/* ----------------------------------------------------------------------- */}
-        {/* RIBBON 1 (DARK / BACKGROUND RIBBON - TILTED -2.5 DEG - SCROLLS LEFT) */}
+        {/* RIBBON 1 (DEEP NOIR / BACK RIBBON - TILTED -4.5 DEG - SCROLLS LEFT) */}
         {/* ----------------------------------------------------------------------- */}
         <div
-          className="absolute w-[140vw] -left-[20vw] z-10 py-3 sm:py-4.5 bg-[#161616] border-y border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.7)]"
+          className="absolute w-[150vw] -left-[25vw] z-10 py-4 sm:py-5.5 md:py-6 bg-[#111111] border-y-2 border-[#D4BD91]/40 shadow-[0_15px_35px_rgba(0,0,0,0.35)]"
           style={{
-            transform: "rotate(-2.8deg)",
+            transform: "rotate(-4.5deg)",
             transformOrigin: "center center",
           }}
         >
           <div className="animate-marquee-ribbon flex items-center gap-14 sm:gap-20 md:gap-24 will-change-transform">
             {logosSet1.map((logo, idx) => (
               <div
-                key={`dark-${logo.id}-${idx}`}
-                className="flex items-center shrink-0 opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300 cursor-default"
+                key={`noir-${logo.id}-${idx}`}
+                className="flex items-center shrink-0 opacity-85 hover:opacity-100 hover:scale-105 transition-all duration-300 cursor-default"
               >
-                {logo.renderLogo("#FFFFFF")}
+                {logo.renderLogo("#D4BD91")}
               </div>
             ))}
           </div>
         </div>
 
         {/* ----------------------------------------------------------------------- */}
-        {/* RIBBON 2 (ELECTRIC LIME / FOREGROUND RIBBON - TILTED +2.8 DEG - SCROLLS RIGHT) */}
+        {/* RIBBON 2 (ANTIQUE GOLD / FRONT RIBBON - TILTED +4.5 DEG - SCROLLS RIGHT) */}
         {/* ----------------------------------------------------------------------- */}
         <div
-          className="absolute w-[140vw] -left-[20vw] z-20 py-3.5 sm:py-5 md:py-6 bg-[#CCFF00] shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_40px_rgba(204,255,0,0.35)]"
+          className="absolute w-[150vw] -left-[25vw] z-20 py-4.5 sm:py-6 md:py-6.5 bg-gradient-to-r from-[#B08D57] via-[#C9A46C] to-[#8C6D3B] border-y-2 border-[#8C6D3B] shadow-[0_25px_60px_-10px_rgba(0,0,0,0.5),0_0_35px_rgba(176,141,87,0.4)]"
           style={{
-            transform: "rotate(3deg)",
+            transform: "rotate(4.5deg)",
             transformOrigin: "center center",
           }}
         >
+          {/* Subtle metallic specular shine on ribbon edge */}
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-white/40 pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-[2px] bg-black/25 pointer-events-none" />
+
           <div className="animate-marquee-ribbon-reverse flex items-center gap-14 sm:gap-20 md:gap-24 will-change-transform">
             {logosSet2.map((logo, idx) => (
               <div
-                key={`lime-${logo.id}-${idx}`}
-                className="flex items-center shrink-0 hover:scale-110 active:scale-95 transition-transform duration-300 cursor-default"
+                key={`gold-${logo.id}-${idx}`}
+                className="flex items-center shrink-0 hover:scale-110 active:scale-95 transition-transform duration-300 cursor-default filter drop-shadow-[0_1px_1px_rgba(255,255,255,0.2)]"
               >
-                {logo.renderLogo("#000000")}
+                {logo.renderLogo("#111111")}
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Bottom Subtle Indicator */}
-      <div className="max-w-7xl mx-auto px-6 mt-8 sm:mt-10 relative z-10 flex items-center justify-between text-[11px] font-mono text-white/40">
+      {/* Bottom Status Ticker */}
+      <div className="max-w-7xl mx-auto px-6 mt-10 relative z-10 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[#777777]">
         <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
-          <span>Interactive Canvas • Hardware-Accelerated 60 FPS</span>
+          <span className="w-2 h-2 rounded-full bg-[#B08D57] animate-pulse" />
+          <span className="text-[#111111] font-bold">Live Integration Network</span>
+          <span>•</span>
+          <span>99.99% Production Uptime</span>
         </div>
-        <span className="hidden sm:inline">Hover to inspect partner stacks</span>
+        <span className="hidden sm:inline">Pause on hover to inspect verified tech stacks</span>
       </div>
     </section>
   );

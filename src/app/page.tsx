@@ -388,15 +388,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. TRUST / CLIENT LOGOS */}
+      {/* 2. TRUST / CLIENT CRISS-CROSS LOGO RIBBONS */}
       <LogoRail />
 
-      <BankingBento />
-
-      {/* 3. PROBLEM → SOLUTION */}
+      {/* 3. PROBLEM → SOLUTION (Market Contrast & Agency Bloat vs Bright Space) */}
       <ProblemSolutionSection />
 
-      {/* 4. CORE SERVICES */}
+      {/* 4. BENTO GRID ARCHITECTURE & SHOWCASE */}
+      <BankingBento />
+
+      {/* 5. CORE SERVICES & CAPABILITIES */}
       <section ref={servicesSectionRef} className="py-24 max-w-7xl mx-auto px-6 md:px-12 relative">
         <div ref={servicesHeadingRef} className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-xs font-mono text-[#B08D57] tracking-widest uppercase font-bold">
@@ -448,10 +449,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. TECH STACK / ARSENAL */}
+      {/* 6. TECH STACK & ARSENAL */}
       <TechArsenalSection />
 
-      {/* 6. FEATURED WORK */}
+      {/* 7. INTERACTIVE CREATIVE PROCESS (560vh Pinned Circular Journey) */}
+      <ScrollServices />
+
+      {/* 8. FEATURED WORK */}
       <section
         ref={projectSectionRef}
         className="relative bg-[#FAF7F2] border-b border-[#DCD4C5] overflow-hidden"
@@ -549,10 +553,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6.5. INFINITE PRODUCT & DESIGN SHOWCASE (Bi-directional Marquee with Center Floating Badge) */}
+      {/* 9. INFINITE PRODUCT & DESIGN SHOWCASE (Bi-directional Marquee with Center Floating Badge) */}
       <InfiniteProductShowcase />
 
-      {/* 7. CASE STUDIES */}
+      {/* 10. MEASURED COMMERCIAL RESULTS & CASE STUDIES */}
       <section ref={caseSectionRef} className="py-24 max-w-7xl mx-auto px-6 md:px-12 relative">
         <div ref={caseHeadingRef} className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-xs font-mono text-[#B08D57] tracking-widest uppercase font-bold">
@@ -602,10 +606,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 8. SCROLL SERVICES */}
-      <ScrollServices />
-
-      {/* 9. WHY CHOOSE US */}
+      {/* 11. WHY CHOOSE US */}
       <section ref={whySectionRef} className="py-28 max-w-7xl mx-auto px-6 md:px-12 relative">
         <div ref={whyHeadingRef} className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-xs font-mono text-[#B08D57] tracking-widest uppercase font-bold">
@@ -650,15 +651,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 10. MEET THE TEAM */}
-      <section className="bg-[#F3EFE6] border-y border-[#DCD4C5]">
-        <MeetTheTeamSection />
-      </section>
-
-      {/* 11. CLIENT TESTIMONIALS */}
-      <TestimonialChain />
-
-      {/* 12. AGENCY STATS */}
+      {/* 12. AGENCY STATS & MILESTONES */}
       <section ref={statsSectionRef} className="py-24 bg-[#FAF7F2] border-y border-[#DCD4C5] relative">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -683,7 +676,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 13. FAQ ACCORDION */}
+      {/* 13. MEET THE CREATIVE TEAM */}
+      <section className="bg-[#F3EFE6] border-b border-[#DCD4C5]">
+        <MeetTheTeamSection />
+      </section>
+
+      {/* 14. CLIENT TESTIMONIALS */}
+      <TestimonialChain />
+
+      {/* 15. FAQ ACCORDION */}
       <section className="py-28 max-w-4xl mx-auto px-6 md:px-12 relative">
         <div className="text-center mb-16 space-y-4">
           <span className="text-xs font-mono text-[#B08D57] tracking-widest uppercase font-bold">
@@ -699,11 +700,11 @@ export default function HomePage() {
         <FaqAccordion items={faqsData} />
       </section>
 
-      {/* 14. PROJECT BRIEF / LEAD FORM */}
-      <ProjectLeadForm />
-
-      {/* 15. FINAL CTA */}
+      {/* 16. INTERACTIVE PROJECT SCOPE BUILDER & FINAL CTA */}
       <FinalCtaSection />
+
+      {/* 17. DIRECT PROJECT BRIEF & LEAD INTAKE */}
+      <ProjectLeadForm />
     </div>
   );
 }
