@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Search, ChevronDown, Link2, BookOpen, CreditCard } from "lucide-react";
 import gsap from "gsap";
@@ -95,7 +96,7 @@ export default function Navbar() {
               onMouseEnter={() => setHoveredTab("More")}
             >
               <Link href="#" className="relative flex-1 aspect-[4/5] rounded-[16px] overflow-hidden group">
-                <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=400&auto=format&fit=crop" alt="Guestbook" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <Image src="https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=400&auto=format&fit=crop" alt="Guestbook" fill sizes="(max-width: 768px) 33vw, 200px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">
                   <h3 className="text-white font-semibold text-[15px]">Guestbook</h3>
@@ -104,7 +105,7 @@ export default function Navbar() {
               </Link>
 
               <Link href="#" className="relative flex-1 aspect-[4/5] rounded-[16px] overflow-hidden group">
-                <img src="https://images.unsplash.com/photo-1521685149344-9ad90e663435?q=80&w=400&auto=format&fit=crop" alt="Bucket List" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <Image src="https://images.unsplash.com/photo-1521685149344-9ad90e663435?q=80&w=400&auto=format&fit=crop" alt="Bucket List" fill sizes="(max-width: 768px) 33vw, 200px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">
                   <h3 className="text-white font-semibold text-[15px]">Bucket List</h3>

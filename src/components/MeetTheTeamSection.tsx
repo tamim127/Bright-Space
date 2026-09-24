@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import Image from "next/image";
 import { teamData } from "@/data/team";
 import { Linkedin, Github, Twitter } from "lucide-react";
 
@@ -545,10 +546,12 @@ export default function MeetTheTeamSection() {
                 <div>
                   <div className="flex items-center gap-3.5 mb-4">
                     <div className="relative w-14 h-14 rounded-full overflow-hidden border border-[#DCD4C5] shadow-md flex-shrink-0 bg-[#FAF7F2]">
-                      <img
+                      <Image
                         src={member.image}
                         alt={member.name}
-                        className="w-full h-full object-cover"
+                        fill
+                        sizes="56px"
+                        className="object-cover"
                       />
                     </div>
                     <div>

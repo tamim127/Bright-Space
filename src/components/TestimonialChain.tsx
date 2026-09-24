@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ChevronLeft, ChevronRight, Quote, Sparkles } from "lucide-react";
 
@@ -173,10 +174,12 @@ export default function TestimonialChain() {
           onClick={() => setActiveIndex(prev2.index)}
           className="hidden xl:block w-28 h-[360px] rounded-[30px] overflow-hidden border-[4px] border-white shadow-xl cursor-pointer hover:opacity-80 transition-all duration-500 hover:scale-105 shrink-0 relative group opacity-35 scale-65"
         >
-          <img
+          <Image
             src={prev2.item.image}
             alt={prev2.item.author}
-            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+            fill
+            sizes="112px"
+            className="object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3">
             <span className="text-xs font-semibold text-white truncate">{prev2.item.author}</span>
@@ -187,10 +190,12 @@ export default function TestimonialChain() {
           onClick={() => setActiveIndex(prev1.index)}
           className="hidden sm:block w-36 lg:w-44 h-[430px] rounded-[32px] overflow-hidden border-[4px] border-white shadow-2xl cursor-pointer hover:opacity-95 transition-all duration-500 hover:scale-90 shrink-0 relative group z-10 opacity-75 scale-80"
         >
-          <img
+          <Image
             src={prev1.item.image}
             alt={prev1.item.author}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            fill
+            sizes="176px"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
             <span className="text-xs font-mono text-[#B08D57] uppercase font-bold">{prev1.item.metric}</span>
@@ -231,9 +236,11 @@ export default function TestimonialChain() {
               ref={authorRef}
               className="flex items-center gap-4 pt-4 border-l-2 border-[#B08D57] pl-4 mt-auto"
             >
-              <img
+              <Image
                 src={active.avatar}
                 alt={active.author}
+                width={48}
+                height={48}
                 className="w-12 h-12 rounded-full object-cover border border-[#DCD4C5] shadow-md"
               />
               <div>
@@ -251,10 +258,12 @@ export default function TestimonialChain() {
             ref={imageRef}
             className="w-full md:w-[42%] h-64 md:h-auto rounded-[28px] overflow-hidden relative shadow-lg group shrink-0 border border-[#DCD4C5]"
           >
-            <img
+            <Image
               src={active.image}
               alt={active.author}
-              className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+              fill
+              sizes="(max-width: 768px) 100vw, 42%"
+              className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-5">
               <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20">
@@ -271,10 +280,12 @@ export default function TestimonialChain() {
           onClick={() => setActiveIndex(next1.index)}
           className="hidden sm:block w-36 lg:w-44 h-[430px] rounded-[32px] overflow-hidden border-[4px] border-white shadow-2xl cursor-pointer hover:opacity-95 transition-all duration-500 hover:scale-90 shrink-0 relative group z-10 opacity-75 scale-80"
         >
-          <img
+          <Image
             src={next1.item.image}
             alt={next1.item.author}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            fill
+            sizes="176px"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
             <span className="text-xs font-mono text-[#B08D57] uppercase font-bold">{next1.item.metric}</span>
@@ -287,10 +298,12 @@ export default function TestimonialChain() {
           onClick={() => setActiveIndex(next2.index)}
           className="hidden xl:block w-28 h-[360px] rounded-[30px] overflow-hidden border-[4px] border-white shadow-2xl cursor-pointer hover:opacity-80 transition-all duration-500 hover:scale-105 shrink-0 relative group opacity-35 scale-65"
         >
-          <img
+          <Image
             src={next2.item.image}
             alt={next2.item.author}
-            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+            fill
+            sizes="112px"
+            className="object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3">
             <span className="text-xs font-semibold text-white truncate">{next2.item.author}</span>

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { CheckCircle2 } from "lucide-react";
 
 const galleryCol1 = [
@@ -352,10 +353,12 @@ export default function Footer() {
 
             <div className="bg-white border border-[#DCD4C5] rounded-2xl p-4 flex items-center gap-4 max-w-md shadow-md">
               <div className="relative w-20 h-28 rounded-xl overflow-hidden shrink-0 border border-[#DCD4C5] bg-[#F3EFE6]">
-                <img
+                <Image
                   src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300"
                   alt="Kate W."
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="80px"
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-1.5 justify-center">
                   <span className="text-[10px] font-mono font-bold tracking-widest text-white uppercase">
@@ -390,10 +393,12 @@ export default function Footer() {
                   key={`dna-col1-${idx}`}
                   className="w-full h-44 sm:h-52 rounded-[36px] overflow-hidden border border-[#DCD4C5] shadow-md shrink-0 group relative bg-white"
                 >
-                  <img
+                  <Image
                     src={imgUrl}
                     alt={`Showcase ${idx}`}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    fill
+                    sizes="128px"
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                 </div>
               ))}
@@ -405,10 +410,12 @@ export default function Footer() {
                   key={`dna-col2-${idx}`}
                   className="w-full h-44 sm:h-52 rounded-[36px] overflow-hidden border border-[#DCD4C5] shadow-md shrink-0 group relative bg-white"
                 >
-                  <img
+                  <Image
                     src={imgUrl}
                     alt={`Showcase ${idx}`}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    fill
+                    sizes="128px"
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                 </div>
               ))}
@@ -420,10 +427,12 @@ export default function Footer() {
                   key={`dna-col3-${idx}`}
                   className="w-full h-44 sm:h-52 rounded-[36px] overflow-hidden border border-[#DCD4C5] shadow-md shrink-0 group relative bg-white"
                 >
-                  <img
+                  <Image
                     src={imgUrl}
                     alt={`Showcase ${idx}`}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    fill
+                    sizes="128px"
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                 </div>
               ))}
