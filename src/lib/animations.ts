@@ -85,118 +85,216 @@ export interface HeroRefs {
   slogan: HTMLElement;
   ctaRow: HTMLElement;
   clientLogos: HTMLElement;
-  videoBg: HTMLElement;
-  ambientGlow: HTMLElement;
+  videoBg?: HTMLElement;
+  ambientGlow?: HTMLElement;
   globeContainer: HTMLElement;
+  renderFrame?: (index: number) => void;
+  scrollHint?: HTMLElement;
+  contentWrapper?: HTMLElement;
+  frameCount?: number;
 }
 
 export function initHeroAnimation(refs: HeroRefs): gsap.Context | null {
-  if (prefersReducedMotion()) return null;
+  const frameCount = refs.frameCount || 240;
+
+  if (prefersReducedMotion()) {
+    // If user prefers reduced motion: show final frame and reveal hero content immediately
+    if (refs.renderFrame) {
+      refs.renderFrame(frameCount - 1);
+    }
+    gsap.set(refs.headingLines, { y: "0%", rotate: 0, opacity: 1 });
+    gsap.set([refs.slogan, refs.ctaRow, refs.clientLogos], { y: 0, opacity: 1 });
+    gsap.set(refs.globeContainer, { scale: 1, opacity: 1 });
+    if (refs.contentWrapper) {
+      refs.contentWrapper.style.pointerEvents = "auto";
+    }
+    if (refs.scrollHint) {
+      gsap.set(refs.scrollHint, { opacity: 0, display: "none" });
+    }
+    return null;
+  }
 
   const ctx = gsap.context(() => {
+    // Initial state: hide hero text, globe, and CTA; prepare animation stage
+    gsap.set(refs.headingLines, { y: "115%", rotate: 2 });
+    gsap.set([refs.slogan, refs.ctaRow, refs.clientLogos], { y: 24, opacity: 0 });
+    gsap.set(refs.globeContainer, { scale: 0.85, opacity: 0 });
+    if (refs.contentWrapper) {
+      refs.contentWrapper.style.pointerEvents = "none";
+    }
+    if (refs.scrollHint) {
+      gsap.set(refs.scrollHint, { opacity: 1, y: 0 });
+    }
+
+    if (refs.renderFrame) {
+      refs.renderFrame(0);
+    }
+
     const mm = gsap.matchMedia();
 
-    // ── PAGE-LOAD INTRO (one-time, not scroll-driven) ──────
-    const introTl = gsap.timeline({ defaults: { ease: MOTION.ease.cinematic } });
-
-    // Masked line reveal for heading
-    introTl.fromTo(
-      refs.headingLines,
-      { y: "110%", rotate: 3 },
-      {
-        y: "0%",
-        rotate: 0,
-        duration: MOTION.duration.cinematic,
-        stagger: 0.18,
-      },
-      0.2
-    );
-
-    // Slogan fades in after heading
-    introTl.fromTo(
-      refs.slogan,
-      { y: MOTION.distance.medium, opacity: 0 },
-      { y: 0, opacity: 1, duration: MOTION.duration.normal },
-      0.7
-    );
-
-    // CTA row
-    introTl.fromTo(
-      refs.ctaRow,
-      { y: MOTION.distance.small, opacity: 0 },
-      { y: 0, opacity: 1, duration: MOTION.duration.normal },
-      0.9
-    );
-
-    // Client logos
-    introTl.fromTo(
-      refs.clientLogos,
-      { y: MOTION.distance.small, opacity: 0 },
-      { y: 0, opacity: 1, duration: MOTION.duration.normal },
-      1.0
-    );
-
-    // Globe scale-in
-    introTl.fromTo(
-      refs.globeContainer,
-      { scale: 0.85, opacity: 0 },
-      { scale: 1, opacity: 1, duration: MOTION.duration.cinematic },
-      0.4
-    );
-
-    // ── SCROLL-DRIVEN PARALLAX (scrubbed) ──────────────────
-    mm.add("(min-width: 1024px)", () => {
-      const scrollTl = gsap.timeline();
-
-      // Heading scales down and shifts up
-      scrollTl.to(refs.headingLines, {
-        scale: MOTION.scale.dramatic,
-        y: "-30%",
-        opacity: 0.3,
-        duration: 1,
-        stagger: 0.05,
-      }, 0);
-
-      // Slogan and CTA fade out at 40%
-      scrollTl.to(refs.slogan, { y: -40, opacity: 0, duration: 0.4 }, 0);
-      scrollTl.to(refs.ctaRow, { y: -30, opacity: 0, duration: 0.35 }, 0.05);
-      scrollTl.to(refs.clientLogos, { y: -20, opacity: 0, duration: 0.3 }, 0.1);
-
-      // Video bg — slow parallax (background layer)
-      scrollTl.to(refs.videoBg, { y: "15%", duration: 1 }, 0);
-
-      // Ambient glow — very slow (deepest layer)
-      scrollTl.to(refs.ambientGlow, { y: "10%", duration: 1 }, 0);
-
-      // Globe — medium parallax
-      scrollTl.to(refs.globeContainer, { y: "25%", scale: 0.9, duration: 1 }, 0);
-
-      ScrollTrigger.create({
-        trigger: refs.section,
-        start: "top top",
-        end: "bottom top",
-        scrub: 1,
-        animation: scrollTl,
+    // Desktop & Tablet
+    mm.add("(min-width: 768px)", () => {
+      const frameTracker = { frame: 0 };
+      const scrollTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: refs.section,
+          start: "top top",
+          end: "+=2600",
+          pin: true,
+          pinSpacing: true,
+          scrub: 0.6,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            if (refs.contentWrapper) {
+              refs.contentWrapper.style.pointerEvents = self.progress >= 0.8 ? "auto" : "none";
+            }
+          },
+        },
       });
+
+      // 1. Initial scroll prompt fades away quickly (0 -> 0.08)
+      if (refs.scrollHint) {
+        scrollTl.to(
+          refs.scrollHint,
+          { opacity: 0, y: -16, duration: 0.08, ease: "power1.out" },
+          0
+        );
+      }
+
+      // 2. Scrub frames 0 -> 239 over 0 to 0.72 of the timeline
+      if (refs.renderFrame) {
+        scrollTl.to(
+          frameTracker,
+          {
+            frame: frameCount - 1,
+            ease: "none",
+            duration: 0.72,
+            onUpdate: () => {
+              refs.renderFrame!(Math.round(frameTracker.frame));
+            },
+          },
+          0
+        );
+      }
+
+      // 3. Smooth continuous transition into Hero content reveal (0.68 -> 1.0)
+      // Rotating globe begins expanding and materializing as frames settle
+      scrollTl.to(
+        refs.globeContainer,
+        { scale: 1, opacity: 1, duration: 0.28, ease: "power2.out" },
+        0.68
+      );
+
+      // Masked typography slides up
+      scrollTl.to(
+        refs.headingLines,
+        {
+          y: "0%",
+          rotate: 0,
+          duration: 0.24,
+          stagger: 0.05,
+          ease: "power3.out",
+        },
+        0.72
+      );
+
+      // Slogan
+      scrollTl.to(
+        refs.slogan,
+        { y: 0, opacity: 1, duration: 0.2, ease: "power2.out" },
+        0.78
+      );
+
+      // CTA row
+      scrollTl.to(
+        refs.ctaRow,
+        { y: 0, opacity: 1, duration: 0.2, ease: "power2.out" },
+        0.82
+      );
+
+      // Client logos
+      scrollTl.to(
+        refs.clientLogos,
+        { y: 0, opacity: 1, duration: 0.2, ease: "power2.out" },
+        0.86
+      );
     });
 
-    // Tablet: reduced parallax
-    mm.add("(min-width: 768px) and (max-width: 1023px)", () => {
-      const scrollTl = gsap.timeline();
-      scrollTl.to(refs.slogan, { opacity: 0, duration: 0.5 }, 0);
-      scrollTl.to(refs.ctaRow, { opacity: 0, duration: 0.4 }, 0.1);
-      scrollTl.to(refs.videoBg, { y: "8%", duration: 1 }, 0);
-
-      ScrollTrigger.create({
-        trigger: refs.section,
-        start: "top top",
-        end: "bottom top",
-        scrub: 1,
-        animation: scrollTl,
+    // Mobile (< 768px): shorter scroll distance for comfortable swipe, same cinematic flow
+    mm.add("(max-width: 767px)", () => {
+      const frameTracker = { frame: 0 };
+      const scrollTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: refs.section,
+          start: "top top",
+          end: "+=1700",
+          pin: true,
+          pinSpacing: true,
+          scrub: 0.5,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            if (refs.contentWrapper) {
+              refs.contentWrapper.style.pointerEvents = self.progress >= 0.8 ? "auto" : "none";
+            }
+          },
+        },
       });
-    });
 
-    // Mobile: no scroll parallax (only intro plays)
+      if (refs.scrollHint) {
+        scrollTl.to(
+          refs.scrollHint,
+          { opacity: 0, y: -12, duration: 0.08, ease: "power1.out" },
+          0
+        );
+      }
+
+      if (refs.renderFrame) {
+        scrollTl.to(
+          frameTracker,
+          {
+            frame: frameCount - 1,
+            ease: "none",
+            duration: 0.72,
+            onUpdate: () => {
+              refs.renderFrame!(Math.round(frameTracker.frame));
+            },
+          },
+          0
+        );
+      }
+
+      scrollTl.to(
+        refs.globeContainer,
+        { scale: 1, opacity: 1, duration: 0.28, ease: "power2.out" },
+        0.68
+      );
+
+      scrollTl.to(
+        refs.headingLines,
+        { y: "0%", rotate: 0, duration: 0.24, stagger: 0.05, ease: "power3.out" },
+        0.72
+      );
+
+      scrollTl.to(
+        refs.slogan,
+        { y: 0, opacity: 1, duration: 0.2, ease: "power2.out" },
+        0.78
+      );
+
+      scrollTl.to(
+        refs.ctaRow,
+        { y: 0, opacity: 1, duration: 0.2, ease: "power2.out" },
+        0.82
+      );
+
+      scrollTl.to(
+        refs.clientLogos,
+        { y: 0, opacity: 1, duration: 0.2, ease: "power2.out" },
+        0.86
+      );
+    });
   }, refs.section);
 
   return ctx;

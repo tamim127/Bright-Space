@@ -29,6 +29,7 @@ import FinalCtaSection from "@/components/FinalCtaSection";
 import InfiniteProductShowcase from "@/components/InfiniteProductShowcase";
 import WhyUsSection from "@/components/WhyUsSection";
 import MeasuredResultsSection from "@/components/MeasuredResultsSection";
+import HeroCanvasScrubber, { HeroCanvasScrubberHandle } from "@/components/HeroCanvasScrubber";
 
 import { projectsData } from "@/data/projects";
 import { servicesData } from "@/data/services";
@@ -90,12 +91,14 @@ export default function HomePage() {
 
   // Refs
   const heroSectionRef = useRef<HTMLElement>(null);
+  const heroCanvasScrubberRef = useRef<HeroCanvasScrubberHandle>(null);
+  const heroContentWrapperRef = useRef<HTMLDivElement>(null);
+  const heroScrollHintRef = useRef<HTMLDivElement>(null);
   const heroLine1Ref = useRef<HTMLSpanElement>(null);
   const heroLine2Ref = useRef<HTMLSpanElement>(null);
   const heroSloganRef = useRef<HTMLParagraphElement>(null);
   const heroCtaRef = useRef<HTMLDivElement>(null);
   const heroLogosRef = useRef<HTMLDivElement>(null);
-  const heroVideoBgRef = useRef<HTMLDivElement>(null);
   const heroAmbientRef = useRef<HTMLDivElement>(null);
   const heroGlobeRef = useRef<HTMLDivElement>(null);
 
@@ -170,9 +173,14 @@ export default function HomePage() {
           slogan: heroSloganRef.current!,
           ctaRow: heroCtaRef.current!,
           clientLogos: heroLogosRef.current!,
-          videoBg: heroVideoBgRef.current!,
-          ambientGlow: heroAmbientRef.current!,
+          ambientGlow: heroAmbientRef.current || undefined,
           globeContainer: heroGlobeRef.current!,
+          scrollHint: heroScrollHintRef.current || undefined,
+          contentWrapper: heroContentWrapperRef.current || undefined,
+          renderFrame: (index: number) => {
+            heroCanvasScrubberRef.current?.renderFrame(index);
+          },
+          frameCount: 240,
         };
         contexts.push(initHeroAnimation(hRefs));
       }
@@ -253,48 +261,58 @@ export default function HomePage() {
       <div className="fixed inset-0 bg-grid-pattern opacity-40 pointer-events-none z-0" />
 
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION */}
+      {/* 1. HERO SECTION — Pinned Scroll-Scrubbed Animation Stage */}
       {/* ========================================================================= */}
       <section
         ref={heroSectionRef}
-        className="relative min-h-[92vh] flex flex-col justify-between overflow-hidden border-b border-[#DCD4C5] -mt-24 pt-28 pb-8"
+        className="relative h-screen min-h-[640px] w-full flex flex-col justify-between overflow-hidden border-b border-[#DCD4C5] -mt-24 pt-24 pb-6"
       >
         <div className="absolute inset-0 z-0 overflow-hidden bg-[#F3EFE6]">
-          <div ref={heroVideoBgRef}>
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover opacity-10 mix-blend-multiply pointer-events-none scale-105"
-              src="/hero-bg.mp4"
-            />
-          </div>
+          {/* Performant HTML5 Canvas Frame Scrubber */}
+          <HeroCanvasScrubber
+            ref={heroCanvasScrubberRef}
+            frameCount={240}
+            className="absolute inset-0 w-full h-full pointer-events-none z-0"
+          />
 
-          <div className="absolute inset-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 pointer-events-none z-0">
+          {/* Precision Architectural Grid Lines */}
+          <div className="absolute inset-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 pointer-events-none z-[1] opacity-50">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="border-r border-[#DCD4C5]/40 h-full" />
+              <div key={i} className="border-r border-[#DCD4C5]/30 h-full" />
             ))}
           </div>
 
+          {/* Ambient Lighting & Atmosphere */}
           <div
             ref={heroAmbientRef}
-            className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(176,141,87,0.2)_0%,rgba(243,239,230,0.9)_70%,#F3EFE6_100%)] pointer-events-none"
+            className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(176,141,87,0.12)_0%,rgba(243,239,230,0.3)_70%,rgba(243,239,230,0.7)_100%)] pointer-events-none z-[2]"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#F3EFE6]/80 via-transparent to-[#F3EFE6] pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#F3EFE6]/40 via-transparent to-[#F3EFE6] pointer-events-none z-[2]" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 md:px-12 z-10 w-full relative flex-grow flex flex-col justify-center">
+        {/* Existing Hero Content Layer — Revealed dynamically at end of frame scrub */}
+        <div
+          ref={heroContentWrapperRef}
+          className="max-w-7xl mx-auto px-6 md:px-12 z-10 w-full relative flex-grow flex flex-col justify-center pointer-events-none"
+        >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             <div className="lg:col-span-6 flex flex-col justify-center space-y-6 lg:pr-4">
               <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[104px] font-black tracking-tighter leading-[0.88] text-[#111111] uppercase select-none">
                 <span className="line-reveal block">
-                  <span ref={heroLine1Ref} className="line-reveal-inner block">
+                  <span
+                    ref={heroLine1Ref}
+                    className="line-reveal-inner block"
+                    style={{ transform: "translateY(115%)" }}
+                  >
                     BRIGHT
                   </span>
                 </span>
                 <span className="line-reveal block">
-                  <span ref={heroLine2Ref} className="line-reveal-inner block text-[#B08D57]">
+                  <span
+                    ref={heroLine2Ref}
+                    className="line-reveal-inner block text-[#B08D57]"
+                    style={{ transform: "translateY(115%)" }}
+                  >
                     SPACE
                   </span>
                 </span>
@@ -303,12 +321,16 @@ export default function HomePage() {
               <p
                 ref={heroSloganRef}
                 className="text-lg sm:text-xl md:text-2xl text-[#555555] font-light max-w-lg leading-relaxed pt-1"
-                style={{ opacity: 0 }}
+                style={{ opacity: 0, transform: "translateY(24px)" }}
               >
                 Turning concepts into experiences that connect, inspire, and endure.
               </p>
 
-              <div ref={heroCtaRef} className="w-full max-w-md space-y-3.5 pt-1" style={{ opacity: 0 }}>
+              <div
+                ref={heroCtaRef}
+                className="w-full max-w-md space-y-3.5 pt-1"
+                style={{ opacity: 0, transform: "translateY(20px)" }}
+              >
                 <div className="flex items-center gap-3">
                   <div className="flex -space-x-2">
                     {[
@@ -353,7 +375,7 @@ export default function HomePage() {
               <div
                 ref={heroLogosRef}
                 className="pt-4 border-t border-[#DCD4C5] flex flex-wrap items-center gap-6 sm:gap-8 text-[#555555] text-xs font-mono tracking-widest uppercase"
-                style={{ opacity: 0 }}
+                style={{ opacity: 0, transform: "translateY(16px)" }}
               >
                 <span className="hover:text-[#111111] transition-colors flex items-center gap-1.5 font-bold">
                   <span className="w-2 h-2 rounded-sm bg-[#B08D57]"></span> 3PORTALS
@@ -374,7 +396,7 @@ export default function HomePage() {
               <div
                 ref={heroGlobeRef}
                 className="relative w-full h-[380px] sm:h-[440px] lg:h-[480px] flex items-center justify-center"
-                style={{ opacity: 0 }}
+                style={{ opacity: 0, transform: "scale(0.85)" }}
               >
                 <RotatingGlobe
                   className="w-full h-full"
@@ -386,6 +408,19 @@ export default function HomePage() {
                 />
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Cinematic Scroll-to-Explore Cue */}
+        <div
+          ref={heroScrollHintRef}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 pointer-events-none text-[#777777]"
+        >
+          <span className="text-[10px] font-mono tracking-[0.25em] uppercase font-semibold text-[#8C6D3B]">
+            Scroll to Explore
+          </span>
+          <div className="w-5 h-9 rounded-full border border-[#B08D57]/50 flex justify-center pt-1.5 shadow-sm bg-white/40 backdrop-blur-xs">
+            <div className="w-1 h-2 rounded-full bg-[#B08D57] animate-bounce" />
           </div>
         </div>
       </section>
