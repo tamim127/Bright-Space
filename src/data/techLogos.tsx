@@ -547,20 +547,20 @@ export const techLogoCollection: Record<string, TechItem> = {
 export const techCategoryGroups: TechCategoryGroup[] = [
   {
     id: "frontend",
-    title: "Frontend",
-    subtitle: "Modern Reactive UI",
+    title: "Frontend & UI",
+    subtitle: "Modern, responsive and interactive interfaces.",
     panelPosition: {
-      top: "12%",
-      left: "4%",
+      top: "40px",
+      left: "30px",
     },
     defaultAngle: {
-      rotateZ: -1.4,
-      rotateY: 4,
-      rotateX: 2,
+      rotateZ: -1.2,
+      rotateY: 3.5,
+      rotateX: 1.5,
     },
     items: [
-      techLogoCollection.nextjs,
       techLogoCollection.react,
+      techLogoCollection.nextjs,
       techLogoCollection.typescript,
       techLogoCollection.tailwind,
     ],
@@ -568,14 +568,14 @@ export const techCategoryGroups: TechCategoryGroup[] = [
   {
     id: "backend",
     title: "Backend & APIs",
-    subtitle: "High-Throughput Systems",
+    subtitle: "Scalable server-side solutions and integrations.",
     panelPosition: {
-      top: "40%",
-      left: "3%",
+      top: "270px",
+      left: "24px",
     },
     defaultAngle: {
-      rotateZ: 0.8,
-      rotateY: 5,
+      rotateZ: 0.6,
+      rotateY: 4.5,
       rotateX: -1,
     },
     items: [
@@ -587,16 +587,16 @@ export const techCategoryGroups: TechCategoryGroup[] = [
   },
   {
     id: "design",
-    title: "Design & Animation",
-    subtitle: "Interactive Polish",
+    title: "Design & Motion",
+    subtitle: "Beautiful visuals and smooth experiences.",
     panelPosition: {
-      top: "70%",
-      left: "8%",
+      top: "500px",
+      left: "30px",
     },
     defaultAngle: {
-      rotateZ: -0.6,
-      rotateY: 3,
-      rotateX: -3,
+      rotateZ: -0.8,
+      rotateY: 2.5,
+      rotateX: -2.5,
     },
     items: [
       techLogoCollection.figma,
@@ -608,15 +608,15 @@ export const techCategoryGroups: TechCategoryGroup[] = [
   {
     id: "cms",
     title: "CMS & E-commerce",
-    subtitle: "Commercial Scale",
+    subtitle: "Flexible content and powerful commerce solutions.",
     panelPosition: {
-      top: "14%",
-      right: "6%",
+      top: "30px",
+      right: "30px",
     },
     defaultAngle: {
-      rotateZ: 1.2,
-      rotateY: -4,
-      rotateX: 2,
+      rotateZ: 1.0,
+      rotateY: -3.5,
+      rotateX: 1.5,
     },
     items: [
       techLogoCollection.wix,
@@ -628,14 +628,14 @@ export const techCategoryGroups: TechCategoryGroup[] = [
   {
     id: "database",
     title: "Databases & Storage",
-    subtitle: "ACID & Real-Time Sync",
+    subtitle: "Reliable data management and storage.",
     panelPosition: {
-      top: "38%",
-      right: "5%",
+      top: "210px",
+      right: "24px",
     },
     defaultAngle: {
-      rotateZ: -0.8,
-      rotateY: -5,
+      rotateZ: -0.7,
+      rotateY: -4.5,
       rotateX: -1,
     },
     items: [
@@ -648,14 +648,14 @@ export const techCategoryGroups: TechCategoryGroup[] = [
   {
     id: "cloud",
     title: "Cloud & DevOps",
-    subtitle: "Zero-Downtime Infrastructure",
+    subtitle: "Secure deployment and scalable infrastructure.",
     panelPosition: {
-      top: "62%",
-      right: "3%",
+      top: "390px",
+      right: "24px",
     },
     defaultAngle: {
-      rotateZ: 1.5,
-      rotateY: -3,
+      rotateZ: 1.2,
+      rotateY: -2.8,
       rotateX: -2,
     },
     items: [
@@ -667,16 +667,16 @@ export const techCategoryGroups: TechCategoryGroup[] = [
   },
   {
     id: "tools",
-    title: "Other Tools",
-    subtitle: "Workflow & Engineering",
+    title: "Other Tools & AI",
+    subtitle: "Workflow, tooling and emerging intelligence.",
     panelPosition: {
-      top: "84%",
-      right: "16%",
+      top: "570px",
+      right: "30px",
     },
     defaultAngle: {
-      rotateZ: -1.0,
-      rotateY: -2,
-      rotateX: -4,
+      rotateZ: -0.8,
+      rotateY: -1.8,
+      rotateX: -3,
     },
     items: [
       techLogoCollection.vscode,

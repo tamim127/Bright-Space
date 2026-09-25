@@ -19,6 +19,7 @@ import {
   TechCategoryGroup,
   TechItem,
 } from "@/data/techLogos";
+import TechCore3D from "./TechCore3D";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -219,20 +220,29 @@ export default function TechArsenalSection() {
     }
   };
 
-  // Subtle Parallax Tilt on Core
-  const [mouseParallax, setMouseParallax] = useState({ x: 0, y: 0 });
-  const handleSectionMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = sectionRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    const nx = (e.clientX - rect.left) / rect.width - 0.5;
-    const ny = (e.clientY - rect.top) / rect.height - 0.5;
-    setMouseParallax({ x: nx * 12, y: ny * 12 });
-  };
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top 85%",
+        end: "bottom 15%",
+        scrub: 1,
+        onUpdate: (self) => {
+          setScrollProgress(self.progress);
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
       ref={sectionRef}
-      onMouseMove={handleSectionMouseMove}
       className="relative py-28 md:py-36 bg-[#FAF7F2] overflow-hidden border-b border-[#E3DAC8]"
     >
       {/* Background Decorative Mesh & Golden Wave Asset */}
@@ -241,13 +251,13 @@ export default function TechArsenalSection() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-radial from-[#F1E4C9]/45 via-[#F6ECE0]/20 to-transparent blur-3xl opacity-80" />
         <div className="absolute -top-24 right-1/4 w-[500px] h-[500px] rounded-full bg-radial from-[#EEDBC0]/35 to-transparent blur-3xl opacity-60" />
 
-        {/* Bottom Left Flowing Gold Particle Wave Mesh Asset */}
-        <div className="absolute -bottom-24 -left-20 w-[600px] sm:w-[750px] lg:w-[900px] h-[400px] sm:h-[500px] opacity-40 mix-blend-multiply pointer-events-none select-none">
+        {/* Bottom Left Flowing Gold Particle Wave Mesh Asset (Tamed, non-interfering) */}
+        <div className="absolute bottom-0 left-0 w-[450px] lg:w-[580px] h-[280px] sm:h-[340px] opacity-25 mix-blend-multiply pointer-events-none select-none overflow-hidden">
           <Image
             src="/images/tech/gold-wave.jpg"
             alt="Gold particle wave"
             fill
-            sizes="(max-width: 1024px) 100vw, 900px"
+            sizes="(max-width: 1024px) 100vw, 580px"
             className="object-contain object-left-bottom"
           />
         </div>
@@ -272,7 +282,7 @@ export default function TechArsenalSection() {
             {/* Eyebrow: // TECH STACK & TOOLS */}
             <div className="flex items-center gap-2 mb-3">
               <span className="text-xs font-mono font-bold tracking-[0.25em] text-[#9E7A45] uppercase">
-                // TECH STACK &amp; TOOLS
+                {"//"} TECH STACK &amp; TOOLS
               </span>
             </div>
 
@@ -370,73 +380,73 @@ export default function TechArsenalSection() {
         {/* ================================================================= */}
         {/* DESKTOP SPATIAL UNIVERSE (Digital Core + Floating 3D Panels) */}
         {/* ================================================================= */}
-        <div className="hidden lg:block relative w-full h-[680px] rounded-[32px] border border-[#E3DAC8]/60 bg-gradient-to-b from-white/40 via-[#FAF7F2]/60 to-white/40 p-4 overflow-hidden select-none">
+        <div className="hidden lg:block relative w-full h-[750px] rounded-[32px] border border-[#E3DAC8]/60 bg-gradient-to-b from-white/40 via-[#FAF7F2]/60 to-white/40 p-4 overflow-hidden select-none">
           {/* Subtle Golden SVG Connection Lines Connecting Core to Cards */}
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none z-10"
-            viewBox="0 0 1200 680"
+            viewBox="0 0 1200 750"
             fill="none"
           >
             <defs>
               <linearGradient id="goldTechGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#CBB996" stopOpacity="0.2" />
-                <stop offset="50%" stopColor="#B08D57" stopOpacity="0.75" />
+                <stop offset="50%" stopColor="#B08D57" stopOpacity="0.8" />
                 <stop offset="100%" stopColor="#E0D1B4" stopOpacity="0.2" />
               </linearGradient>
             </defs>
 
-            {/* Core (Center at 600, 340) -> Floating Panel Anchors */}
-            {/* Frontend: Top Left (240, 140) */}
+            {/* Core (Center at 600, 375) -> Floating Panel Anchors */}
+            {/* Frontend: Top Left (350, 112) */}
             <path
-              d="M 600 340 C 420 300, 320 220, 240 140"
+              d="M 600 375 C 500 300, 420 180, 350 112"
               stroke="url(#goldTechGrad)"
               strokeWidth="1.2"
               strokeDasharray="4 6"
               className={activeCategory === "frontend" ? "opacity-100 stroke-[#9E7A45]" : "opacity-45"}
             />
-            {/* Backend: Mid Left (220, 350) */}
+            {/* Backend: Mid Left (344, 342) */}
             <path
-              d="M 600 340 C 450 340, 360 350, 220 350"
+              d="M 600 375 C 500 370, 420 355, 344 342"
               stroke="url(#goldTechGrad)"
               strokeWidth="1.2"
               strokeDasharray="4 6"
               className={activeCategory === "backend" ? "opacity-100 stroke-[#9E7A45]" : "opacity-45"}
             />
-            {/* Design: Bottom Left (260, 520) */}
+            {/* Design: Bottom Left (350, 572) */}
             <path
-              d="M 600 340 C 460 410, 370 480, 260 520"
+              d="M 600 375 C 500 450, 420 520, 350 572"
               stroke="url(#goldTechGrad)"
               strokeWidth="1.2"
               strokeDasharray="4 6"
               className={activeCategory === "design" ? "opacity-100 stroke-[#9E7A45]" : "opacity-45"}
             />
-            {/* CMS: Top Right (960, 160) */}
+            {/* CMS: Top Right (850, 102) */}
             <path
-              d="M 600 340 C 760 270, 860 210, 960 160"
+              d="M 600 375 C 700 300, 780 180, 850 102"
               stroke="url(#goldTechGrad)"
               strokeWidth="1.2"
               strokeDasharray="4 6"
               className={activeCategory === "cms" ? "opacity-100 stroke-[#9E7A45]" : "opacity-45"}
             />
-            {/* Database: Mid Right (970, 330) */}
+            {/* Database: Mid Right (856, 282) */}
             <path
-              d="M 600 340 C 770 335, 870 330, 970 330"
+              d="M 600 375 C 700 340, 780 305, 856 282"
               stroke="url(#goldTechGrad)"
               strokeWidth="1.2"
               strokeDasharray="4 6"
               className={activeCategory === "database" ? "opacity-100 stroke-[#9E7A45]" : "opacity-45"}
             />
-            {/* Cloud: Lower Right (950, 480) */}
+            {/* Cloud: Lower Right (856, 462) */}
             <path
-              d="M 600 340 C 760 410, 850 450, 950 480"
+              d="M 600 375 C 700 410, 780 440, 856 462"
               stroke="url(#goldTechGrad)"
               strokeWidth="1.2"
               strokeDasharray="4 6"
               className={activeCategory === "cloud" ? "opacity-100 stroke-[#9E7A45]" : "opacity-45"}
             />
-            {/* Tools: Bottom Center-Right (800, 590) */}
+            {/* Tools: Bottom Right (850, 642) */}
             <path
-              d="M 600 340 C 670 460, 730 540, 800 590"
+              d="M 600 375 C 700 480, 780 570, 850 642"
               stroke="url(#goldTechGrad)"
               strokeWidth="1.2"
               strokeDasharray="4 6"
@@ -444,38 +454,30 @@ export default function TechArsenalSection() {
             />
 
             {/* Glowing Golden Connection Nodes */}
-            <circle cx="600" cy="340" r="4" fill="#B08D57" />
-            <circle cx="240" cy="140" r="3" fill="#B08D57" />
-            <circle cx="220" cy="350" r="3" fill="#B08D57" />
-            <circle cx="260" cy="520" r="3" fill="#B08D57" />
-            <circle cx="960" cy="160" r="3" fill="#B08D57" />
-            <circle cx="970" cy="330" r="3" fill="#B08D57" />
-            <circle cx="950" cy="480" r="3" fill="#B08D57" />
-            <circle cx="800" cy="590" r="3" fill="#B08D57" />
+            <circle cx="600" cy="375" r="4.5" fill="#B08D57" />
+            <circle cx="350" cy="112" r="3" fill="#B08D57" />
+            <circle cx="344" cy="342" r="3" fill="#B08D57" />
+            <circle cx="350" cy="572" r="3" fill="#B08D57" />
+            <circle cx="850" cy="102" r="3" fill="#B08D57" />
+            <circle cx="856" cy="282" r="3" fill="#B08D57" />
+            <circle cx="856" cy="462" r="3" fill="#B08D57" />
+            <circle cx="850" cy="642" r="3" fill="#B08D57" />
           </svg>
 
-          {/* Central Digital Core Component (Layered 3D Software Processor) */}
+          {/* Central Digital Core Component (Interactive 3D Three.js Object) */}
           <div
             ref={coreRef}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] flex items-center justify-center pointer-events-none z-15 transition-transform duration-300"
-            style={{
-              transform: `translate(-50%, -50%) rotateX(${-mouseParallax.y}deg) rotateY(${mouseParallax.x}deg)`,
-            }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] lg:w-[520px] lg:h-[520px] flex items-center justify-center z-15 pointer-events-auto"
           >
             {/* Ambient Radial Core Light Glow */}
-            <div className="absolute inset-0 rounded-full bg-radial from-[#F0DFC0]/60 via-[#ECD3A8]/20 to-transparent blur-2xl scale-125" />
+            <div className="absolute inset-0 rounded-full bg-radial from-[#F0DFC0]/50 via-[#ECD3A8]/15 to-transparent blur-3xl scale-125 pointer-events-none" />
 
-            {/* 3D Isometric Layered Digital Core Render */}
-            <div className="relative w-[300px] h-[300px] rounded-3xl overflow-hidden drop-shadow-[0_20px_40px_rgba(180,140,80,0.30)]">
-              <Image
-                src="/images/tech/digital-core.jpg"
-                alt="Digital Technology Architecture Core"
-                fill
-                sizes="340px"
-                className="object-contain mix-blend-multiply"
-                priority
-              />
-            </div>
+            {/* Real Interactive 3D Three.js Digital Core */}
+            <TechCore3D
+              className="w-full h-full"
+              scrollProgress={scrollProgress}
+              isHoveredSection={activeCategory !== "ALL"}
+            />
           </div>
 
           {/* 7 Floating Technology Panels Positioned in Orbit */}
@@ -515,15 +517,9 @@ export default function TechArsenalSection() {
         {/* MOBILE & TABLET LAYOUT (Clean, responsive, touch-friendly grid) */}
         {/* ================================================================= */}
         <div className="block lg:hidden space-y-6">
-          {/* Centered Digital Core Image on Mobile */}
-          <div className="relative w-48 h-48 mx-auto mb-6">
-            <Image
-              src="/images/tech/digital-core.jpg"
-              alt="Digital Technology Core"
-              fill
-              sizes="200px"
-              className="object-contain mix-blend-multiply drop-shadow-lg"
-            />
+          {/* Centered Interactive 3D Digital Core on Mobile */}
+          <div className="relative w-64 h-64 sm:w-72 sm:h-72 mx-auto mb-6 pointer-events-auto">
+            <TechCore3D className="w-full h-full" />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
