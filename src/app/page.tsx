@@ -7,8 +7,6 @@ import dynamic from "next/dynamic";
 import {
   ArrowUpRight,
   ChevronRight,
-  CheckCircle2,
-  Layers,
 } from "lucide-react";
 import MagneticButton from "@/components/MagneticButton";
 import ProjectCard from "@/components/ProjectCard";
@@ -16,6 +14,7 @@ import LogoRail from "@/components/LogoRail";
 import FaqAccordion from "@/components/FaqAccordion";
 import ProblemSolutionSection from "@/components/ProblemSolutionSection";
 import TechArsenalSection from "@/components/TechArsenalSection";
+import CinematicServicesShowcase from "@/components/CinematicServicesShowcase";
 import ScrollServices from "@/components/ScrollServices";
 import MeetTheTeamSection from "@/components/MeetTheTeamSection";
 import TestimonialChain from "@/components/TestimonialChain";
@@ -36,19 +35,16 @@ const RotatingGlobe = dynamic(() => import("@/components/RotatingGlobe"), {
 });
 
 import { projectsData } from "@/data/projects";
-import { servicesData } from "@/data/services";
 import { faqsData } from "@/data/faqs";
 
 import {
   initHeroAnimation,
-  initServicesAnimation,
   initProjectShowcase,
   initCaseStudiesAnimation,
   initWhyUsAnimation,
   initStatsAnimation,
   initFinalCTAAnimation,
   type HeroRefs,
-  type ServicesRefs,
   type ProjectShowcaseRefs,
   type CaseStudyRefs,
   type WhyUsRefs,
@@ -80,10 +76,6 @@ export default function HomePage() {
   const heroAmbientRef = useRef<HTMLDivElement>(null);
   const heroGlobeRef = useRef<HTMLDivElement>(null);
 
-  const servicesSectionRef = useRef<HTMLElement>(null);
-  const servicesHeadingRef = useRef<HTMLDivElement>(null);
-  const serviceCardsRef = useRef<HTMLDivElement[]>([]);
-
   const projectSectionRef = useRef<HTMLElement>(null);
   const projectHeaderRef = useRef<HTMLDivElement>(null);
   const projectPinRef = useRef<HTMLDivElement>(null);
@@ -109,12 +101,6 @@ export default function HomePage() {
   const ctaButtonRef = useRef<HTMLDivElement>(null);
   const ctaGlowRef = useRef<HTMLDivElement>(null);
 
-  const setServiceCardRef = useCallback(
-    (el: HTMLDivElement | null, idx: number) => {
-      if (el) serviceCardsRef.current[idx] = el;
-    },
-    []
-  );
   const setProjectPanelRef = useCallback(
     (el: HTMLDivElement | null, idx: number) => {
       if (el) projectPanelRefs.current[idx] = el;
@@ -153,15 +139,6 @@ export default function HomePage() {
           frameCount: 240,
         };
         contexts.push(initHeroAnimation(hRefs));
-      }
-
-      if (servicesSectionRef.current && servicesHeadingRef.current) {
-        const sRefs: ServicesRefs = {
-          section: servicesSectionRef.current,
-          heading: servicesHeadingRef.current,
-          cards: serviceCardsRef.current.filter(Boolean),
-        };
-        contexts.push(initServicesAnimation(sRefs));
       }
 
       if (
@@ -399,58 +376,8 @@ export default function HomePage() {
       {/* 4. BENTO GRID ARCHITECTURE & SHOWCASE */}
       <BankingBento />
 
-      {/* 5. CORE SERVICES & CAPABILITIES */}
-      <section ref={servicesSectionRef} className="py-24 max-w-7xl mx-auto px-6 md:px-12 relative">
-        <div ref={servicesHeadingRef} className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <span className="text-xs font-mono text-[#B08D57] tracking-widest uppercase font-bold">
-            {"/// OUR CAPABILITIES"}
-          </span>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#111111] tracking-tight">
-            Engineered for <span className="font-serif italic text-gradient-accent">Scale & Speed</span>
-          </h2>
-          <p className="text-[#555555] text-base leading-relaxed">
-            From luxury web design to cloud-native SaaS engineering, we deliver complete digital product solutions under one roof.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {servicesData.slice(0, 6).map((service, idx) => (
-            <div
-              key={service.id}
-              ref={(el) => setServiceCardRef(el, idx)}
-              className="glass-card p-8 rounded-3xl relative overflow-hidden group border border-[#DCD4C5] hover:border-[#B08D57] transition-all duration-300 flex flex-col justify-between bg-white shadow-md"
-            >
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-[#B08D57]/15 border border-[#DCD4C5] flex items-center justify-center mb-6 text-[#B08D57] group-hover:scale-110 transition-transform">
-                  <Layers className="w-6 h-6" />
-                </div>
-                <h3 className="text-2xl font-bold text-[#111111] mb-3 group-hover:text-[#B08D57] transition-colors">
-                  {service.title}
-                </h3>
-                <p className="text-sm text-[#555555] leading-relaxed mb-6">
-                  {service.description}
-                </p>
-                <ul className="space-y-2 mb-8">
-                  {service.capabilities.slice(0, 3).map((item, i) => (
-                    <li key={i} className="text-xs text-[#444444] flex items-center gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#B08D57] shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <Link
-                href="/services"
-                aria-label={`Learn more about ${service.title}`}
-                className="text-xs font-mono uppercase tracking-wider text-[#111111] group-hover:text-[#B08D57] inline-flex items-center gap-1 transition-colors pt-4 border-t border-[#DCD4C5] font-semibold"
-              >
-                Learn More <ChevronRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* 5. CORE SERVICES & CAPABILITIES (Cinematic Viewport-Sized Stacked Showcase) */}
+      <CinematicServicesShowcase />
 
       {/* 6. TECH STACK & ARSENAL */}
       <TechArsenalSection />
