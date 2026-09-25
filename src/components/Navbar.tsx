@@ -105,7 +105,7 @@ export default function Navbar() {
               </Link>
 
               <Link href="#" className="relative flex-1 aspect-[4/5] rounded-[16px] overflow-hidden group">
-                <Image src="https://images.unsplash.com/photo-1521685149344-9ad90e663435?q=80&w=400&auto=format&fit=crop" alt="Bucket List" fill sizes="(max-width: 768px) 33vw, 200px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                <Image src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=400&auto=format&fit=crop" alt="Bucket List" fill sizes="(max-width: 768px) 33vw, 200px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">
                   <h3 className="text-white font-semibold text-[15px]">Bucket List</h3>

@@ -343,18 +343,18 @@ export default function MeetTheTeamSection() {
           background: #FFFFFF;
           backdrop-filter: blur(24px);
           -webkit-backdrop-filter: blur(24px);
-          border: 1px solid #DCD4C5;
+          border: 1px solid transparent;
           border-radius: 16px;
           padding: 30px 24px 22px 24px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          box-shadow: 0 20px 45px rgba(17, 17, 17, 0.06), 0 1px 2px rgba(255, 255, 255, 0.9) inset;
+          box-shadow: 0 20px 45px rgba(17, 17, 17, 0.06), 0 1px 2px rgba(255, 255, 255, 0.9) inset, 0 0 0 1px #DCD4C5;
           cursor: pointer;
           transform-origin: center 20px;
-          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-                      border-color 0.35s ease, 
-                      box-shadow 0.4s ease;
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                      box-shadow 0.4s ease,
+                      opacity 0.4s ease;
           will-change: transform;
           overflow: visible;
         }
@@ -432,8 +432,7 @@ export default function MeetTheTeamSection() {
         }
 
         .service-card.illuminated {
-          border-color: #B08D57;
-          box-shadow: 0 25px 50px rgba(176, 141, 87, 0.2), 0 0 30px rgba(176, 141, 87, 0.1);
+          box-shadow: 0 25px 50px rgba(176, 141, 87, 0.2), 0 0 30px rgba(176, 141, 87, 0.1), 0 0 0 1px #B08D57;
         }
 
         .card-1 {
@@ -474,9 +473,9 @@ export default function MeetTheTeamSection() {
         .service-card:hover {
           transform: translateY(-30px) rotate(0deg) scale(1.05) !important;
           z-index: 50 !important;
-          border-color: #B08D57;
-          box-shadow: 0 35px 70px rgba(176, 141, 87, 0.25), 
-                      0 0 40px rgba(212, 189, 145, 0.2);
+          box-shadow: 0 35px 70px rgba(176, 141, 87, 0.25),
+                      0 0 40px rgba(212, 189, 145, 0.2),
+                      0 0 0 1px #B08D57;
         }
 
         @media (max-width: 1400px) {
@@ -580,7 +579,8 @@ export default function MeetTheTeamSection() {
                         href={member.socials.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-7 h-7 rounded-full bg-[#FAF7F2] border border-[#DCD4C5] hover:bg-[#B08D57] hover:text-white hover:border-[#B08D57] transition-colors flex items-center justify-center text-[#555555] text-xs"
+                        aria-label={`${member.name} on LinkedIn`}
+                        className="w-9 h-9 rounded-full bg-[#FAF7F2] border border-[#DCD4C5] hover:bg-[#B08D57] hover:text-white hover:border-[#B08D57] transition-colors flex items-center justify-center text-[#555555] text-xs"
                       >
                         <Linkedin className="w-3.5 h-3.5" />
                       </a>
@@ -590,7 +590,8 @@ export default function MeetTheTeamSection() {
                         href={member.socials.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-7 h-7 rounded-full bg-[#FAF7F2] border border-[#DCD4C5] hover:bg-[#B08D57] hover:text-white hover:border-[#B08D57] transition-colors flex items-center justify-center text-[#555555] text-xs"
+                        aria-label={`${member.name} on GitHub`}
+                        className="w-9 h-9 rounded-full bg-[#FAF7F2] border border-[#DCD4C5] hover:bg-[#B08D57] hover:text-white hover:border-[#B08D57] transition-colors flex items-center justify-center text-[#555555] text-xs"
                       >
                         <Github className="w-3.5 h-3.5" />
                       </a>
@@ -600,7 +601,8 @@ export default function MeetTheTeamSection() {
                         href={member.socials.twitter}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-7 h-7 rounded-full bg-[#FAF7F2] border border-[#DCD4C5] hover:bg-[#B08D57] hover:text-white hover:border-[#B08D57] transition-colors flex items-center justify-center text-[#555555] text-xs"
+                        aria-label={`${member.name} on Twitter`}
+                        className="w-9 h-9 rounded-full bg-[#FAF7F2] border border-[#DCD4C5] hover:bg-[#B08D57] hover:text-white hover:border-[#B08D57] transition-colors flex items-center justify-center text-[#555555] text-xs"
                       >
                         <Twitter className="w-3.5 h-3.5" />
                       </a>

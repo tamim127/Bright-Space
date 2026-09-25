@@ -30,6 +30,7 @@ export const metadata: Metadata = {
   title: "Bright Space | Premium Motion & Digital Product Studio",
   description: "We design and engineer high-performance websites, 3D interactive experiences, motion design, and custom software for ambitious digital brands.",
   keywords: ["Bright Space", "Motion Design", "3D WebGL", "Digital Studio", "Web Development", "Next.js", "Creative Engineering"],
+  robots: { index: true, follow: true },
   openGraph: {
     title: "Bright Space | Creative Motion & Digital Studio",
     description: "We craft kinetic motion and immersive digital experiences.",
@@ -43,8 +44,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable} ${cormorant.variable} dark`}>
-      <body className="bg-[#050505] text-[#F5F5F5] min-h-screen flex flex-col antialiased selection:bg-[#6C63FF] selection:text-white">
+    <html lang="en" className={`${inter.variable} ${outfit.variable} ${cormorant.variable}`}>
+      <body className="bg-[#F3EFE6] text-[#111111] min-h-screen flex flex-col antialiased selection:bg-[#B08D57] selection:text-white">
         <SmoothScrollProvider>
           <CustomCursor />
           <Navbar />

@@ -3,6 +3,7 @@
 import { useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import {
   ArrowUpRight,
   ChevronRight,
@@ -18,7 +19,6 @@ import TechArsenalSection from "@/components/TechArsenalSection";
 import ScrollServices from "@/components/ScrollServices";
 import MeetTheTeamSection from "@/components/MeetTheTeamSection";
 import TestimonialChain from "@/components/TestimonialChain";
-import RotatingGlobe from "@/components/RotatingGlobe";
 import ProjectLeadForm from "@/components/ProjectLeadForm";
 import BankingBento from "@/components/BankingBento";
 import FinalCtaSection from "@/components/FinalCtaSection";
@@ -26,6 +26,13 @@ import InfiniteProductShowcase from "@/components/InfiniteProductShowcase";
 import WhyUsSection from "@/components/WhyUsSection";
 import MeasuredResultsSection from "@/components/MeasuredResultsSection";
 import HeroCanvasScrubber, { HeroCanvasScrubberHandle } from "@/components/HeroCanvasScrubber";
+
+// Lazy-load the globe — its engine computes ~8000 particles at module parse time (4.8s CPU)
+// Deferring this to when the component actually mounts saves massive TBT
+const RotatingGlobe = dynamic(() => import("@/components/RotatingGlobe"), {
+  ssr: false,
+  loading: () => <div className="w-full h-full" />,
+});
 
 import { projectsData } from "@/data/projects";
 import { servicesData } from "@/data/services";
@@ -124,6 +131,9 @@ export default function HomePage() {
   useEffect(() => {
     const contexts: (gsap.Context | null | undefined)[] = [];
 
+    // Short setTimeout to let first paint happen, then GSAP takes over immediately.
+    // requestIdleCallback was tried but backfired — browser is never truly idle
+    // during initial load so GSAP got delayed 4+s, breaking LCP.
     const timer = setTimeout(() => {
       if (heroSectionRef.current && heroLine1Ref.current && heroLine2Ref.current) {
         const hRefs: HeroRefs = {
@@ -207,6 +217,7 @@ export default function HomePage() {
         };
         contexts.push(initFinalCTAAnimation(fRefs));
       }
+
     }, 100);
 
     return () => {
@@ -261,7 +272,6 @@ export default function HomePage() {
                   <span
                     ref={heroLine1Ref}
                     className="line-reveal-inner block"
-                    style={{ transform: "translateY(115%)" }}
                   >
                     BRIGHT
                   </span>
@@ -270,7 +280,6 @@ export default function HomePage() {
                   <span
                     ref={heroLine2Ref}
                     className="line-reveal-inner block text-[#B08D57]"
-                    style={{ transform: "translateY(115%)" }}
                   >
                     SPACE
                   </span>
@@ -280,7 +289,6 @@ export default function HomePage() {
               <p
                 ref={heroSloganRef}
                 className="text-lg sm:text-xl md:text-2xl text-[#555555] font-light max-w-lg leading-relaxed pt-1"
-                style={{ opacity: 0, transform: "translateY(24px)" }}
               >
                 Turning concepts into experiences that connect, inspire, and endure.
               </p>
@@ -288,7 +296,6 @@ export default function HomePage() {
               <div
                 ref={heroCtaRef}
                 className="w-full max-w-md space-y-3.5 pt-1"
-                style={{ opacity: 0, transform: "translateY(20px)" }}
               >
                 <div className="flex items-center gap-3">
                   <div className="flex -space-x-2">
@@ -334,7 +341,6 @@ export default function HomePage() {
               <div
                 ref={heroLogosRef}
                 className="pt-4 border-t border-[#DCD4C5] flex flex-wrap items-center gap-6 sm:gap-8 text-[#555555] text-xs font-mono tracking-widest uppercase"
-                style={{ opacity: 0, transform: "translateY(16px)" }}
               >
                 <span className="hover:text-[#111111] transition-colors flex items-center gap-1.5 font-bold">
                   <span className="w-2 h-2 rounded-sm bg-[#B08D57]"></span> 3PORTALS
@@ -355,7 +361,6 @@ export default function HomePage() {
               <div
                 ref={heroGlobeRef}
                 className="relative w-full h-[380px] sm:h-[440px] lg:h-[480px] flex items-center justify-center"
-                style={{ opacity: 0, transform: "scale(0.85)" }}
               >
                 <RotatingGlobe
                   className="w-full h-full"
@@ -436,6 +441,7 @@ export default function HomePage() {
 
               <Link
                 href="/services"
+                aria-label={`Learn more about ${service.title}`}
                 className="text-xs font-mono uppercase tracking-wider text-[#111111] group-hover:text-[#B08D57] inline-flex items-center gap-1 transition-colors pt-4 border-t border-[#DCD4C5] font-semibold"
               >
                 Learn More <ChevronRight className="w-3.5 h-3.5" />

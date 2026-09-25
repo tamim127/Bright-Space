@@ -8,6 +8,11 @@ import { usePathname } from "next/navigation";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 
+// Register once at module level — avoids re-registration on every render
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 declare global {
   interface Window {
     __lenis?: Lenis;
@@ -63,13 +68,9 @@ export default function SmoothScrollProvider({
       return;
     }
 
-    if (typeof window !== "undefined") {
-      gsap.registerPlugin(ScrollTrigger);
-    }
-
-    // Initialize Lenis for luxurious, inertia-based smooth scrolling
+    // Initialize Lenis for smooth scrolling
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",

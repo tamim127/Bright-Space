@@ -23,7 +23,8 @@ const TOTAL_FRAMES = 240;
 
 function formatFrameUrl(index: number): string {
   const frameNum = String(index + 1).padStart(3, "0");
-  return `/frames/hero/ezgif-frame-${frameNum}.png`;
+  // Use WebP for ~10x smaller payload vs PNG
+  return `/frames/hero/ezgif-frame-${frameNum}.webp`;
 }
 
 export const HeroCanvasScrubber = forwardRef<
@@ -89,6 +90,22 @@ export const HeroCanvasScrubber = forwardRef<
     [frameCount]
   );
 
+  // Requests a specific frame on demand if not yet cached
+  const requestFrame = useCallback((index: number) => {
+    if (isLoadedRef.current[index] || framesCacheRef.current[index]) return;
+    const img = new Image();
+    img.decoding = "async";
+    img.src = formatFrameUrl(index);
+    framesCacheRef.current[index] = img;
+    img.onload = () => {
+      if (!isMountedRef.current) return;
+      isLoadedRef.current[index] = true;
+      if (currentFrameRef.current === index) {
+        drawImageToCanvas(img);
+      }
+    };
+  }, [drawImageToCanvas]);
+
   // Renders a specific frame by index
   const renderFrame = useCallback(
     (index: number) => {
@@ -98,9 +115,11 @@ export const HeroCanvasScrubber = forwardRef<
       const img = findNearestLoadedFrame(clampedIndex);
       if (img && img.complete && img.naturalWidth > 0) {
         drawImageToCanvas(img);
+      } else {
+        requestFrame(clampedIndex);
       }
     },
-    [frameCount, findNearestLoadedFrame, drawImageToCanvas]
+    [frameCount, findNearestLoadedFrame, drawImageToCanvas, requestFrame]
   );
 
   // Adjust canvas size to match DOM layout + devicePixelRatio
@@ -155,7 +174,6 @@ export const HeroCanvasScrubber = forwardRef<
     for (let i = 0; i < frameCount; i += 6) {
       if (i !== 0) keyframeIndices.push(i);
     }
-    // Also include final frame explicitly
     if (!keyframeIndices.includes(frameCount - 1)) {
       keyframeIndices.push(frameCount - 1);
     }
@@ -168,41 +186,66 @@ export const HeroCanvasScrubber = forwardRef<
       }
     }
 
-    // Worker queue with concurrency limiter (4 concurrent requests)
-    const queue = [...keyframeIndices, ...remainingIndices];
-    const CONCURRENCY = 4;
     let activeLoads = 0;
+    const makeLoader = (queue: number[], concurrency: number) => {
+      const loadNext = () => {
+        if (!isMountedRef.current || queue.length === 0) return;
+        while (activeLoads < concurrency && queue.length > 0) {
+          const nextIdx = queue.shift();
+          if (nextIdx === undefined) break;
 
-    const loadNext = () => {
-      if (!isMountedRef.current || queue.length === 0) return;
-      while (activeLoads < CONCURRENCY && queue.length > 0) {
-        const nextIdx = queue.shift();
-        if (nextIdx === undefined) break;
-
-        activeLoads++;
-        const img = new Image();
-        img.decoding = "async";
-        img.src = formatFrameUrl(nextIdx);
-        img.onload = () => {
-          activeLoads--;
-          if (isMountedRef.current) {
-            framesCacheRef.current[nextIdx] = img;
-            isLoadedRef.current[nextIdx] = true;
-            if (currentFrameRef.current === nextIdx) {
-              drawImageToCanvas(img);
+          activeLoads++;
+          const img = new Image();
+          img.decoding = "async";
+          img.src = formatFrameUrl(nextIdx);
+          img.onload = () => {
+            activeLoads--;
+            if (isMountedRef.current) {
+              framesCacheRef.current[nextIdx] = img;
+              isLoadedRef.current[nextIdx] = true;
+              if (currentFrameRef.current === nextIdx) {
+                drawImageToCanvas(img);
+              }
             }
-          }
-          loadNext();
-        };
-        img.onerror = () => {
-          activeLoads--;
-          loadNext();
-        };
+            loadNext();
+          };
+          img.onerror = () => {
+            activeLoads--;
+            loadNext();
+          };
+        }
+      };
+      return loadNext;
+    };
+
+    // Defer keyframe preloading to first user interaction or idle delay (1.5s)
+    // This frees 100% of network & CPU bandwidth for FCP, LCP, and TBT
+    let preloadingStarted = false;
+    const startPreloading = () => {
+      if (preloadingStarted || !isMountedRef.current) return;
+      preloadingStarted = true;
+      const loadKeyframes = makeLoader([...keyframeIndices], 3);
+      loadKeyframes();
+      const loadRemaining = makeLoader([...remainingIndices], 2);
+      if (typeof requestIdleCallback !== "undefined") {
+        requestIdleCallback(() => loadRemaining(), { timeout: 4000 });
+      } else {
+        setTimeout(loadRemaining, 1000);
       }
     };
 
-    // Start background progressive preload
-    loadNext();
+    const idleTimer = setTimeout(startPreloading, 1500);
+
+    const onUserInteraction = () => {
+      startPreloading();
+      window.removeEventListener("scroll", onUserInteraction);
+      window.removeEventListener("pointermove", onUserInteraction);
+      window.removeEventListener("touchstart", onUserInteraction);
+    };
+
+    window.addEventListener("scroll", onUserInteraction, { passive: true, once: true });
+    window.addEventListener("pointermove", onUserInteraction, { passive: true, once: true });
+    window.addEventListener("touchstart", onUserInteraction, { passive: true, once: true });
 
     // Resize handling
     const resizeObserver = new ResizeObserver(() => {
@@ -216,6 +259,10 @@ export const HeroCanvasScrubber = forwardRef<
 
     return () => {
       isMountedRef.current = false;
+      clearTimeout(idleTimer);
+      window.removeEventListener("scroll", onUserInteraction);
+      window.removeEventListener("pointermove", onUserInteraction);
+      window.removeEventListener("touchstart", onUserInteraction);
       resizeObserver.disconnect();
       window.removeEventListener("resize", updateCanvasSize);
     };

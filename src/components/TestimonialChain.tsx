@@ -329,7 +329,8 @@ export default function TestimonialChain() {
         <div className="flex items-center gap-4 md:hidden">
           <button
             onClick={handlePrev}
-            className="w-10 h-10 rounded-full bg-white border border-[#DCD4C5] flex items-center justify-center text-[#111111]"
+            aria-label="Previous testimonial"
+            className="w-11 h-11 rounded-full bg-white border border-[#DCD4C5] flex items-center justify-center text-[#111111]"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -338,7 +339,8 @@ export default function TestimonialChain() {
           </span>
           <button
             onClick={handleNext}
-            className="w-10 h-10 rounded-full bg-white border border-[#DCD4C5] flex items-center justify-center text-[#111111]"
+            aria-label="Next testimonial"
+            className="w-11 h-11 rounded-full bg-white border border-[#DCD4C5] flex items-center justify-center text-[#111111]"
           >
             <ChevronRight className="w-5 h-5" />
           </button>

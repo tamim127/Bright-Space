@@ -35,13 +35,17 @@ function fbm(x, y, z) {
 }
 
 const DOT_FLOOR = 0.3;
-const ALL_DOTS = (() => {
+// Lazy-initialize particle data — these IIFEs cost ~4.8s CPU.
+// By computing on first access rather than module parse, initial page load is freed.
+let _ALL_DOTS = null;
+function getAllDots() {
+  if (_ALL_DOTS) return _ALL_DOTS;
   const out = [];
-  const latStep = 2;
+  const latStep = 2.5;
   for (let lat = -84; lat <= 84; lat += latStep) {
     const latR = (lat * Math.PI) / 180;
     const circ = Math.cos(latR);
-    const n = Math.max(6, Math.round(190 * circ));
+    const n = Math.max(6, Math.round(150 * circ));
     for (let i = 0; i < n; i++) {
       const lon = (i / n) * TAU + lat * 0.13;
       const x = Math.cos(latR) * Math.cos(lon);
@@ -60,8 +64,9 @@ const ALL_DOTS = (() => {
       }
     }
   }
-  return out;
-})();
+  _ALL_DOTS = out;
+  return _ALL_DOTS;
+}
 
 function ll(lat, lon) {
   const a = (lat * Math.PI) / 180;
@@ -73,7 +78,9 @@ function ll(lat, lon) {
   };
 }
 
-const ICO = (() => {
+let _ICO = null;
+function getICO() {
+  if (_ICO) return _ICO;
   const t = (1 + Math.sqrt(5)) / 2;
   const V = [
     [-1, t, 0], [1, t, 0], [-1, -t, 0], [1, -t, 0],
@@ -125,15 +132,21 @@ const ICO = (() => {
       }
     }
   }
-  return { V, E };
-})();
+  _ICO = { V, E };
+  return _ICO;
+}
 
-const STARS = Array.from({ length: 160 }, (_, i) => ({
-  x: hash(i, 1, 0),
-  y: hash(i, 2, 0),
-  s: hash(i, 3, 0),
-  p: hash(i, 4, 0) * TAU
-}));
+let _STARS = null;
+function getStars() {
+  if (_STARS) return _STARS;
+  _STARS = Array.from({ length: 160 }, (_, i) => ({
+    x: hash(i, 1, 0),
+    y: hash(i, 2, 0),
+    s: hash(i, 3, 0),
+    p: hash(i, 4, 0) * TAU
+  }));
+  return _STARS;
+}
 
 let probeEl = null;
 function toRGB(color, fallback) {
@@ -234,7 +247,7 @@ function draw(ctx, time, cfg, itx, W, H, DPR) {
   ctx.fillRect(0, 0, W, H);
 
   if (cfg.showStars) {
-    for (const s of STARS) {
+    for (const s of getStars()) {
       const a = 0.12 + 0.14 * Math.sin((time / DUR) * TAU * 2 + s.p);
       ctx.fillStyle = `rgba(200,210,255,${a.toFixed(3)})`;
       const r = (0.5 + s.s) * DPR;
@@ -248,7 +261,7 @@ function draw(ctx, time, cfg, itx, W, H, DPR) {
 
   ctx.globalCompositeOperation = "lighter";
 
-  for (const d of ALL_DOTS) {
+  for (const d of getAllDots()) {
     if (d.d <= cfg.threshold) continue;
     const p = rot(d, ay, ax);
     if (p.z >= 0) continue;
@@ -266,8 +279,8 @@ function draw(ctx, time, cfg, itx, W, H, DPR) {
 
   if (cfg.showWireframe) {
     const WR = R * 1.06;
-    const pv = ICO.V.map(v => rot({ x: v[0], y: v[1], z: v[2] }, ay * 0.32, ax));
-    for (const [a, b] of ICO.E) {
+    const pv = getICO().V.map(v => rot({ x: v[0], y: v[1], z: v[2] }, ay * 0.32, ax));
+    for (const [a, b] of getICO().E) {
       const p1 = pv[a], p2 = pv[b];
       const zm = (p1.z + p2.z) / 2;
       const alpha = 0.05 + Math.max(0, zm) * 0.55;
@@ -355,7 +368,7 @@ function draw(ctx, time, cfg, itx, W, H, DPR) {
     ctx.globalCompositeOperation = "lighter";
   }
 
-  for (const d of ALL_DOTS) {
+  for (const d of getAllDots()) {
     if (d.d <= cfg.threshold) continue;
     const p = rot(d, ay, ax);
     if (p.z < 0) continue;
@@ -572,25 +585,28 @@ export function createParticleGlobe(container, userProps = {}) {
   let running = false;
   let last = null;
 
+  let cachedDPR = DPRof();
   const syncSize = () => {
-    const DPR = DPRof();
-    const w = Math.max(1, Math.round(container.clientWidth * DPR));
-    const h = Math.max(1, Math.round(container.clientHeight * DPR));
+    cachedDPR = DPRof();
+    const w = Math.max(1, Math.round(container.clientWidth * cachedDPR));
+    const h = Math.max(1, Math.round(container.clientHeight * cachedDPR));
     if (canvas.width !== w || canvas.height !== h) {
       canvas.width = w;
       canvas.height = h;
     }
-    return DPR;
+    return cachedDPR;
   };
 
+  syncSize();
+
   const frame = now => {
-    const DPR = syncSize();
+    if (!running) return;
     if (last == null) last = now;
     if (cfg.autoPlay) {
       time = (time + ((now - last) / 1000) * cfg.speed) % DUR;
     }
     last = now;
-    draw(ctx, time, cfg, itx, canvas.width, canvas.height, DPR);
+    draw(ctx, time, cfg, itx, canvas.width, canvas.height, cachedDPR);
     raf = requestAnimationFrame(frame);
   };
 
@@ -610,18 +626,31 @@ export function createParticleGlobe(container, userProps = {}) {
   };
 
   let ro = new ResizeObserver(() => {
-    const DPR = syncSize();
-    draw(ctx, time, cfg, itx, canvas.width, canvas.height, DPR);
+    syncSize();
+    draw(ctx, time, cfg, itx, canvas.width, canvas.height, cachedDPR);
   });
   ro.observe(container);
 
-  start();
+  let io = null;
+  if (typeof IntersectionObserver !== "undefined") {
+    io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        start();
+      } else {
+        stop();
+      }
+    }, { threshold: 0.05 });
+    io.observe(container);
+  } else {
+    start();
+  }
 
   return {
     update: updateConfig,
     destroy: () => {
       stop();
       ro.disconnect();
+      io?.disconnect();
       canvas.removeEventListener("pointermove", onMove);
       canvas.removeEventListener("pointerleave", onLeave);
       canvas.removeEventListener("pointerdown", onDown);
