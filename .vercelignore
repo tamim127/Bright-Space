@@ -5,8 +5,10 @@
 *.rar
 *.7z
 public/*.zip
+*.mp4
 *.mov
-*.avi
-*.mkv
-public/frames/**/*.png
-
+*.webm
+public/*.mp4
+public/hero-bg.mp4
+public/frames/
+public/frames/**

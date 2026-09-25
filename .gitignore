@@ -40,7 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Large archives, zip files & compressed datasets (Prevent GitHub/Vercel 100MB limit error)
+# Large archives, zip files & compressed datasets (Prevent Vercel 100MB limit error)
 *.zip
 *.tar
 *.gz
@@ -48,11 +48,15 @@ next-env.d.ts
 *.7z
 public/*.zip
 
-# Large raw video formats (hero-bg.mp4 is 2.19MB and tracked)
+# Video files
+*.mp4
 *.mov
+*.webm
 *.avi
 *.mkv
+public/*.mp4
+public/hero-bg.mp4
 
-# Ignore uncompressed raw PNG frames (track optimized .webp sequence ~13MB)
-public/frames/**/*.png
-
+# Heavy frame sequences
+public/frames/
+public/frames/**
