@@ -23,7 +23,7 @@ const TOTAL_FRAMES = 240;
 
 function formatFrameUrl(index: number): string {
   const frameNum = String(index + 1).padStart(3, "0");
-  return `/frames/hero/ezgif-frame-${frameNum}.png`;
+  return `/frames/hero/ezgif-frame-${frameNum}.webp`;
 }
 
 export const HeroCanvasScrubber = forwardRef<
