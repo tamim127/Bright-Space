@@ -25,6 +25,7 @@ import FinalCtaSection from "@/components/FinalCtaSection";
 import InfiniteProductShowcase from "@/components/InfiniteProductShowcase";
 import WhyUsSection from "@/components/WhyUsSection";
 import MeasuredResultsSection from "@/components/MeasuredResultsSection";
+import OurImpactSection from "@/components/OurImpactSection";
 import HeroCanvasScrubber, { HeroCanvasScrubberHandle } from "@/components/HeroCanvasScrubber";
 
 // Lazy-load the globe — its engine computes ~8000 particles at module parse time (4.8s CPU)
@@ -564,30 +565,8 @@ export default function HomePage() {
       {/* 11. WHY CHOOSE US (New Modern Bento & Showreel Layout) */}
       <WhyUsSection />
 
-      {/* 12. AGENCY STATS & MILESTONES */}
-      <section ref={statsSectionRef} className="py-24 bg-[#FAF7F2] border-y border-[#DCD4C5] relative">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {agencyMilestones.map((m, idx) => (
-              <div
-                key={m.label}
-                ref={(el) => setStatsCardRef(el, idx)}
-                className="glass-card p-8 rounded-3xl border border-[#DCD4C5] bg-white space-y-3 shadow-md"
-              >
-                <div className="text-4xl md:text-5xl font-extrabold font-mono text-gradient-accent">
-                  {m.value}
-                </div>
-                <h4 className="text-lg font-bold text-[#111111] tracking-tight">
-                  {m.label}
-                </h4>
-                <p className="text-xs text-[#555555] leading-relaxed">
-                  {m.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* 12. AGENCY STATS & MILESTONES — OUR IMPACT */}
+      <OurImpactSection />
 
       {/* 13. MEET THE CREATIVE TEAM */}
       <section className="bg-[#F3EFE6] border-b border-[#DCD4C5]">

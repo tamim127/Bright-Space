@@ -12,6 +12,12 @@ interface RotatingGlobeProps {
   accentColor?: string;
 }
 
+interface GlobeInstance {
+  update: (props?: unknown) => void;
+  destroy: () => void;
+  canvas: HTMLCanvasElement;
+}
+
 export default function RotatingGlobe({
   className = '',
   onInteractionStart,
@@ -32,7 +38,7 @@ export default function RotatingGlobe({
     const container = containerRef.current
     if (!container) return
 
-    let instance: any = null;
+    let instance: GlobeInstance | null = null;
     let cancelled = false;
 
     const initGlobe = () => {
