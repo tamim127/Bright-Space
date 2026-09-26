@@ -4,6 +4,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { teamData } from "@/data/team";
+import FaqAccordion from "@/components/FaqAccordion";
+import { faqsData } from "@/data/faqs";
 
 const stats = [
   { value: "50+", label: "Completed Projects" },
@@ -141,6 +143,24 @@ export default function AboutPage() {
               <p className="text-sm text-[#9A9A9A] pl-7">{v.desc}</p>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* FAQ Section */}
+      <div className="space-y-12">
+        <div className="text-center mb-12 space-y-4">
+          <span className="text-xs font-mono text-[#00E5FF] tracking-widest uppercase font-bold">
+            {"/// FREQUENT QUESTIONS"}
+          </span>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+            Frequently Asked <span className="text-gradient-accent">Questions</span>
+          </h2>
+          <p className="text-[#9A9A9A] text-base">
+            Everything you need to know about starting a digital product or software engagement with us.
+          </p>
+        </div>
+        <div className="max-w-4xl mx-auto">
+          <FaqAccordion items={faqsData} />
         </div>
       </div>
     </div>

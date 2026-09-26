@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -97,6 +98,10 @@ body {
 
 .font-instrument {
   font-family: 'Instrument Serif', Georgia, serif;
+}
+
+.font-script {
+  font-family: 'Caveat', cursive, sans-serif;
 }
 
 /* Glassmorphism Utilities */
@@ -251,7 +256,7 @@ body {
 .showcase-panel {
   flex-shrink: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   position: relative;
   display: flex;
   align-items: center;

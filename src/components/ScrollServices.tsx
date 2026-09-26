@@ -2,10 +2,9 @@
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import MagneticButton from "@/components/MagneticButton";
+import ProcessConstellationCanvas from "@/components/ProcessConstellationCanvas";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -232,39 +231,63 @@ export default function ScrollServices() {
   return (
     <div ref={containerRef} className="relative w-full">
       {/* 1. INTRO BOOKEND SECTION */}
-      <section className="min-h-screen bg-[#F3EFE6] text-[#111111] flex flex-col justify-center items-center relative px-6 text-center select-none z-10 border-t border-[#DCD4C5]">
-        <div className="max-w-4xl mx-auto space-y-6">
-          <div className="text-xs uppercase tracking-[0.22em] text-[#B08D57] font-mono font-bold">
+      <section className="min-h-screen bg-[#F3EFE6] text-[#111111] flex flex-col justify-center items-center relative px-6 text-center select-none z-10 border-t border-[#DCD4C5] overflow-hidden">
+        {/* Interactive Constellation Particle Mesh Background */}
+        <ProcessConstellationCanvas className="opacity-80" />
+
+        {/* Subtle Ambient Radial Lighting for Depth */}
+        <div className="absolute inset-0 bg-radial from-transparent via-[#F3EFE6]/30 to-[#F3EFE6]/80 pointer-events-none z-2" />
+
+        {/* Content Box */}
+        <div className="max-w-5xl mx-auto space-y-6 relative z-10 py-12">
+          {/* Eyebrow */}
+          <div className="text-xs uppercase tracking-[0.25em] text-[#B08D57] font-mono font-bold">
             Our Process
           </div>
-          <h2 className="font-instrument text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-[#111111] leading-[1.04]">
-            How we bring ideas to life
+
+          {/* Heading: Guaranteed Single-Line on Desktop, Slightly Smaller Font, Matching Reference */}
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[3.4rem] xl:text-[3.85rem] tracking-tight text-[#1E1B18] leading-[1.1] whitespace-normal sm:whitespace-nowrap font-normal">
+            How we bring ideas to <span className="font-serif italic font-normal text-[#1E1B18]">life</span>
           </h2>
-          <p className="text-[#555555] max-w-xl mx-auto text-base sm:text-lg font-light leading-relaxed">
+
+          {/* Subtext Paragraph */}
+          <p className="text-[#555555] max-w-xl mx-auto text-sm sm:text-base md:text-lg font-light leading-relaxed">
             Scroll down to walk through each phase — from first conversation to
             launch. Every step stays pinned to the screen while the story unfolds
             around it.
           </p>
         </div>
 
-        {/* Bouncing down indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#555555] pointer-events-none">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#B08D57] font-bold">
-            Scroll
-          </span>
-          <svg
-            className="w-5 h-5 animate-bounce text-[#B08D57]"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.5}
+        {/* Luxury Circular Compass Scroll Dial (Matches Reference Screenshot) */}
+        <div className="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center">
+          <button
+            onClick={() => scrollToPhase(0)}
+            className="group relative flex flex-col items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/80 backdrop-blur-md border border-[#DCD4C5] shadow-[0_12px_35px_-8px_rgba(176,141,87,0.22)] hover:shadow-[0_16px_45px_-6px_rgba(176,141,87,0.35)] hover:scale-105 hover:border-[#B08D57] active:scale-95 transition-all duration-300 cursor-pointer"
+            aria-label="Scroll to first phase"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-            />
-          </svg>
+            {/* Glowing Ambient Outer Aura */}
+            <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-[#B08D57]/20 via-[#D4BD91]/30 to-transparent blur-md -z-10 opacity-70 group-hover:opacity-100 transition-opacity" />
+
+            {/* Dial Label */}
+            <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.22em] uppercase font-bold text-[#8C6D3B] group-hover:text-[#B08D57] transition-colors mb-0.5">
+              SCROLL
+            </span>
+
+            {/* Compass Chevron Needle */}
+            <div className="relative w-6 h-5 flex items-center justify-center">
+              <svg
+                className="w-5 h-5 text-[#8C6D3B] group-hover:text-[#B08D57] group-hover:translate-y-0.5 transition-all duration-300"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </div>
+          </button>
         </div>
       </section>
 
@@ -483,35 +506,6 @@ export default function ScrollServices() {
           </div>
         </div>
       </div>
-
-      {/* 3. OUTRO BOOKEND SECTION */}
-      <section className="min-h-screen bg-[#171512] text-[#f2f0ec] flex flex-col justify-center items-center relative px-6 text-center select-none z-10">
-        <div className="max-w-4xl mx-auto space-y-6">
-          <div className="text-xs uppercase tracking-[0.22em] text-[#9A9A9A] font-mono font-medium">
-            Ready when you are
-          </div>
-          <h2 className="font-instrument text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-white leading-[1.04]">
-            Let&apos;s build the next one together
-          </h2>
-          <p className="text-[#9A9A9A] max-w-xl mx-auto text-base sm:text-lg font-light leading-relaxed">
-            That&apos;s our end-to-end process. If it feels like the right fit,
-            we&apos;d love to hear what you&apos;re working on.
-          </p>
-
-          <div className="pt-6 flex justify-center gap-4 flex-wrap">
-            <Link href="/contact">
-              <MagneticButton variant="primary">
-                Schedule a Call
-              </MagneticButton>
-            </Link>
-            <Link href="/work">
-              <MagneticButton variant="outline">
-                Explore Case Studies
-              </MagneticButton>
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

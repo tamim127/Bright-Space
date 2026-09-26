@@ -565,6 +565,7 @@ export interface ProjectShowcaseRefs {
   pinContainer: HTMLElement;
   track: HTMLElement;
   panels: HTMLElement[];
+  progressBar?: HTMLElement;
 }
 
 export function initProjectShowcase(
@@ -577,19 +578,19 @@ export function initProjectShowcase(
 
     // ── DESKTOP: Full cinematic horizontal scroll ──────────
     mm.add("(min-width: 1024px)", () => {
-      // Header reveal — line-style clip
+      // Header smooth fade in on enter
       gsap.fromTo(
         refs.header,
-        { clipPath: "inset(100% 0 0 0)", y: 25 },
+        { opacity: 0, y: -15 },
         {
-          clipPath: "inset(0% 0 0 0)",
+          opacity: 1,
           y: 0,
-          duration: MOTION.duration.slow,
-          ease: MOTION.ease.cinematic,
+          duration: MOTION.duration.normal,
+          ease: MOTION.ease.smooth,
           scrollTrigger: {
-            trigger: refs.header,
-            start: "top 85%",
-            end: "top 60%",
+            trigger: refs.section,
+            start: "top 80%",
+            end: "top 40%",
             scrub: 1,
           },
         }
@@ -600,7 +601,6 @@ export function initProjectShowcase(
         return refs.track.scrollWidth - window.innerWidth;
       };
 
-      // Master timeline
       const numPanels = refs.panels.length;
       const masterTl = gsap.timeline();
 
@@ -615,106 +615,107 @@ export function initProjectShowcase(
         0
       );
 
+      // Animate progress bar if present
+      if (refs.progressBar) {
+        masterTl.fromTo(
+          refs.progressBar,
+          { width: "33%" },
+          {
+            width: "100%",
+            ease: "none",
+            duration: numPanels,
+          },
+          0
+        );
+      }
+
       // Per-panel cinematic transitions layered on top
       refs.panels.forEach((panel, i) => {
         const img = panel.querySelector<HTMLElement>(".showcase-img");
         const imgInner = panel.querySelector<HTMLElement>(".showcase-img-inner");
         const title = panel.querySelector<HTMLElement>(".showcase-title");
         const meta = panel.querySelector<HTMLElement>(".showcase-meta");
-        const number = panel.querySelector<HTMLElement>(".showcase-number");
         const category = panel.querySelector<HTMLElement>(".showcase-category");
 
-        // Each panel occupies ~1 unit in the timeline
         const enter = i * 1;
 
-        // Image container clip-path reveal
-        if (img) {
-          masterTl.fromTo(
-            img,
-            { clipPath: "inset(12% 12% 12% 12%)" },
-            {
-              clipPath: "inset(0% 0% 0% 0%)",
-              duration: 0.45,
-              ease: MOTION.ease.cinematic,
-            },
-            enter + 0.05
-          );
-        }
+        if (i === 0) {
+          // First panel is already crisp and visible
+          if (img) gsap.set(img, { opacity: 1, scale: 1 });
+          if (title) gsap.set(title, { opacity: 1, y: 0 });
+          if (category) gsap.set(category, { opacity: 1, y: 0 });
+          if (meta) gsap.set(meta, { opacity: 1, y: 0 });
+        } else {
+          // Subsequent panels glide in with modern scale & opacity
+          if (img) {
+            masterTl.fromTo(
+              img,
+              { scale: 0.92, opacity: 0.4 },
+              {
+                scale: 1,
+                opacity: 1,
+                duration: 0.45,
+                ease: "power2.out",
+              },
+              enter + 0.05
+            );
+          }
 
-        // Internal image parallax — image content moves
-        // at a different rate than its container for depth
-        if (imgInner) {
-          masterTl.fromTo(
-            imgInner,
-            { scale: 1.15, x: "5%" },
-            {
-              scale: 1.05,
-              x: "-5%",
-              duration: 0.9,
-              ease: "none",
-            },
-            enter
-          );
-        }
+          if (imgInner) {
+            masterTl.fromTo(
+              imgInner,
+              { scale: 1.08, x: "4%" },
+              {
+                scale: 1.0,
+                x: "-4%",
+                duration: 0.9,
+                ease: "none",
+              },
+              enter
+            );
+          }
 
-        // Title slides up
-        if (title) {
-          masterTl.fromTo(
-            title,
-            { y: 35, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.3,
-              ease: MOTION.ease.cinematic,
-            },
-            enter + 0.15
-          );
-        }
+          if (title) {
+            masterTl.fromTo(
+              title,
+              { y: 20, opacity: 0 },
+              {
+                y: 0,
+                opacity: 1,
+                duration: 0.35,
+                ease: "power3.out",
+              },
+              enter + 0.15
+            );
+          }
 
-        // Category
-        if (category) {
-          masterTl.fromTo(
-            category,
-            { y: 12, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.25,
-              ease: MOTION.ease.smooth,
-            },
-            enter + 0.1
-          );
-        }
+          if (category) {
+            masterTl.fromTo(
+              category,
+              { y: 12, opacity: 0 },
+              {
+                y: 0,
+                opacity: 1,
+                duration: 0.25,
+                ease: "power2.out",
+              },
+              enter + 0.1
+            );
+          }
 
-        // Metadata (tagline + results)
-        if (meta) {
-          masterTl.fromTo(
-            meta,
-            { y: 18, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.25,
-              ease: MOTION.ease.smooth,
-            },
-            enter + 0.22
-          );
-        }
-
-        // Large background number
-        if (number) {
-          masterTl.fromTo(
-            number,
-            { scale: 1.15, opacity: 0 },
-            {
-              scale: 1,
-              opacity: 0.06,
-              duration: 0.4,
-              ease: MOTION.ease.smooth,
-            },
-            enter + 0.02
-          );
+          if (meta) {
+            masterTl.fromTo(
+              meta,
+              { y: 16, opacity: 0 },
+              {
+                y: 0,
+                opacity: 1,
+                duration: 0.3,
+                ease: "power2.out",
+              },
+              enter + 0.2
+            );
+          }
         }
 
         // Exit animations (not for last panel)
@@ -723,33 +724,23 @@ export function initProjectShowcase(
             masterTl.to(
               img,
               {
-                scale: 0.95,
-                opacity: 0.6,
-                duration: 0.25,
-                ease: MOTION.ease.smooth,
+                scale: 0.94,
+                opacity: 0.3,
+                duration: 0.35,
+                ease: "power2.inOut",
               },
-              enter + 0.72
+              enter + 0.68
             );
           }
           if (title) {
             masterTl.to(
               title,
-              { y: -15, opacity: 0, duration: 0.2 },
-              enter + 0.74
+              { y: -15, opacity: 0, duration: 0.25 },
+              enter + 0.72
             );
           }
           if (meta) {
-            masterTl.to(meta, { opacity: 0, duration: 0.18 }, enter + 0.76);
-          }
-          if (number) {
-            masterTl.to(number, { opacity: 0, duration: 0.2 }, enter + 0.72);
-          }
-          if (category) {
-            masterTl.to(
-              category,
-              { opacity: 0, duration: 0.18 },
-              enter + 0.73
-            );
+            masterTl.to(meta, { opacity: 0, duration: 0.2 }, enter + 0.74);
           }
         }
       });
@@ -757,9 +748,9 @@ export function initProjectShowcase(
       ScrollTrigger.create({
         trigger: refs.section,
         start: "top top",
-        end: () => `+=${getScrollDistance() + window.innerHeight * 0.5}`,
+        end: () => `+=${getScrollDistance()}`,
         pin: refs.pinContainer,
-        scrub: 1,
+        scrub: 1.2,
         anticipatePin: 1,
         animation: masterTl,
         invalidateOnRefresh: true,

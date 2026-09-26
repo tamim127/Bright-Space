@@ -11,7 +11,6 @@ import {
 import MagneticButton from "@/components/MagneticButton";
 import ProjectCard from "@/components/ProjectCard";
 import LogoRail from "@/components/LogoRail";
-import FaqAccordion from "@/components/FaqAccordion";
 import ProblemSolutionSection from "@/components/ProblemSolutionSection";
 import TechArsenalSection from "@/components/TechArsenalSection";
 import CinematicServicesShowcase from "@/components/CinematicServicesShowcase";
@@ -35,29 +34,20 @@ const RotatingGlobe = dynamic(() => import("@/components/RotatingGlobe"), {
 });
 
 import { projectsData } from "@/data/projects";
-import { faqsData } from "@/data/faqs";
 
 import {
   initHeroAnimation,
   initProjectShowcase,
   initCaseStudiesAnimation,
   initWhyUsAnimation,
-  initStatsAnimation,
   initFinalCTAAnimation,
   type HeroRefs,
   type ProjectShowcaseRefs,
   type CaseStudyRefs,
   type WhyUsRefs,
-  type StatsRefs,
   type FinalCTARefs,
 } from "@/lib/animations";
 
-const agencyMilestones = [
-  { value: "50+", label: "Digital Products Shipped", desc: "High-performing websites, SaaS apps & custom software." },
-  { value: "99.8%", label: "On-Time Sprint Record", desc: "Punctual delivery with zero compromise on code quality." },
-  { value: "15+", label: "Global Tech Hubs", desc: "Clients across USA, UK, Europe, and Asia Pacific." },
-  { value: "2.4x", label: "Avg Conversion Growth", desc: "Measured conversion surge post Bright Space redesign." },
-];
 
 
 export default function HomePage() {
@@ -81,6 +71,7 @@ export default function HomePage() {
   const projectPinRef = useRef<HTMLDivElement>(null);
   const projectTrackRef = useRef<HTMLDivElement>(null);
   const projectPanelRefs = useRef<HTMLDivElement[]>([]);
+  const projectProgressBarRef = useRef<HTMLDivElement>(null);
 
   const caseSectionRef = useRef<HTMLElement>(null);
   const caseHeadingRef = useRef<HTMLDivElement>(null);
@@ -90,8 +81,6 @@ export default function HomePage() {
   const whyHeadingRef = useRef<HTMLDivElement>(null);
   const whyPillarRefs = useRef<HTMLDivElement[]>([]);
 
-  const statsSectionRef = useRef<HTMLElement>(null);
-  const statsCardRefs = useRef<HTMLDivElement[]>([]);
 
   const ctaSectionRef = useRef<HTMLElement>(null);
   const ctaHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -108,19 +97,11 @@ export default function HomePage() {
     []
   );
 
-  const setStatsCardRef = useCallback(
-    (el: HTMLDivElement | null, idx: number) => {
-      if (el) statsCardRefs.current[idx] = el;
-    },
-    []
-  );
 
   useEffect(() => {
     const contexts: (gsap.Context | null | undefined)[] = [];
 
-    // Short setTimeout to let first paint happen, then GSAP takes over immediately.
-    // requestIdleCallback was tried but backfired — browser is never truly idle
-    // during initial load so GSAP got delayed 4+s, breaking LCP.
+    // Initialize GSAP animations swiftly after mount
     const timer = setTimeout(() => {
       if (heroSectionRef.current && heroLine1Ref.current && heroLine2Ref.current) {
         const hRefs: HeroRefs = {
@@ -152,6 +133,7 @@ export default function HomePage() {
           pinContainer: projectPinRef.current,
           track: projectTrackRef.current,
           panels: projectPanelRefs.current.filter(Boolean),
+          progressBar: projectProgressBarRef.current || undefined,
         };
         contexts.push(initProjectShowcase(projRefs));
       }
@@ -175,13 +157,6 @@ export default function HomePage() {
         contexts.push(initWhyUsAnimation(wRefs));
       }
 
-      if (statsSectionRef.current) {
-        const sRefs: StatsRefs = {
-          section: statsSectionRef.current,
-          cards: statsCardRefs.current.filter(Boolean),
-        };
-        contexts.push(initStatsAnimation(sRefs));
-      }
 
       if (ctaSectionRef.current && ctaHeadingRef.current) {
         const fRefs: FinalCTARefs = {
@@ -196,7 +171,7 @@ export default function HomePage() {
         contexts.push(initFinalCTAAnimation(fRefs));
       }
 
-    }, 100);
+    }, 20);
 
     return () => {
       clearTimeout(timer);
@@ -249,7 +224,7 @@ export default function HomePage() {
                 <span className="line-reveal block">
                   <span
                     ref={heroLine1Ref}
-                    className="line-reveal-inner block"
+                    className="line-reveal-inner block translate-y-[115%] rotate-2"
                   >
                     BRIGHT
                   </span>
@@ -257,7 +232,7 @@ export default function HomePage() {
                 <span className="line-reveal block">
                   <span
                     ref={heroLine2Ref}
-                    className="line-reveal-inner block text-[#B08D57]"
+                    className="line-reveal-inner block text-[#B08D57] translate-y-[115%] rotate-2"
                   >
                     SPACE
                   </span>
@@ -266,14 +241,14 @@ export default function HomePage() {
 
               <p
                 ref={heroSloganRef}
-                className="text-lg sm:text-xl md:text-2xl text-[#555555] font-light max-w-lg leading-relaxed pt-1"
+                className="text-lg sm:text-xl md:text-2xl text-[#555555] font-light max-w-lg leading-relaxed pt-1 opacity-0 translate-y-6"
               >
                 Turning concepts into experiences that connect, inspire, and endure.
               </p>
 
               <div
                 ref={heroCtaRef}
-                className="w-full max-w-md space-y-3.5 pt-1"
+                className="w-full max-w-md space-y-3.5 pt-1 opacity-0 translate-y-6"
               >
                 <div className="flex items-center gap-3">
                   <div className="flex -space-x-2">
@@ -318,7 +293,7 @@ export default function HomePage() {
 
               <div
                 ref={heroLogosRef}
-                className="pt-4 border-t border-[#DCD4C5] flex flex-wrap items-center gap-6 sm:gap-8 text-[#555555] text-xs font-mono tracking-widest uppercase"
+                className="pt-4 border-t border-[#DCD4C5] flex flex-wrap items-center gap-6 sm:gap-8 text-[#555555] text-xs font-mono tracking-widest uppercase opacity-0 translate-y-6"
               >
                 <span className="hover:text-[#111111] transition-colors flex items-center gap-1.5 font-bold">
                   <span className="w-2 h-2 rounded-sm bg-[#B08D57]"></span> 3PORTALS
@@ -338,7 +313,7 @@ export default function HomePage() {
             <div className="lg:col-span-6 flex flex-col justify-center items-center lg:items-center">
               <div
                 ref={heroGlobeRef}
-                className="relative w-full h-[380px] sm:h-[440px] lg:h-[480px] flex items-center justify-center"
+                className="relative w-full h-[380px] sm:h-[440px] lg:h-[480px] flex items-center justify-center opacity-0 scale-90"
               >
                 <RotatingGlobe
                   className="w-full h-full"
@@ -353,16 +328,20 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Cinematic Scroll-to-Explore Cue */}
+        {/* Cinematic Scroll-to-Explore Cue — Prominent, bold, luxury styling */}
         <div
           ref={heroScrollHintRef}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 pointer-events-none text-[#777777]"
+          className="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-3 pointer-events-none select-none"
         >
-          <span className="text-[10px] font-mono tracking-[0.25em] uppercase font-semibold text-[#8C6D3B]">
-            Scroll to Explore
-          </span>
-          <div className="w-5 h-9 rounded-full border border-[#B08D57]/50 flex justify-center pt-1.5 shadow-sm bg-white/40 backdrop-blur-xs">
-            <div className="w-1 h-2 rounded-full bg-[#B08D57] animate-bounce" />
+          <div className="flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/85 backdrop-blur-md border-2 border-[#B08D57] shadow-[0_8px_30px_rgba(176,141,87,0.3)]">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#B08D57] animate-pulse" />
+            <span className="text-sm sm:text-base md:text-lg font-mono font-black tracking-[0.25em] text-[#111111] uppercase">
+              SCROLL TO EXPLORE
+            </span>
+            <span className="text-[#B08D57] font-bold text-sm sm:text-base">↓</span>
+          </div>
+          <div className="w-6 h-11 rounded-full border-2 border-[#B08D57] flex justify-center pt-2 shadow-md bg-white/70 backdrop-blur-xs">
+            <div className="w-1.5 h-3 rounded-full bg-[#B08D57] animate-bounce" />
           </div>
         </div>
       </section>
@@ -390,92 +369,183 @@ export default function HomePage() {
         ref={projectSectionRef}
         className="relative bg-[#FAF7F2] border-b border-[#DCD4C5] overflow-hidden"
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 lg:py-24">
-          <div ref={projectHeaderRef} className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        {/* DESKTOP PINNED VIEWPORT SHOWCASE (h-screen, zero white space gap, generous bottom margin/padding) */}
+        <div
+          ref={projectPinRef}
+          className="hidden lg:flex flex-col justify-between w-full h-screen min-h-[680px] max-h-[1050px] relative overflow-hidden"
+        >
+          {/* Header Row: Compact, elegant, integrated at top of pinned screen */}
+          <div
+            ref={projectHeaderRef}
+            className="w-full max-w-7xl mx-auto px-6 md:px-12 pt-6 lg:pt-8 pb-2 shrink-0 z-20 flex items-center justify-between"
+          >
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#B08D57] animate-pulse" />
+                <span className="text-xs font-mono text-[#B08D57] tracking-widest uppercase font-bold">
+                  {"/// FEATURED WORK"}
+                </span>
+              </div>
+              <h2 className="text-3xl lg:text-4xl font-extrabold text-[#111111] tracking-tight mt-1">
+                Selected <span className="font-serif italic text-gradient-accent">Digital Products</span>
+              </h2>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <Link href="/work">
+                <MagneticButton variant="outline" className="px-5 py-2.5 text-xs font-bold font-mono">
+                  Explore All Projects <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
+                </MagneticButton>
+              </Link>
+            </div>
+          </div>
+
+          {/* Middle Stage: Horizontal Track with properly proportioned cards */}
+          <div className="flex-1 w-full min-h-0 relative flex items-center overflow-hidden my-auto">
+            <div
+              ref={projectTrackRef}
+              className="flex h-full items-center wc-transform"
+            >
+              {featuredProjects.map((project, idx) => (
+                <div
+                  key={project.id}
+                  ref={(el) => setProjectPanelRef(el, idx)}
+                  className="showcase-panel w-screen h-full flex items-center justify-center px-6 md:px-12 lg:px-16 shrink-0"
+                >
+                  <div className="relative w-full max-w-6xl mx-auto grid grid-cols-12 gap-8 lg:gap-12 items-center">
+                    {/* Visual Mockup Frame (Col 1-7: 58% width, max-h 48vh, 16:10 ratio) */}
+                    <div className="col-span-12 lg:col-span-7 relative">
+                      <div className="showcase-img relative w-full aspect-[16/10] max-h-[48vh] rounded-2xl lg:rounded-3xl overflow-hidden border border-[#DCD4C5] bg-[#181716] shadow-[0_20px_50px_-15px_rgba(17,17,17,0.18)] group">
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          className="showcase-img-inner object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                          sizes="(max-width: 1200px) 60vw, 700px"
+                          priority={idx === 0}
+                        />
+
+                        {/* Floating Top Glass Bar */}
+                        <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10 pointer-events-none">
+                          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white text-[11px] font-mono tracking-wider">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#81C784]" />
+                            <span>{project.category}</span>
+                          </div>
+                          <span className="px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white/90 text-[11px] font-mono">
+                            {project.client}
+                          </span>
+                        </div>
+
+                        {/* Subtle Bottom Ambient Gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                      </div>
+                    </div>
+
+                    {/* Content Column (Col 8-12: 42% width) */}
+                    <div className="col-span-12 lg:col-span-5 flex flex-col justify-center space-y-4 lg:space-y-5 relative">
+                      <div className="flex items-center justify-between">
+                        <span className="showcase-category text-xs font-mono text-[#B08D57] tracking-widest uppercase font-bold flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#B08D57]" />
+                          {project.subcategory}
+                        </span>
+                        <span className="text-3xl lg:text-4xl font-serif italic text-[#B08D57]/30 font-bold select-none">
+                          {String(idx + 1).padStart(2, "0")}
+                        </span>
+                      </div>
+
+                      <h3 className="showcase-title text-2xl lg:text-3xl xl:text-4xl font-extrabold text-[#111111] tracking-tight leading-tight">
+                        {project.title}
+                      </h3>
+
+                      <div className="showcase-meta space-y-4">
+                        <p className="text-sm lg:text-base text-[#555555] leading-relaxed line-clamp-3">
+                          {project.tagline}
+                        </p>
+
+                        {project.results && project.results.length > 0 && (
+                          <div className="grid grid-cols-2 gap-3 pt-1">
+                            {project.results.slice(0, 2).map((r, ri) => (
+                              <div
+                                key={ri}
+                                className="p-3 rounded-xl bg-white/80 border border-[#DCD4C5] shadow-xs"
+                              >
+                                <div className="text-xl font-extrabold font-mono text-[#B08D57]">
+                                  {r.value}
+                                </div>
+                                <div className="text-[10px] font-mono text-[#777777] uppercase tracking-wider mt-0.5 truncate">
+                                  {r.label}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        <div className="pt-2 flex items-center gap-4">
+                          <Link
+                            href={`/work/${project.id}`}
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#111111] hover:bg-[#B08D57] text-white text-xs font-mono uppercase font-bold transition-all shadow-md group"
+                          >
+                            <span>View Case Study</span>
+                            <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                          </Link>
+                          <span className="text-[11px] font-mono text-[#777777]">
+                            Timeline: {project.timeline}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom Bar: Generous padding & margin, dynamic progress, slide cues */}
+          <div className="w-full max-w-7xl mx-auto px-6 md:px-12 pb-6 lg:pb-8 pt-3 border-t border-[#DCD4C5]/80 flex items-center justify-between text-xs font-mono text-[#777777] shrink-0 z-20">
+            <div className="flex items-center gap-3">
+              <span className="text-[#111111] font-bold">
+                [ 01 — 03 ]
+              </span>
+              <span>•</span>
+              <span className="hidden sm:inline">Featured Work Gallery</span>
+            </div>
+
+            {/* Dynamic Progress Bar */}
+            <div className="flex items-center gap-2 w-44 md:w-56">
+              <div className="h-1.5 w-full bg-[#DCD4C5]/60 rounded-full overflow-hidden">
+                <div
+                  ref={projectProgressBarRef}
+                  className="h-full bg-gradient-to-r from-[#B08D57] to-[#D4BD91] rounded-full transition-all duration-75"
+                  style={{ width: "33%" }}
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-[#B08D57] font-semibold">Scroll to explore</span>
+              <span className="inline-block animate-pulse text-[#B08D57]">→</span>
+            </div>
+          </div>
+        </div>
+
+        {/* MOBILE / TABLET VIEW (Responsive clean grid with comfortable spacing) */}
+        <div className="lg:hidden max-w-7xl mx-auto px-6 md:px-12 py-16">
+          <div className="flex flex-col gap-6 mb-10">
             <div>
               <span className="text-xs font-mono text-[#B08D57] tracking-widest uppercase font-bold">
                 {"/// FEATURED WORK"}
               </span>
-              <h2 className="text-4xl md:text-5xl font-extrabold text-[#111111] tracking-tight mt-2">
+              <h2 className="text-3xl font-extrabold text-[#111111] tracking-tight mt-1">
                 Selected <span className="font-serif italic text-gradient-accent">Digital Products</span>
               </h2>
             </div>
             <Link href="/work">
-              <MagneticButton variant="outline">
+              <MagneticButton variant="outline" className="w-full justify-center">
                 Explore All Projects <ArrowUpRight className="w-4 h-4 ml-1" />
               </MagneticButton>
             </Link>
           </div>
-        </div>
-
-        <div ref={projectPinRef} className="hidden lg:block">
-          <div
-            ref={projectTrackRef}
-            className="flex wc-transform"
-          >
-            {featuredProjects.map((project, idx) => (
-              <div
-                key={project.id}
-                ref={(el) => setProjectPanelRef(el, idx)}
-                className="showcase-panel"
-              >
-                <div className="showcase-number bottom-8 right-12 text-[#B08D57]/20">
-                  {String(idx + 1).padStart(2, "0")}
-                </div>
-
-                <div className="relative w-full h-full flex items-center px-12 xl:px-20 gap-12">
-                  <div className="showcase-img w-[55%] h-[70vh] relative shadow-xl border border-[#DCD4C5]">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="showcase-img-inner object-cover object-center"
-                      sizes="55vw"
-                      priority={idx < 2}
-                    />
-                  </div>
-
-                  <div className="flex-1 flex flex-col justify-center space-y-6 max-w-lg">
-                    <span className="showcase-category text-xs font-mono text-[#B08D57] tracking-widest uppercase font-bold">
-                      {project.category} • {project.subcategory}
-                    </span>
-                    <h3 className="showcase-title text-4xl xl:text-5xl font-extrabold text-[#111111] tracking-tight leading-tight">
-                      {project.title}
-                    </h3>
-                    <div className="showcase-meta space-y-4">
-                      <p className="text-base text-[#555555] leading-relaxed">
-                        {project.tagline}
-                      </p>
-                      {project.results && project.results.length > 0 && (
-                        <div className="flex items-center gap-6 pt-2">
-                          {project.results.slice(0, 2).map((r, ri) => (
-                            <div key={ri} className="text-center">
-                              <div className="text-2xl font-extrabold font-mono text-[#B08D57]">
-                                {r.value}
-                              </div>
-                              <div className="text-[10px] font-mono text-[#777777] uppercase tracking-wider mt-1">
-                                {r.label}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                      <Link
-                        href={`/work/${project.id}`}
-                        className="interactive inline-flex items-center gap-2 text-sm font-mono text-[#111111] hover:text-[#B08D57] transition-colors pt-2 font-bold"
-                      >
-                        View Case Study <ArrowUpRight className="w-4 h-4" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="lg:hidden max-w-7xl mx-auto px-6 md:px-12 pb-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {featuredProjects.map((project, idx) => (
               <ProjectCard key={project.id} project={project} index={idx} />
             ))}
@@ -503,23 +573,7 @@ export default function HomePage() {
       {/* 14. CLIENT TESTIMONIALS */}
       <TestimonialChain />
 
-      {/* 15. FAQ ACCORDION */}
-      <section className="py-28 max-w-4xl mx-auto px-6 md:px-12 relative">
-        <div className="text-center mb-16 space-y-4">
-          <span className="text-xs font-mono text-[#B08D57] tracking-widest uppercase font-bold">
-            {"/// FREQUENT QUESTIONS"}
-          </span>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#111111] tracking-tight">
-            Frequently Asked <span className="font-serif italic text-gradient-accent">Questions</span>
-          </h2>
-          <p className="text-[#555555] text-base">
-            Everything you need to know about starting a digital product or software engagement with us.
-          </p>
-        </div>
-        <FaqAccordion items={faqsData} />
-      </section>
-
-      {/* 16. INTERACTIVE PROJECT SCOPE BUILDER & FINAL CTA */}
+      {/* 15. INTERACTIVE PROJECT SCOPE BUILDER & FINAL CTA */}
       <FinalCtaSection />
 
       {/* 17. DIRECT PROJECT BRIEF & LEAD INTAKE */}
